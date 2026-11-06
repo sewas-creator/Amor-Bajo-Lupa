@@ -1,668 +1,372 @@
-﻿@{ ViewBag.Title = "Amor Bajo Lupa";
-    Layout = null; }
+@{
+    ViewBag.Title = "Amor Bajo Lupa";
+    Layout = null;
+}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Amor Bajo Lupa</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            min-height: 100%;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            min-height: 100vh;
-            margin: 0;
-            padding: 40px 24px;
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
-            color: #5f5572;
-            background: radial-gradient(circle at 8% 12%, rgba(218, 183, 255, 0.48), transparent 30%), radial-gradient(circle at 94% 18%, rgba(255, 205, 231, 0.48), transparent 30%), linear-gradient(15deg, #f5ebff 0%, #fff9ff 52%, #ffedf5 100%);
-            overflow-x: hidden;
-        }
-
-        .pagina {
-            width: 100%;
-            max-width: 1080px;
-            margin: 0 auto;
-        }
-
-        .tarjeta {
-            position: relative;
-            overflow: hidden;
-            padding: 48px 56px 36px;
-            background: rgba(255, 255, 255, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            border-radius: 32px;
-            box-shadow: 0 24px 70px rgba(105, 62, 137, 0.08);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            animation: aparecer 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
-            isolation: isolate;
-        }
-
-            .tarjeta::before, .tarjeta::after {
-                position: absolute;
-                z-index: -1;
-                content: "";
-                border-radius: 50%;
-                pointer-events: none;
-            }
-
-            .tarjeta::before {
-                width: 260px;
-                height: 260px;
-                top: -155px;
-                right: -95px;
-                background: linear-gradient(135deg, rgba(238, 211, 255, 0.5), rgba(255, 225, 242, 0.1));
-            }
-
-            .tarjeta::after {
-                width: 190px;
-                height: 190px;
-                bottom: 180px;
-                left: -135px;
-                background: rgba(244, 226, 255, 0.3);
-            }
-
-        .hero {
-            position: relative;
-            text-align: center;
-            padding: 0 10px 32px;
-        }
-
-        .marca {
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 24px;
-            color: #fff;
-            font-size: 36px;
-            background: linear-gradient(145deg, #9d51c4, #d56eaf);
-            box-shadow: 0 12px 25px rgba(166, 82, 184, 0.25);
-            transform: rotate(-5deg);
-        }
-
-        .etiqueta {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            margin-bottom: 14px;
-            padding: 8px 16px;
-            border: 1px solid #f0def8;
-            border-radius: 30px;
-            background: rgba(251, 242, 255, 0.6);
-            color: #8951a5;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        h1 {
-            margin: 0;
-            color: #522275;
-            font-size: clamp(36px, 5vw, 56px);
-            font-weight: 850;
-            line-height: 1.15;
-            letter-spacing: -1.5px;
-        }
-
-        .titulo-acento {
-            background: linear-gradient(120deg, #9d51c4, #d56eaf);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .titulo-adorno {
-            display: inline-block;
-            margin-left: 7px;
-            color: #d36aab;
-            font-size: 0.48em;
-            vertical-align: top;
-            transform: translateY(3px) rotate(10deg);
-        }
-
-        .descripcion {
-            max-width: 650px;
-            margin: 18px auto 0;
-            color: #6e637e;
-            font-size: 16px;
-            line-height: 1.7;
-        }
-
-        .frase {
-            display: inline-block;
-            margin: 20px auto 0;
-            padding: 10px 20px;
-            border-radius: 16px;
-            background: linear-gradient(90deg, rgba(251, 241, 255, 0.7), rgba(255, 242, 248, 0.7));
-            color: #924fa3;
-            font-size: 14px;
-            font-style: italic;
-            font-weight: 600;
-            line-height: 1.5;
-        }
-
-        .seccion-tests {
-            margin-top: 16px;
-            padding-top: 32px;
-            border-top: 1px solid #f0e4f6;
-        }
-
-        .encabezado-tests {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            gap: 18px;
-            margin-bottom: 28px;
-        }
-
-            .encabezado-tests h2 {
-                margin: 0 0 6px;
-                color: #522275;
-                font-size: 26px;
-                letter-spacing: -0.5px;
-                font-weight: 800;
-            }
-
-        .subtexto {
-            margin: 0;
-            color: #857893;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .contador {
-            flex-shrink: 0;
-            padding: 8px 14px;
-            border: 1px solid #f0e0f7;
-            border-radius: 30px;
-            background: #fff8ff;
-            color: #9252a5;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-
-        .tests {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 24px;
-            text-align: left;
-        }
-
-        .test-card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-            padding: 28px;
-            overflow: hidden;
-            border: 1px solid rgba(238, 224, 246, 0.7);
-            border-radius: 24px;
-            background: rgba(255, 255, 255, 0.75);
-            box-shadow: 0 10px 30px rgba(117, 70, 143, 0.02);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-            .test-card::after {
-                position: absolute;
-                top: -35px;
-                right: -32px;
-                width: 105px;
-                height: 105px;
-                border-radius: 50%;
-                background: rgba(240, 220, 255, 0.25);
-                content: "";
-                pointer-events: none;
-            }
-
-            .test-card:hover {
-                transform: translateY(-6px);
-                border-color: #dfbeee;
-                box-shadow: 0 20px 38px rgba(117, 70, 143, 0.09);
-            }
-
-        .test-superior {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        .test-icono {
-            width: 48px;
-            height: 48px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #f0ddfa;
-            border-radius: 16px;
-            background: linear-gradient(145deg, #f2e2ff, #ffe7f3);
-            color: #9950b3;
-            font-size: 24px;
-            box-shadow: 0 4px 10px rgba(160, 91, 183, 0.05);
-        }
-
-        .estado {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-            .estado.disponible {
-                background: #e1f9ec;
-                color: #1e7e4c;
-            }
-
-            .estado.google {
-                background: #fff0f6;
-                color: #b5427b;
-                border: 1px solid #fad2e1;
-            }
-
-        .test-card h3 {
-            margin: 0 0 10px;
-            color: #522275;
-            font-size: 20px;
-            line-height: 1.3;
-            font-weight: 750;
-        }
-
-        .test-card p {
-            flex-grow: 1;
-            margin: 0 0 24px;
-            color: #746a82;
-            font-size: 13.5px;
-            line-height: 1.65;
-        }
-
-        .boton {
-            position: relative;
-            z-index: 1;
-            display: inline-flex;
-            min-height: 46px;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 22px;
-            border: 0;
-            border-radius: 14px;
-            background: linear-gradient(115deg, #9250bd, #cc59aa);
-            box-shadow: 0 8px 20px rgba(151, 75, 179, 0.18);
-            color: #fff;
-            font-size: 14px;
-            font-weight: 700;
-            text-align: center;
-            text-decoration: none;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-        }
-
-            .boton:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 12px 26px rgba(151, 75, 179, 0.28);
-                color: #fff;
-                filter: brightness(1.04);
-            }
-
-        .aviso {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            max-width: 850px;
-            margin: 32px auto 0;
-            padding: 16px 20px;
-            border: 1px solid #eeddf5;
-            border-radius: 16px;
-            background: rgba(253, 251, 255, 0.8);
-            color: #7b6f8a;
-            font-size: 12px;
-            line-height: 1.65;
-            text-align: left;
-        }
-
-        .aviso-icono {
-            flex-shrink: 0;
-            color: #a45ab4;
-            font-size: 16px;
-            margin-top: 1px;
-        }
-
-        .pie {
-            margin-top: 24px;
-            color: #8c7ca7;
-            font-size: 12px;
-            text-align: center;
-        }
-
-        @@keyframes aparecer {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @@media (max-width: 768px) {
-            body {
-                padding: 16px 12px;
-            }
-
-            .tarjeta {
-                padding: 32px 20px 24px;
-                border-radius: 24px;
-            }
-
-            .hero {
-                padding: 0 2px 24px;
-            }
-
-            .marca {
-                width: 64px;
-                height: 64px;
-                border-radius: 20px;
-                font-size: 32px;
-            }
-
-            h1 {
-                font-size: clamp(30px, 8vw, 42px);
-                letter-spacing: -1px;
-            }
-
-            .descripcion {
-                font-size: 14px;
-                margin-top: 14px;
-            }
-
-            .frase {
-                margin-top: 16px;
-                font-size: 12.5px;
-                padding: 10px 16px;
-            }
-
-            .seccion-tests {
-                padding-top: 24px;
-            }
-
-            .encabezado-tests {
-                align-items: flex-start;
-                flex-direction: column;
-                gap: 8px;
-                margin-bottom: 20px;
-            }
-
-                .encabezado-tests h2 {
-                    font-size: 22px;
-                }
-
-            .tests {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .test-card {
-                padding: 24px;
-            }
-
-                .test-card h3 {
-                    font-size: 18px;
-                }
-
-            .boton {
-                width: 100%;
-            }
-
-            .aviso {
-                margin-top: 24px;
-                padding: 14px;
-            }
-        }
-
-        @@media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                scroll-behavior: auto !important;
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-    </style>
+    <meta name="theme-color" content="#fffdfd" />
+    <meta name="description" content="Un espacio para explorar las relaciones, comprender tus emociones y descubrirte a través del autoconocimiento." />
+    <title>Amor Bajo Lupa | Psicología, relaciones y autoconocimiento</title>
+    <link rel="stylesheet" href="@Url.Content("~/Content/Inicio.css")" />
 </head>
-
 <body>
+    <div class="abl-page" id="inicio">
 
-    <main class="pagina">
+        <!-- NAVEGACIÓN PRINCIPAL -->
+        <header class="abl-header">
+            <div class="abl-container abl-header-inner">
+                <a class="abl-brand" href="#inicio" aria-label="Amor Bajo Lupa, ir al inicio">
+                    <span class="abl-brand-mark" aria-hidden="true">♥</span>
+                    <span>
+                        <span class="abl-brand-name">Amor Bajo <span>Lupa</span></span>
+                        <span class="abl-brand-caption">Relaciones · Emociones · Tú</span>
+                    </span>
+                </a>
 
-        <div class="tarjeta">
+                <nav class="abl-nav" aria-label="Navegación principal">
+                    <a href="#inicio">Inicio</a>
+                    <a href="#temas">Temas</a>
+                    <a href="#conocenos">Conócenos</a>
+                    <a href="#articulos">Artículos</a>
+                    <a class="abl-nav-cta" href="#tests">Explorar tests <span aria-hidden="true">↗</span></a>
+                </nav>
 
+                <details class="abl-mobile-menu">
+                    <summary aria-label="Abrir menú de navegación">☰</summary>
+                    <nav class="abl-mobile-panel" aria-label="Navegación móvil">
+                        <a href="#inicio">Inicio</a>
+                        <a href="#temas">Temas</a>
+                        <a href="#conocenos">Conócenos</a>
+                        <a href="#articulos">Artículos</a>
+                        <a href="#tests">Explorar tests</a>
+                    </nav>
+                </details>
+            </div>
+        </header>
+
+        <main>
             <!-- PRESENTACIÓN PRINCIPAL -->
-            <header class="hero">
+            <section class="abl-hero" aria-labelledby="abl-hero-title">
+                <div class="abl-container abl-hero-grid">
+                    <div class="abl-hero-copy-block">
+                        <p class="abl-eyebrow">Un espacio para mirar hacia dentro</p>
+                        <h1 id="abl-hero-title">Comprende tus emociones. <em>Descubre tu interior.</em></h1>
+                        <p class="abl-hero-copy">
+                            Las relaciones, los sentimientos y las experiencias que vivimos también cuentan nuestra historia.
+                            Aquí encontrarás ideas y herramientas para reflexionar, reconocer tus patrones y construir vínculos
+                            más conscientes.
+                        </p>
 
-                <div class="marca">♥</div>
+                        <div class="abl-hero-actions">
+                            <a class="abl-button abl-button-primary" href="#temas">Conoce el proyecto <span aria-hidden="true">→</span></a>
+                            <a class="abl-button abl-button-secondary" href="#tests">Explorar los tests</a>
+                        </div>
 
-                <div class="etiqueta">
-                    ✦ Un espacio para reflexionar ✦
+                        <div class="abl-hero-note">
+                            <span aria-hidden="true">✦</span>
+                            <span>Un lugar para aprender, cuestionarte y conocerte sin juicios.</span>
+                        </div>
+                    </div>
+
+                    <div class="abl-hero-visual" aria-label="Imágenes sobre comunicación y reflexión personal">
+                        <div class="abl-hero-photo">
+                            <img src="https://images.pexels.com/photos/35999767/pexels-photo-35999767.jpeg?cs=srgb&amp;dl=pexels-rebornfilmes-35999767.jpg&amp;fm=jpg"
+                                 alt="Dos personas conversan tranquilamente en una cafetería"
+                                 fetchpriority="high" />
+                        </div>
+                        <div class="abl-photo-small">
+                            <img src="https://images.pexels.com/photos/33359322/pexels-photo-33359322.jpeg?cs=srgb&amp;dl=pexels-leticia-alvares-1805702-33359322.jpg&amp;fm=jpg"
+                                 alt="Una mujer escribe en su diario durante un momento de reflexión"
+                                 loading="lazy" />
+                        </div>
+                        <div class="abl-hero-sticker">
+                            <span class="abl-hero-sticker-icon" aria-hidden="true">♡</span>
+                            <span>
+                                <strong>Conocerte también es cuidarte.</strong>
+                                <small>Empieza por ti</small>
+                            </span>
+                        </div>
+                    </div>
                 </div>
+            </section>
 
-                <h1>
-                    Amor Bajo
-                    <span class="titulo-acento">Lupa</span>
-                    <span class="titulo-adorno">✦</span>
-                </h1>
-
-                <p class="descripcion">
-                    Las relaciones se construyen con confianza,
-                    comunicación y respeto. Explora tus emociones,
-                    reconoce tus inquietudes y descubre qué merece
-                    una conversación sincera.
-                </p>
-
-                <div class="frase">
-                    Comprender lo que sentimos es el primer paso
-                    para encontrar claridad.
+            <!-- TEMAS PRINCIPALES -->
+            <section class="abl-topics-band" id="temas" aria-labelledby="abl-topics-title">
+                <div class="abl-container">
+                    <h2 class="abl-topics-heading" id="abl-topics-title">Temas para explorar y comprender</h2>
+                    <div class="abl-topics-grid">
+                        <a class="abl-topic" href="#articulos">
+                            <span class="abl-topic-icon" aria-hidden="true">♡</span>
+                            <strong>Relaciones de pareja</strong>
+                        </a>
+                        <a class="abl-topic" href="#articulos">
+                            <span class="abl-topic-icon" aria-hidden="true">✧</span>
+                            <strong>Inteligencia emocional</strong>
+                        </a>
+                        <a class="abl-topic" href="#articulos">
+                            <span class="abl-topic-icon" aria-hidden="true">⌁</span>
+                            <strong>Confianza y comunicación</strong>
+                        </a>
+                        <a class="abl-topic" href="#articulos">
+                            <span class="abl-topic-icon" aria-hidden="true">◎</span>
+                            <strong>Autoconocimiento</strong>
+                        </a>
+                    </div>
                 </div>
+            </section>
 
-            </header>
+            <!-- SOBRE AMOR BAJO LUPA -->
+            <section class="abl-section" id="conocenos" aria-labelledby="abl-about-title">
+                <div class="abl-container abl-about">
+                    <div class="abl-about-visual">
+                        <div class="abl-about-image">
+                            <img src="https://images.pexels.com/photos/33359322/pexels-photo-33359322.jpeg?cs=srgb&amp;dl=pexels-leticia-alvares-1805702-33359322.jpg&amp;fm=jpg"
+                                 alt="Una persona dedica un momento a escribir y ordenar sus pensamientos"
+                                 loading="lazy" />
+                        </div>
+                        <div class="abl-about-caption">
+                            “Mirarte con honestidad también es una forma de avanzar.”
+                            <span>Una pausa para ti</span>
+                        </div>
+                    </div>
 
+                    <div class="abl-about-copy">
+                        <p class="abl-section-kicker">Conócenos</p>
+                        <h2 class="abl-section-title" id="abl-about-title">Un espacio para entender lo que hay detrás de lo que sentimos.</h2>
+                        <p class="abl-section-intro">
+                            Amor Bajo Lupa nace de una idea sencilla: conocernos mejor puede ayudarnos a construir relaciones
+                            más conscientes y una relación más amable con nosotros mismos.
+                        </p>
+                        <p>
+                            Reunimos contenidos sobre vínculos, emociones, comunicación y crecimiento personal. También
+                            encontrarás tests interactivos que invitan a observar tus respuestas, reconocer hábitos y abrir
+                            nuevas preguntas.
+                        </p>
+                        <p>
+                            No buscamos etiquetarte ni ofrecer respuestas absolutas. Queremos acercarte recursos claros para
+                            que puedas reflexionar a tu propio ritmo.
+                        </p>
+                        <a class="abl-about-link" href="#articulos">Descubre nuestros contenidos <span aria-hidden="true">→</span></a>
+                    </div>
+                </div>
+            </section>
 
-            <!-- SECCIÓN DE TESTS -->
-            <section class="seccion-tests">
+            <!-- ARTÍCULOS DESTACADOS DE DEMOSTRACIÓN -->
+            <section class="abl-section abl-articles-section" id="articulos" aria-labelledby="abl-articles-title">
+                <div class="abl-container">
+                    <div class="abl-section-heading-row">
+                        <div>
+                            <p class="abl-section-kicker">Ideas para seguir explorando</p>
+                            <h2 class="abl-section-title" id="abl-articles-title">Lecturas para mirar las cosas de otra manera.</h2>
+                            <p class="abl-section-intro">
+                                Pequeñas aproximaciones a temas que forman parte de nuestra vida emocional y nuestros vínculos.
+                            </p>
+                        </div>
+                    </div>
 
-                <div class="encabezado-tests">
+                    <div class="abl-articles-grid">
+                        <article class="abl-article-card">
+                            <div class="abl-article-photo">
+                                <img src="https://images.pexels.com/photos/33359322/pexels-photo-33359322.jpeg?cs=srgb&amp;dl=pexels-leticia-alvares-1805702-33359322.jpg&amp;fm=jpg"
+                                     alt="Una mujer escribe en un cuaderno durante un momento de autoconocimiento"
+                                     loading="lazy" />
+                            </div>
+                            <div class="abl-article-body">
+                                <p class="abl-article-category">Autoconocimiento</p>
+                                <h3>¿Qué significa conocerse realmente a uno mismo?</h3>
+                                <p>Observar tus pensamientos, reconocer tus necesidades y comprender por qué algunas experiencias te afectan.</p>
+                                <div class="abl-article-meta"><span>Lectura de muestra</span> · Contenido introductorio</div>
+                            </div>
+                        </article>
 
-                    <div>
-                        <h2>Explora nuestros tests</h2>
+                        <article class="abl-article-card">
+                            <div class="abl-article-photo">
+                                <img src="https://images.pexels.com/photos/35999767/pexels-photo-35999767.jpeg?cs=srgb&amp;dl=pexels-rebornfilmes-35999767.jpg&amp;fm=jpg"
+                                     alt="Una pareja conversa frente a frente en una cafetería"
+                                     loading="lazy" />
+                            </div>
+                            <div class="abl-article-body">
+                                <p class="abl-article-category">Relaciones de pareja</p>
+                                <h3>¿Por qué es importante la comunicación en pareja?</h3>
+                                <p>Escuchar, expresar lo que necesitamos y conversar con respeto puede cambiar la forma de afrontar los desacuerdos.</p>
+                                <div class="abl-article-meta"><span>Lectura de muestra</span> · Contenido introductorio</div>
+                            </div>
+                        </article>
 
-                        <p class="subtexto">
-                            Un momento para reflexionar, conocerte mejor
-                            y mirar tus relaciones desde otra perspectiva.
+                        <article class="abl-article-card">
+                            <div class="abl-article-photo">
+                                <img src="https://images.pexels.com/photos/7659546/pexels-photo-7659546.jpeg?cs=srgb&amp;dl=pexels-thirdman-7659546.jpg&amp;fm=jpg"
+                                     alt="Dos amigas comparten una conversación cercana y de apoyo"
+                                     loading="lazy" />
+                            </div>
+                            <div class="abl-article-body">
+                                <p class="abl-article-category">Inteligencia emocional</p>
+                                <h3>Aprender a reconocer lo que sentimos</h3>
+                                <p>Poner nombre a una emoción es un primer paso para comprenderla y elegir cómo queremos responder.</p>
+                                <div class="abl-article-meta"><span>Lectura de muestra</span> · Contenido introductorio</div>
+                            </div>
+                        </article>
+
+                        <article class="abl-article-card">
+                            <div class="abl-article-photo">
+                                <img src="https://images.pexels.com/photos/10549067/pexels-photo-10549067.jpeg?cs=srgb&amp;dl=pexels-jeff-vinluan-20921030-10549067.jpg&amp;fm=jpg"
+                                     alt="Dos amigas conversan sentadas en un sofá luminoso"
+                                     loading="lazy" />
+                            </div>
+                            <div class="abl-article-body">
+                                <p class="abl-article-category">Límites saludables</p>
+                                <h3>¿Cómo aprender a establecer límites saludables?</h3>
+                                <p>Los límites ayudan a comunicar lo que necesitamos, cuidar nuestro espacio y construir vínculos más equilibrados.</p>
+                                <div class="abl-article-meta"><span>Lectura de muestra</span> · Contenido introductorio</div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TESTS ACTUALES: SE CONSERVAN LAS CUATRO RUTAS EXISTENTES -->
+            <section class="abl-section abl-tests-section" id="tests" aria-labelledby="abl-tests-title">
+                <div class="abl-container">
+                    <div class="abl-tests-head">
+                        <div>
+                            <p class="abl-section-kicker">Conócete a través de la reflexión</p>
+                            <h2 class="abl-section-title" id="abl-tests-title">Explora nuestros tests</h2>
+                            <p class="abl-section-intro">
+                                Elige una experiencia y dedica unos minutos a observar tus emociones, comportamientos y formas de relacionarte.
+                            </p>
+                        </div>
+                        <span class="abl-test-counter">♥ 4 EXPERIENCIAS</span>
+                    </div>
+
+                    <div class="abl-tests-grid">
+                        <article class="abl-test-card">
+                            <div class="abl-test-top">
+                                <span class="abl-test-icon" aria-hidden="true">♡</span>
+                                <span class="abl-test-status">Sin iniciar sesión</span>
+                            </div>
+                            <h3>¿Qué está ocultando?</h3>
+                            <p>
+                                Responde 12 preguntas sobre comportamientos, comunicación, confianza y límites en tu relación.
+                                Obtén un resultado orientativo para reflexionar.
+                            </p>
+                            <a class="abl-button abl-button-primary" href="@Url.Action("TestPatrones", "Home")">Comenzar test <span aria-hidden="true">→</span></a>
+                        </article>
+
+                        <article class="abl-test-card">
+                            <div class="abl-test-top">
+                                <span class="abl-test-icon" aria-hidden="true">✧</span>
+                                <span class="abl-test-status">Sin iniciar sesión</span>
+                            </div>
+                            <h3>Descubre tus patrones</h3>
+                            <p>
+                                Explora tus emociones, expectativas y hábitos dentro de una relación para identificar patrones
+                                personales y nuevas preguntas.
+                            </p>
+                            <a class="abl-button abl-button-primary" href="@Url.Action("DescubrePatrones", "Home")">Comenzar test <span aria-hidden="true">→</span></a>
+                        </article>
+
+                        <article class="abl-test-card">
+                            <div class="abl-test-top">
+                                <span class="abl-test-icon" aria-hidden="true">♥</span>
+                                <span class="abl-test-status abl-test-status-google">Requiere Google</span>
+                            </div>
+                            <h3>¿Qué está ocultando? (Avanzado)</h3>
+                            <p>
+                                Profundiza mediante 30 preguntas sobre privacidad, comunicación, cambios de comportamiento,
+                                tiempo y límites. Incluye un análisis orientativo por categorías.
+                            </p>
+                            <a class="abl-button abl-button-primary" href="@Url.Action("TestAvanzado", "Home")">Comenzar test avanzado <span aria-hidden="true">→</span></a>
+                        </article>
+
+                        <article class="abl-test-card">
+                            <div class="abl-test-top">
+                                <span class="abl-test-icon" aria-hidden="true">◎</span>
+                                <span class="abl-test-status abl-test-status-google">Requiere Google</span>
+                            </div>
+                            <h3>Descubre tus patrones (Avanzado)</h3>
+                            <p>
+                                Explora con 30 preguntas tus emociones, expectativas, hábitos, comunicación y autonomía.
+                                Obtén un análisis personal por categorías.
+                            </p>
+                            <a class="abl-button abl-button-primary" href="@Url.Action("DescubrePatronesAvanzado", "Home")">Comenzar test avanzado <span aria-hidden="true">→</span></a>
+                        </article>
+                    </div>
+
+                    <aside class="abl-disclaimer">
+                        <span class="abl-disclaimer-icon" aria-hidden="true">i</span>
+                        <div>
+                            <strong>Una aclaración importante:</strong>
+                            los tests de Amor Bajo Lupa son herramientas orientativas de reflexión personal.
+                            No demuestran una infidelidad, no determinan lo que otra persona piensa o hace y no sustituyen
+                            una conversación honesta ni una evaluación profesional.
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+            <!-- INVITACIÓN FINAL -->
+            <section class="abl-container" aria-labelledby="abl-final-title">
+                <div class="abl-final-cta">
+                    <p class="abl-section-kicker">Tu historia también merece atención</p>
+                    <h2 id="abl-final-title">A veces, entenderte es el comienzo de algo nuevo.</h2>
+                    <p>
+                        Date un momento para explorar tus emociones, reconocer lo que necesitas y descubrir nuevas perspectivas.
+                    </p>
+                    <a class="abl-button" href="#tests">Empieza a explorar <span aria-hidden="true">→</span></a>
+                </div>
+            </section>
+        </main>
+
+        <!-- PIE DE PÁGINA -->
+        <footer class="abl-footer">
+            <div class="abl-container">
+                <div class="abl-footer-main">
+                    <div class="abl-footer-about">
+                        <a class="abl-brand" href="#inicio">
+                            <span class="abl-brand-mark" aria-hidden="true">♥</span>
+                            <span>
+                                <span class="abl-brand-name">Amor Bajo <span>Lupa</span></span>
+                                <span class="abl-brand-caption">Relaciones · Emociones · Tú</span>
+                            </span>
+                        </a>
+                        <p>
+                            Un espacio digital para reflexionar sobre las relaciones humanas, comprender las emociones
+                            y fomentar el autoconocimiento.
                         </p>
                     </div>
 
-                    <span class="contador">
-                        ♥ 4 EXPERIENCIAS
+                    <div class="abl-footer-column">
+                        <h3>Explora</h3>
+                        <a href="#temas">Temas</a>
+                        <a href="#conocenos">Conócenos</a>
+                        <a href="#articulos">Artículos</a>
+                        <a href="#tests">Tests</a>
+                    </div>
+
+                    <div class="abl-footer-column">
+                        <h3>Amor Bajo Lupa</h3>
+                        <a href="#inicio">Volver al inicio ↑</a>
+                        <a href="#tests">Experiencias interactivas</a>
+                        <a href="#articulos">Lecturas de muestra</a>
+                    </div>
+                </div>
+
+                <div class="abl-footer-bottom">
+                    <span>© @DateTime.Now.Year Amor Bajo Lupa. Todos los derechos reservados.</span>
+                    <span class="abl-photo-credits">
+                        Fotografías de
+                        <a href="https://www.pexels.com/@rebornfilmes/" target="_blank" rel="noopener noreferrer">Alexander Mass</a>,
+                        <a href="https://www.pexels.com/@leticia-alvares/" target="_blank" rel="noopener noreferrer">Letícia Alvares</a>,
+                        <a href="https://www.pexels.com/@thirdman/" target="_blank" rel="noopener noreferrer">Thirdman</a>
+                        y <a href="https://www.pexels.com/@jeff-vinluan/" target="_blank" rel="noopener noreferrer">Jeff Vinluan</a> · Pexels.
                     </span>
-
                 </div>
+            </div>
+        </footer>
 
-
-                <div class="tests">
-
-
-                    <!-- TEST 1 -->
-                    <article class="test-card">
-
-                        <div class="test-superior">
-
-                            <div class="test-icono">♡</div>
-
-                            <span class="estado disponible">
-                                Disponible
-                            </span>
-
-                        </div>
-
-                        <h3>¿Qué está ocultando?</h3>
-
-                        <p>
-                            Responde 12 preguntas sobre comportamientos,
-                            comunicación, confianza y límites en tu relación.
-                            Al finalizar, podrás consultar un resultado
-                            orientativo y recomendaciones para reflexionar.
-                        </p>
-
-                        <a class="boton"
-                           href="@Url.Action("TestPatrones", "Home")">
-                            Comenzar test →
-                        </a>
-
-                    </article>
-
-
-                    <!-- TEST 2 -->
-                    <article class="test-card">
-
-                        <div class="test-superior">
-
-                            <div class="test-icono">✧</div>
-
-                            <span class="estado disponible">
-                                Disponible
-                            </span>
-
-                        </div>
-
-                        <h3>Descubre tus patrones</h3>
-
-                        <p>
-                            Explora tus emociones, expectativas y hábitos
-                            dentro de una relación. Identifica patrones
-                            personales y encuentra nuevas preguntas
-                            para conocerte mejor.
-                        </p>
-
-                        <a class="boton"
-                           href="@Url.Action("DescubrePatrones", "Home")">
-                            Comenzar test →
-                        </a>
-
-                    </article>
-
-
-                    <!-- TEST 3 -->
-                    <article class="test-card">
-
-                        <div class="test-superior">
-
-                            <div class="test-icono">♥</div>
-
-                            <span class="estado google">
-                                Requiere Google
-                            </span>
-
-                        </div>
-
-                        <h3>¿Qué está ocultando? (Avanzado)</h3>
-
-                        <p>
-                            Profundiza en tu relación mediante 30 preguntas
-                            sobre privacidad, comunicación, cambios de
-                            comportamiento, tiempo y límites. Obtén un
-                            análisis orientativo por categorías.
-                        </p>
-
-                        <a class="boton"
-                           href="@Url.Action("TestAvanzado", "Home")">
-                            Comenzar test avanzado →
-                        </a>
-
-                    </article>
-
-
-                    <!-- TEST 4 -->
-                    <article class="test-card">
-
-                        <div class="test-superior">
-
-                            <div class="test-icono">✧</div>
-
-                            <span class="estado google">
-                                Requiere Google
-                            </span>
-
-                        </div>
-
-                        <h3>Descubre tus patrones (Avanzado)</h3>
-
-                        <p>
-                            Explora más profundamente tus emociones,
-                            expectativas, hábitos, comunicación y autonomía
-                            mediante 30 preguntas. Obtén un análisis
-                            personal por categorías para conocerte mejor.
-                        </p>
-
-                        <a class="boton"
-                           href="@Url.Action("DescubrePatronesAvanzado", "Home")">
-                            Comenzar test avanzado →
-                        </a>
-
-                    </article>
-
-
-                </div>
-
-            </section>
-
-
-            <!-- AVISO IMPORTANTE -->
-            <aside class="aviso">
-
-                <span class="aviso-icono">ⓘ</span>
-
-                <div>
-                    <strong>Importante:</strong>
-                    estos tests son herramientas orientativas de reflexión
-                    personal. No demuestran una infidelidad ni determinan
-                    lo que otra persona piensa o hace. Los resultados no
-                    sustituyen una conversación honesta ni una evaluación
-                    profesional.
-                </div>
-
-            </aside>
-
-
-            <!-- PIE DE PÁGINA -->
-            <footer class="pie">
-
-                Amor Bajo Lupa · Un espacio para reflexionar
-                sobre las relaciones.
-
-            </footer>
-
-        </div>
-
-    </main>
-
+    </div>
 </body>
 </html>
