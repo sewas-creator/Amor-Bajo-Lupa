@@ -106,7 +106,7 @@ a { color: inherit; }
     display: block;
     margin-top: 2px;
     color: #968ba0;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 1.65px;
     text-transform: uppercase;
@@ -121,7 +121,7 @@ a { color: inherit; }
 .abl-nav a {
     position: relative;
     color: #655773;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     text-decoration: none;
     transition: color .2s ease;
@@ -212,7 +212,7 @@ a { color: inherit; }
     max-width: 510px;
     margin: 23px 0 0;
     color: var(--abl-muted);
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.85;
 }
 
@@ -272,7 +272,7 @@ a { color: inherit; }
     gap: 10px;
     margin-top: 27px;
     color: #8b8096;
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1.5;
 }
 
@@ -391,7 +391,7 @@ a { color: inherit; }
 .abl-topics-heading {
     margin: 0 0 19px;
     color: #a095aa;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 800;
     letter-spacing: 2px;
     text-align: center;
@@ -438,7 +438,7 @@ a { color: inherit; }
 }
 
 .abl-topic strong {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1.35;
 }
 
@@ -470,7 +470,7 @@ a { color: inherit; }
     max-width: 620px;
     margin: 14px 0 0;
     color: var(--abl-muted);
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.8;
 }
 
@@ -523,7 +523,7 @@ a { color: inherit; }
     margin-top: 7px;
     color: #95889e;
     font-family: "Segoe UI", Arial, sans-serif;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -534,7 +534,7 @@ a { color: inherit; }
 .abl-about-copy p:not(.abl-section-kicker):not(.abl-section-intro) {
     margin: 0 0 14px;
     color: #756a81;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.85;
 }
 
@@ -607,7 +607,7 @@ a { color: inherit; }
 .abl-article-category {
     margin: 0 0 9px;
     color: #a7689a;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 800;
     letter-spacing: 1.25px;
     text-transform: uppercase;
@@ -617,7 +617,7 @@ a { color: inherit; }
     margin: 0;
     color: var(--abl-ink);
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 600;
     line-height: 1.35;
 }
@@ -625,7 +625,7 @@ a { color: inherit; }
 .abl-article-card p {
     margin: 10px 0 15px;
     color: var(--abl-muted);
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.7;
 }
 
@@ -743,7 +743,7 @@ a { color: inherit; }
     margin: 0 0 9px;
     color: var(--abl-ink);
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 21px;
+    font-size: 22px;
     font-weight: 600;
     line-height: 1.3;
 }
@@ -754,7 +754,7 @@ a { color: inherit; }
     flex-grow: 1;
     margin: 0 0 21px;
     color: var(--abl-muted);
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.75;
 }
 
@@ -890,7 +890,7 @@ a { color: inherit; }
     width: fit-content;
     margin: 9px 0;
     color: #81758c;
-    font-size: 11px;
+    font-size: 12px;
     text-decoration: none;
 }
 
@@ -904,7 +904,7 @@ a { color: inherit; }
     padding-top: 18px;
     border-top: 1px solid #eee5f2;
     color: #a095aa;
-    font-size: 9px;
+    font-size: 10px;
     line-height: 1.6;
 }
 
@@ -1003,7 +1003,7 @@ a { color: inherit; }
     .abl-topics-grid { gap: 9px; }
     .abl-topic { min-height: 66px; gap: 9px; padding: 10px; }
     .abl-topic-icon { width: 33px; height: 33px; flex-basis: 33px; font-size: 15px; }
-    .abl-topic strong { font-size: 10px; }
+    .abl-topic strong { font-size: 11px; }
     .abl-section-title { font-size: 34px; }
     .abl-about-visual { min-height: 315px; }
     .abl-about-image { right: 9%; border-top-right-radius: 95px; }
@@ -1013,8 +1013,8 @@ a { color: inherit; }
     .abl-article-card { display: grid; grid-template-columns: 118px minmax(0, 1fr); }
     .abl-article-photo { height: 100%; min-height: 174px; }
     .abl-article-body { padding: 15px 13px; }
-    .abl-article-card h3 { font-size: 15px; }
-    .abl-article-card p { font-size: 10px; margin: 8px 0 11px; }
+    .abl-article-card h3 { font-size: 16px; }
+    .abl-article-card p { font-size: 11.5px; margin: 8px 0 11px; }
     .abl-article-meta { padding-top: 9px; }
     .abl-test-card { padding: 21px; }
     .abl-test-card h3 { font-size: 19px; }
