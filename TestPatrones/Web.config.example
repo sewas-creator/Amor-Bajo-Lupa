@@ -1,20 +1,45 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
 
-	<connectionStrings>
-		<add name="AmorBajoLupa"
-			 connectionString="Data Source=SERVIDOR;Initial Catalog=AmorBajoLupa;Integrated Security=True"
-			 providerName="System.Data.SqlClient" />
-	</connectionStrings>
+  <!--
+    PLANTILLA PARA DESPLIEGUE EN SOMEE.
+    Copia estos valores a tu Web.config privado y reemplaza TODOS los marcadores.
+    Nunca publiques ni compartas el Web.config real con credenciales.
+  -->
 
-	<appSettings>
-		<add key="GoogleClientId" value="TU_CLIENT_ID" />
-		<add key="GoogleClientSecret" value="TU_CLIENT_SECRET" />
+  <connectionStrings>
+    <add name="AmorBajoLupa"
+         connectionString="Data Source=SERVIDOR_SQL_DE_SOMEE;Initial Catalog=BASE_DE_DATOS;User ID=USUARIO_SQL;Password=CONTRASENA_SQL;"
+         providerName="System.Data.SqlClient" />
+  </connectionStrings>
 
-		<add key="webpages:Version" value="3.0.0.0" />
-		<add key="webpages:Enabled" value="false" />
-		<add key="ClientValidationEnabled" value="true" />
-		<add key="UnobtrusiveJavaScriptEnabled" value="true" />
-	</appSettings>
+  <appSettings>
+    <add key="GoogleClientId" value="TU_CLIENT_ID.apps.googleusercontent.com" />
+    <add key="GoogleClientSecret" value="TU_CLIENT_SECRET" />
+
+    <add key="webpages:Version" value="3.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+  </appSettings>
+
+  <system.web>
+    <compilation debug="false" targetFramework="4.7.2" />
+    <httpRuntime targetFramework="4.7.2" />
+    <globalization fileEncoding="utf-8" requestEncoding="utf-8" responseEncoding="utf-8" />
+  </system.web>
+
+  <system.webServer>
+    <!-- Requerido para que IIS procese las rutas MVC sin extension. -->
+    <modules runAllManagedModulesForAllRequests="true" />
+    <handlers>
+      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <add name="ExtensionlessUrlHandler-Integrated-4.0"
+           path="*."
+           verb="*"
+           type="System.Web.Handlers.TransferRequestHandler"
+           preCondition="integratedMode,runtimeVersionv4.0" />
+    </handlers>
+  </system.webServer>
 
 </configuration>
