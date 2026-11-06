@@ -1,72 +1,127 @@
-# Despliegue de Amor Bajo Lupa en Somee
+# Configuración y despliegue de Amor Bajo Lupa en Somee
 
-Esta aplicación es ASP.NET MVC 5 sobre .NET Framework 4.7.2. Somee documenta compatibilidad con MVC 5 y .NET Framework 4.0–4.8. Para MVC clásico, la aplicación debe ejecutarse con el Application Pool en modo **Integrated** y CLR **v4.0**.
+Esta rama utiliza **ASP.NET MVC 5 y .NET Framework 4.7.2**. Somee indica que admite aplicaciones MVC 5 sobre .NET Framework 4.0–4.8. Para MVC clásico, configura el Application Pool con **Managed Pipeline Mode = Integrated** y **.NET CLR v4.0**.
 
-## 1. Configuración del sitio en Somee
+## 1. Ajustes del sitio en Somee
 
-En el panel de Somee, abre las propiedades del sitio y verifica:
+En el panel de la cuenta propietaria del sitio, verifica:
 
-- ASP.NET / .NET Framework compatible con **4.7.2** (Somee puede ofrecer 4.7 o 4.8 según el servidor).
-- Application Pool: **Managed Pipeline Mode = Integrated**.
+- ASP.NET / .NET Framework compatible con 4.7.2 (Somee puede ofrecer una opción 4.x compatible, por ejemplo 4.8).
+- Managed Pipeline Mode: **Integrated**.
 - .NET CLR: **v4.0**.
-- SSL activo y el sitio accesible mediante HTTPS, especialmente porque se utiliza Google OAuth.
+- SSL activo y el sitio accesible mediante HTTPS, necesario para el retorno seguro de Google OAuth.
 
-No cambies la versión del framework del proyecto para que coincida con el número que ves en IIS: .NET Framework 4.x utiliza CLR v4.0.
+El sitio alojado en el proyecto de referencia del ZIP es `https://amorbajolupa.somee.com/`. Confirma que ese siga siendo el dominio asignado antes de configurar las URLs de Google.
 
-## 2. Web.config privado
+## 2. Cómo se leen las credenciales y la conexión SQL
 
-El archivo `TestPatrones/Web.config` está excluido de Git mediante `.gitignore` porque contiene secretos. La plantilla versionada es `TestPatrones/Web.config.example`.
+La configuración está separada en archivos para que las contraseñas no se guarden en GitHub:
 
-No reemplaces el Web.config completo de Visual Studio por la plantilla sin revisar las secciones existentes. Integra en el Web.config privado:
+- `TestPatrones/Web.config`: archivo privado principal, excluido de Git.
+- `TestPatrones/App_Data/GoogleAuth.secrets.config`: Client ID y Client Secret de Google.
+- `TestPatrones/App_Data/SqlServer.secrets.config`: cadena de conexión de SQL Server de Somee.
 
-- La cadena de conexión `AmorBajoLupa` usando el servidor, base de datos, usuario y contraseña SQL que muestra Somee.
-- Las claves `GoogleClientId` y `GoogleClientSecret` del mismo cliente OAuth tipo **Web application**.
-- La configuración `system.web` para target framework 4.7.2 y UTF-8.
-- La configuración `system.webServer` para rutas MVC sin extensión, tal como aparece en la plantilla.
+El `.gitignore` excluye los tres archivos privados. En GitHub solo se guardan las plantillas `.example`.
 
-La conexión SQL alojada en Somee normalmente utiliza autenticación SQL. No uses `Integrated Security=True` para la base de datos remota salvo que Somee indique expresamente que tu plan y base de datos requieren ese mecanismo.
+### Crear los archivos privados
 
-Nunca subas el Web.config real, contraseñas, Client Secret ni credenciales FTP a GitHub.
+Dentro de la carpeta `TestPatrones/App_Data`, crea dos copias locales:
 
-## 3. Google OAuth en producción
+1. Copia `GoogleAuth.secrets.config.example` como `GoogleAuth.secrets.config`.
+2. Copia `SqlServer.secrets.config.example` como `SqlServer.secrets.config`.
 
-En Google Cloud Console, el cliente OAuth de Amor Bajo Lupa debe incluir el origen HTTPS real del sitio en **Authorized JavaScript origins** y la URL exacta de retorno en **Authorized redirect URIs**.
+Rellena las copias privadas con los valores reales proporcionados por la propietaria de Somee y el cliente OAuth que se usará en producción. No edites las plantillas `.example` para pegar contraseñas.
 
-Con el callback actual de OWIN en `Startup.cs`, el URI de retorno termina en:
+El archivo privado de Google debe tener la sección `appSettings` y estas dos claves:
 
-```text
-https://TU-SITIO.somee.com/signin-google
+```xml
+<appSettings>
+  <add key="GoogleClientId" value="CLIENT_ID_REAL" />
+  <add key="GoogleClientSecret" value="CLIENT_SECRET_REAL" />
+</appSettings>
 ```
 
-Sustituye `TU-SITIO.somee.com` por el dominio real asignado al sitio (o el dominio personalizado que esté configurado). No registres una URL inventada ni elimines las direcciones locales de desarrollo si todavía las necesitas.
+El archivo privado de SQL debe tener la sección `connectionStrings` y una entrada con el nombre exacto `AmorBajoLupa`:
 
-El código lee las claves `GoogleClientId` y `GoogleClientSecret` desde `appSettings`. Ambas credenciales tienen que pertenecer al mismo cliente OAuth.
+```xml
+<connectionStrings>
+  <add name="AmorBajoLupa"
+       providerName="System.Data.SqlClient"
+       connectionString="Data Source=SERVIDOR_SQL;Initial Catalog=BASE_DATOS;User ID=USUARIO_SQL;Password=CLAVE_SQL;Integrated Security=False;Connect Timeout=30" />
+</connectionStrings>
+```
 
-## 4. Publicar desde Visual Studio 2019
+Usa los valores exactos del panel de Somee. No inventes el host, catálogo, usuario ni contraseña. La conexión remota de Somee normalmente utiliza autenticación SQL; por eso el ejemplo emplea `Integrated Security=False`.
 
-1. Cambia a la rama que se haya aprobado para desplegar.
-2. Compila la solución en configuración **Release**.
-3. En Visual Studio, abre **Build > Publish**.
-4. Crea un perfil de publicación con destino **Folder**.
-5. Publica en una carpeta local de salida.
-6. Comprueba que la salida contenga, entre otros, `bin`, `Content`, `Scripts`, `Views`, `Global.asax` y el `Web.config` correcto.
-7. Sube el contenido publicado a la carpeta raíz del sitio Somee mediante el File Manager de Somee o FTP/FileZilla. En FTP, entra en la carpeta del sitio indicada por Somee; no cargues los archivos en una carpeta superior.
-8. No subas `.git`, `.vs`, archivos `.user`, copias de seguridad ni archivos de credenciales locales.
+### Referencias en el Web.config principal
 
-Somee documenta tanto la publicación a carpeta desde Visual Studio seguida de carga por FTP, como el uso de su File Manager.
+El `Web.config` privado debe contener estas referencias:
+
+```xml
+<connectionStrings configSource="App_Data\SqlServer.secrets.config" />
+
+<appSettings file="App_Data\GoogleAuth.secrets.config">
+  <add key="webpages:Version" value="3.0.0.0" />
+  <add key="webpages:Enabled" value="false" />
+  <add key="ClientValidationEnabled" value="true" />
+  <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+</appSettings>
+```
+
+Conserva también las secciones de MVC, .NET Framework, ensamblados y CodeDom que necesita el proyecto. La plantilla versionada `TestPatrones/Web.config.example` muestra la estructura de referencia. No reemplaces a ciegas el Web.config privado que ya utiliza Visual Studio.
+
+La aplicación obtiene la conexión con `ConfigurationManager.ConnectionStrings["AmorBajoLupa"]`. El inicio de sesión lee `GoogleClientId` y `GoogleClientSecret` de `ConfigurationManager.AppSettings`; opcionalmente, las variables de entorno `GOOGLE_CLIENT_ID` y `GOOGLE_CLIENT_SECRET` tienen prioridad.
+
+Microsoft documenta que `configSource` permite guardar la sección `connectionStrings` en un archivo externo, mientras `appSettings file` permite separar valores de configuración. La carga en tiempo de ejecución es transparente para `ConfigurationManager`.
+
+**Los archivos privados reales no se incluyen en el ZIP de GitHub que se revisó.** El ZIP contenía las plantillas `.example` y referencias a los archivos privados, pero no los archivos con las credenciales. Deben obtenerse directamente de la propietaria del hosting o recrearse con los datos oficiales de Somee y Google Cloud.
+
+## 3. Google OAuth para el dominio de Somee
+
+En Google Cloud Console, abre el cliente OAuth de tipo **Web application** que se utilizará en producción. Añade el origen HTTPS del dominio real a **Authorized JavaScript origins**.
+
+Para el dominio de referencia, el origen es:
+
+```text
+https://amorbajolupa.somee.com
+```
+
+El `Startup.cs` usa actualmente `CallbackPath = "/signin-google"`. Por eso el URI de retorno autorizado debe ser:
+
+```text
+https://amorbajolupa.somee.com/signin-google
+```
+
+Si la propietaria utiliza otro dominio o un dominio personalizado, reemplaza ambas URLs por el dominio real. Conserva también las URLs locales de desarrollo que todavía necesites. El Client ID y el Client Secret deben pertenecer al mismo cliente OAuth.
+
+## 4. Publicación de archivos
+
+1. Descarga la rama que se haya aprobado para despliegue.
+2. Abre `TestPatrones.sln` en Visual Studio 2019.
+3. Restaura los paquetes NuGet.
+4. Compila la solución en configuración **Release**.
+5. Abre **Build > Publish** y crea un perfil **Folder**.
+6. Publica en una carpeta local.
+7. Revisa que el resultado incluya `bin`, `Content`, `Scripts`, `Views`, `Global.asax` y un `Web.config` configurado para usar los dos archivos externos.
+8. La publicación no lleva las credenciales privadas porque esos archivos están excluidos del repositorio/proyecto publicable. Súbelos por separado al directorio `App_Data` del sitio Somee mediante un canal seguro.
+9. Sube el resto de los archivos publicados a la raíz del sitio usando File Manager o FTP/FileZilla.
+10. No reemplaces el `Web.config` privado de producción con uno que contenga marcadores. Conserva un respaldo antes de modificarlo.
+11. No borres `.well-known` ni otros archivos de alojamiento que no formen parte del despliegue.
+
+Somee ofrece File Manager en el panel y admite aplicaciones MVC 5 con el Application Pool configurado en Integrated.
 
 ## 5. Comprobaciones después de publicar
 
-Probar en el dominio HTTPS real:
+Prueba en el dominio HTTPS real:
 
-- La portada y sus imágenes.
+- Portada, imágenes, CSS y JavaScript.
 - Navegación entre secciones.
-- Los cuatro tests y sus rutas.
+- Los cuatro tests.
 - Inicio de sesión con Google en los dos tests avanzados.
-- Guardado de resultados en SQL Server.
-- El primer artículo: `/Home/ArticuloConocerse`.
-- Acceso directo a rutas MVC (por ejemplo, refrescar una página de artículo).
+- Guardado y lectura de resultados en la base SQL Server alojada en Somee.
+- Primer artículo: `/Home/ArticuloConocerse`.
+- Acceso directo y actualización del navegador en rutas MVC.
 
-Si una ruta MVC devuelve 404 pero la portada abre, revisa primero el Application Pool Integrated y la sección `system.webServer/handlers` del Web.config.
+Si la portada abre pero las rutas MVC devuelven 404, revisa el Application Pool Integrated y la sección `system.webServer/handlers` del Web.config. Si falla la base de datos, valida la cadena privada `AmorBajoLupa`; si falla Google, revisa las credenciales externas y la URL de retorno exacta.
 
-No se ha realizado una publicación en Somee desde este repositorio. El despliegue debe probarse en el sitio real con las credenciales y la base de datos que ya administra su responsable.
+No se ha realizado una publicación en Somee desde este repositorio. El despliegue debe hacerlo la propietaria del hosting y probarse con sus credenciales y su base de datos reales.
