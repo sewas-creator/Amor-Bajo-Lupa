@@ -175,7 +175,7 @@ a { color: inherit; }
     display: grid;
     grid-template-columns: minmax(0, .95fr) minmax(420px, 1.05fr);
     align-items: center;
-    gap: clamp(38px, 6vw, 82px);
+    gap: clamp(20px, 3vw, 40px);
 }
 
 .abl-eyebrow {
@@ -307,15 +307,15 @@ a { color: inherit; }
 
 .abl-hero-visual {
     position: relative;
-    min-height: 470px;
+    min-height: 495px;
 }
 
 .abl-hero-photo {
     position: absolute;
     top: 0;
     right: 0;
-    width: 82%;
-    height: 430px;
+    width: 88%;
+    height: 455px;
     overflow: hidden;
     border-radius: 190px 190px 26px 26px;
     background: #eadfe8;
@@ -950,8 +950,8 @@ a { color: inherit; }
     .abl-nav { gap: 13px; }
     .abl-nav a { font-size: 14px; }
     .abl-hero-grid { grid-template-columns: minmax(0, .95fr) minmax(350px, 1.05fr); gap: 30px; }
-    .abl-hero-visual { min-height: 420px; }
-    .abl-hero-photo { height: 390px; }
+    .abl-hero-visual { min-height: 440px; }
+    .abl-hero-photo { width: 87%; height: 410px; }
     .abl-articles-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -1002,8 +1002,8 @@ a { color: inherit; }
     .abl-hero { padding: 54px 0 60px; }
     .abl-hero-grid { grid-template-columns: 1fr; gap: 34px; }
     .abl-hero-copy { max-width: 590px; }
-    .abl-hero-visual { width: 100%; max-width: 540px; min-height: 400px; margin: 0 auto; }
-    .abl-hero-photo { width: 83%; height: 365px; }
+    .abl-hero-visual { width: 100%; max-width: 540px; min-height: 410px; margin: 0 auto; }
+    .abl-hero-photo { width: 87%; height: 375px; }
     .abl-photo-small { bottom: 2px; height: 175px; }
     .abl-section { padding: 40px 0; }
     .abl-topics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1023,8 +1023,8 @@ a { color: inherit; }
     .abl-hero-copy { font-size: 17px; }
     .abl-hero-actions { align-items: stretch; flex-direction: column; }
     .abl-button { width: 100%; }
-    .abl-hero-visual { min-height: 330px; }
-    .abl-hero-photo { height: 305px; border-radius: 140px 140px 20px 20px; }
+    .abl-hero-visual { min-height: 340px; }
+    .abl-hero-photo { width: 87%; height: 315px; border-radius: 140px 140px 20px 20px; }
     .abl-photo-small { width: 40%; height: 135px; border-width: 5px; }
     .abl-hero-sticker { right: -3px; bottom: 10px; width: 150px; padding: 11px; }
     .abl-hero-sticker-icon { width: 31px; height: 31px; flex-basis: 31px; }
