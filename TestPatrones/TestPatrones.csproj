@@ -198,6 +198,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Content Include="App_Data\GoogleAuth.secrets.config.example" />
+    <Content Include="App_Data\SqlServer.secrets.config.example" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
