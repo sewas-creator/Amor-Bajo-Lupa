@@ -13,6 +13,11 @@
             box-sizing: border-box;
         }
 
+        button, input, select, textarea {
+            font: inherit;
+        }
+
+
         html, body {
             margin: 0;
             min-height: 100%;
@@ -375,6 +380,9 @@
         </section>
 
         <section id="test" class="tarjeta hidden" aria-live="polite">
+            <div class="botones" style="margin: 0 0 18px;">
+                <a class="boton boton-secundario" href="@Url.Action("Index", "Home")">← Volver a Amor Bajo Lupa</a>
+            </div>
             <div class="contador" id="contador">Pregunta 1 de 12</div>
             <div class="barra-fondo"><div id="barra" class="barra"></div></div>
             <h2 id="pregunta" class="pregunta"></h2>
