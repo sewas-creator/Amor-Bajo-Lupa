@@ -79,6 +79,10 @@
             display: none !important;
         }
 
+        button, input, select, textarea {
+            font: inherit;
+        }
+
         /* ===== INICIO ===== */
 
         #inicio {
@@ -732,6 +736,10 @@
         <!-- ===== PANTALLA DE PREGUNTAS ===== -->
 
         <section id="test" class="card hidden">
+
+            <div class="volver-inicio" style="text-align: right; margin: 0 0 15px;">
+                <a href="@Url.Action("Index", "Home")" class="btn-volver">← Volver a Amor Bajo Lupa</a>
+            </div>
 
             <div id="contador">
                 Pregunta 1 de 12
