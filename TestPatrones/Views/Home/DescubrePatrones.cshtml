@@ -356,6 +356,381 @@
                 gap: 12px;
             }
         }
+    
+        /* ===== IDENTIDAD VISUAL COMPARTIDA: AMOR BAJO LUPA ===== */
+        :root {
+            --abl-primary: #9251a8;
+            --abl-primary-dark: #713787;
+            --abl-pink: #dc8fb9;
+            --abl-text: #39264d;
+            --abl-muted: #7b7087;
+            --abl-border: #eee5f2;
+            --abl-soft: #f8f1fc;
+            --abl-white: #ffffff;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--abl-text);
+            background: linear-gradient(135deg, #f1e5ff 0%, #fbf5ff 48%, #ffe8f3 100%);
+        }
+
+        body::before,
+        body::after {
+            display: none;
+        }
+
+        .pagina,
+        .contenedor {
+            width: min(100%, 850px);
+            max-width: 850px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tarjeta-inicio,
+        .tarjeta,
+        .card {
+            width: 100%;
+            max-width: 850px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 38px 42px;
+            border: 1px solid rgba(234, 227, 240, .95);
+            border-radius: 26px;
+            background: rgba(255, 255, 255, .96);
+            box-shadow: 0 18px 55px rgba(87, 49, 104, .10);
+        }
+
+        .tarjeta-inicio {
+            text-align: center;
+        }
+
+        h1,
+        .tarjeta-inicio h1,
+        .tarjeta h1,
+        .card h1 {
+            color: #633b7e;
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: clamp(30px, 4vw, 38px);
+            font-weight: 800;
+            letter-spacing: -.8px;
+            line-height: 1.2;
+        }
+
+        h2,
+        .pregunta,
+        #pregunta,
+        #textoPregunta {
+            color: #514269;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .subtitulo,
+        .descripcion {
+            color: #756b83;
+            font-size: 16px;
+            line-height: 1.75;
+        }
+
+        .etiqueta,
+        #contador,
+        .contador,
+        .numero,
+        .categoria {
+            border-radius: 999px;
+            color: var(--abl-primary-dark);
+        }
+
+        .etiqueta {
+            padding: 7px 14px;
+            background: #f5eafb;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .5px;
+        }
+
+        .marca {
+            color: var(--abl-primary-dark);
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 23px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        /* Tarjetas de respuesta: mismo tamaño, borde y estado seleccionado. */
+        .option,
+        .opcion {
+            display: flex;
+            width: 100%;
+            min-height: 60px;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+            margin: 0;
+            padding: 16px 18px;
+            border: 1.5px solid var(--abl-border);
+            border-radius: 15px;
+            background: #fff;
+            color: #5e526c;
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.5;
+            text-align: left;
+            cursor: pointer;
+            transition: border-color .2s ease, background .2s ease, box-shadow .2s ease, transform .2s ease;
+        }
+
+        .option:hover,
+        .opcion:hover {
+            border-color: #c39bd5;
+            background: #fcf8ff;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(117, 70, 143, .07);
+        }
+
+        .option:has(input:checked),
+        .opcion:has(input:checked),
+        .opcion.seleccionada {
+            border-color: var(--abl-primary);
+            background: #f7effb;
+            color: var(--abl-primary-dark);
+        }
+
+        .option input,
+        .opcion input {
+            width: 19px;
+            height: 19px;
+            flex: 0 0 19px;
+            margin: 0 2px 0 0;
+            accent-color: var(--abl-primary);
+        }
+
+        .option:focus-within,
+        .opcion:focus-within {
+            outline: 3px solid #dfc4e9;
+            outline-offset: 2px;
+        }
+
+        .opciones {
+            gap: 12px;
+        }
+
+        /* Barras de progreso unificadas. */
+        .progress,
+        .barra-fondo {
+            height: 9px;
+            overflow: hidden;
+            border-radius: 999px;
+            background: #eee7f2;
+        }
+
+        .progress-bar,
+        .barra,
+        .barra-progreso {
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #9251a8, #dc8fb9);
+            transition: width .3s ease;
+        }
+
+        /* Todos los botones principales comparten dimensiones y degradado. */
+        .btn-comenzar,
+        .boton:not(.boton-secundario),
+        .btn:not(.btn-secondary):not(.btn-secundario),
+        .btn-principal {
+            display: inline-flex;
+            min-width: 190px;
+            min-height: 48px;
+            max-width: 100%;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 13px 22px;
+            border: 1px solid transparent;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #9251a8, #713787);
+            box-shadow: 0 7px 18px rgba(146, 81, 168, .20);
+            color: #fff;
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.25;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+
+        .btn-comenzar:hover,
+        .boton:not(.boton-secundario):hover,
+        .btn:not(.btn-secondary):not(.btn-secundario):hover,
+        .btn-principal:hover {
+            background: linear-gradient(135deg, #85449c, #60306f);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 23px rgba(146, 81, 168, .27);
+        }
+
+        .btn-secondary,
+        .boton-secundario,
+        .btn-secundario,
+        .btn-volver {
+            display: inline-flex;
+            min-width: 180px;
+            min-height: 46px;
+            max-width: 100%;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 20px;
+            border: 1px solid #e8daf1;
+            border-radius: 14px;
+            background: #f8f1fc;
+            box-shadow: none;
+            color: var(--abl-primary-dark);
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.3;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform .2s ease, background .2s ease, border-color .2s ease;
+        }
+
+        .btn-secondary:hover,
+        .boton-secundario:hover,
+        .btn-secundario:hover,
+        .btn-volver:hover {
+            border-color: #d9c2e6;
+            background: #eee1f7;
+            color: var(--abl-primary-dark);
+            transform: translateY(-1px);
+            box-shadow: none;
+        }
+
+        .btn:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-comenzar:focus-visible,
+        .boton:focus-visible,
+        .btn:focus-visible,
+        .btn-volver:focus-visible {
+            outline: 3px solid #d8b6e8;
+            outline-offset: 3px;
+        }
+
+        /* Resultados con la misma superficie visual. */
+        .result-box,
+        .caja-resultado,
+        .mensaje-resultado,
+        .interpretacion {
+            padding: 20px;
+            border: 1px solid #efe3f5;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #faf5fd, #fff8fc);
+            color: #66556d;
+            line-height: 1.75;
+        }
+
+        .score-circle,
+        .resultado-circulo,
+        .circulo {
+            width: 165px;
+            height: 165px;
+            border-radius: 50%;
+            box-shadow: 0 8px 25px rgba(117, 70, 143, .12);
+        }
+
+        .aviso,
+        .nota,
+        .nota-final {
+            color: #81788b;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .volver-inicio,
+        .botones,
+        .navegacion,
+        .acciones-resultado,
+        .botones-finales {
+            gap: 12px;
+        }
+
+        @@media (max-width: 760px) {
+            .tarjeta-inicio,
+            .tarjeta,
+            .card {
+                width: 100%;
+                padding: 28px 22px;
+                border-radius: 23px;
+            }
+
+            #inicio {
+                padding: 18px 14px;
+            }
+
+            h1,
+            .tarjeta-inicio h1,
+            .tarjeta h1,
+            .card h1 {
+                font-size: clamp(28px, 6vw, 34px);
+            }
+
+            h2,
+            .pregunta,
+            #pregunta,
+            #textoPregunta {
+                font-size: 20px;
+            }
+
+            .option,
+            .opcion {
+                min-height: 58px;
+                padding: 15px 14px;
+                font-size: 14.5px;
+            }
+        }
+
+        @@media (max-width: 520px) {
+            .tarjeta-inicio,
+            .tarjeta,
+            .card {
+                padding: 24px 18px;
+                border-radius: 21px;
+            }
+
+            .btn-comenzar,
+            .boton:not(.boton-secundario),
+            .btn:not(.btn-secondary):not(.btn-secundario),
+            .btn-principal,
+            .btn-secondary,
+            .boton-secundario,
+            .btn-secundario,
+            .btn-volver {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .volver-inicio,
+            .botones,
+            .navegacion,
+            .acciones-resultado,
+            .botones-finales {
+                align-items: stretch;
+            }
+        }
+        /* ===== FIN DE IDENTIDAD VISUAL COMPARTIDA ===== */
+
     </style>
 
 </head>
