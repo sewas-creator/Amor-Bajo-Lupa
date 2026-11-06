@@ -20,7 +20,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 92px;
+    scroll-padding-top: 112px;
 }
 
 body {
@@ -454,9 +454,13 @@ a { color: inherit; }
     line-height: 1.35;
 }
 
+.abl-section,
+.abl-topics-band {
+    scroll-margin-top: 112px;
+}
+
 .abl-section {
     padding: 40px 0;
-    scroll-margin-top: 90px;
 }
 
 .abl-section-kicker {
@@ -939,7 +943,9 @@ a { color: inherit; }
 }
 
 @media (max-width: 760px) {
-    html { scroll-padding-top: 76px; }
+    html { scroll-padding-top: 88px; }
+    .abl-section,
+    .abl-topics-band { scroll-margin-top: 88px; }
     .abl-container { width: min(100% - 34px, 620px); }
     .abl-header-inner { min-height: 72px; }
     .abl-nav { display: none; }
