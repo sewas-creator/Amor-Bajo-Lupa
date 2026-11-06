@@ -444,6 +444,12 @@ namespace TestPatrones.Controllers
             return View();
         }
 
+        // Artículo: autoconocimiento
+        public ActionResult ArticuloConocerse()
+        {
+            return View();
+        }
+
         // Test actual
         public ActionResult TestPatrones()
         {
