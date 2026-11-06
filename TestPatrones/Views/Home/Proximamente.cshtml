@@ -1,0 +1,104 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Próximamente | Amor Bajo Lupa</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: #654578;
+            background: linear-gradient(135deg, #f0e4ff, #fff7fc, #ffe5f0);
+        }
+
+        .tarjeta {
+            width: 100%;
+            max-width: 570px;
+            padding: 45px 30px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 25px 70px rgba(117, 70, 143, 0.15);
+            text-align: center;
+        }
+
+        .icono {
+            margin-bottom: 15px;
+            font-size: 60px;
+        }
+
+        h1 {
+            color: #703b98;
+            font-size: 34px;
+        }
+
+        p {
+            color: #80718a;
+            line-height: 1.9;
+        }
+
+        .etiqueta {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: #f8e6f2;
+            color: #b4508b;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 25px;
+            border-radius: 30px;
+            background: linear-gradient(110deg, #9250bd, #c653b0);
+            color: white;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+            a:hover {
+                filter: brightness(1.08);
+            }
+    </style>
+</head>
+
+<body>
+    <main class="tarjeta">
+        <div class="icono">💗</div>
+
+        <span class="etiqueta">EN PREPARACIÓN</span>
+
+        <h1>Algo nuevo está por llegar...</h1>
+
+        <p>
+            Estamos preparando una nueva experiencia de Amor Bajo Lupa,
+            con más preguntas y una forma más completa de reflexionar
+            sobre tu relación.
+        </p>
+
+        <p>
+            Muy pronto podrás descubrir esta nueva experiencia.
+        </p>
+
+        <a href="@Url.Action("Index", "Home")">
+            ← Volver al inicio
+        </a>
+    </main>
+</body>
+</html>

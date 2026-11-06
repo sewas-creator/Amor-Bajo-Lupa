@@ -1,0 +1,986 @@
+﻿
+@{
+    ViewBag.Title = "Descubre tus Patrones - Análisis Avanzado";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Descubre tus Patrones | Amor Bajo Lupa</title>
+
+    <style>
+        :root {
+            --primary: #9251a8;
+            --primary-dark: #713787;
+            --pink: #dc8fb9;
+            --background: #f8f5fc;
+            --text: #30283a;
+            --muted: #81788b;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 25px 15px;
+            font-family: Arial, sans-serif;
+            color: var(--text);
+            background: linear-gradient(135deg, #f1e5ff, #fbf5ff 50%, #ffe8f3);
+        }
+
+        .contenedor {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .encabezado {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .marca {
+            color: var(--primary-dark);
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .btn-volver {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 18px;
+            border: 1px solid #d9c4e5;
+            border-radius: 20px;
+            color: var(--primary-dark);
+            text-decoration: none;
+            background: white;
+            font-size: 14px;
+        }
+
+        .tarjeta {
+            background: var(--white);
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 12px 35px rgba(80, 45, 100, 0.10);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-dark);
+            margin-top: 0;
+            font-size: 30px;
+        }
+
+        .descripcion {
+            text-align: center;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .etiqueta {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: #f5eafb;
+            color: var(--primary-dark);
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .progreso-texto {
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 9px;
+        }
+
+        .barra-fondo {
+            height: 9px;
+            width: 100%;
+            background: #eee5f3;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .barra {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--pink));
+            border-radius: 20px;
+            transition: width .3s ease;
+        }
+
+        .pregunta {
+            font-size: 21px;
+            line-height: 1.5;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .opciones {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .opcion {
+            display: block;
+            padding: 16px 18px;
+            border: 2px solid #eee5f3;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: .2s;
+            line-height: 1.4;
+        }
+
+            .opcion:hover {
+                border-color: var(--pink);
+                background: #fff8fc;
+            }
+
+            .opcion.seleccionada {
+                border-color: var(--primary);
+                background: #f7edfb;
+            }
+
+            .opcion input {
+                margin-right: 10px;
+                accent-color: var(--primary);
+            }
+
+        .nota {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .resultado {
+            display: none;
+        }
+
+            .resultado h2 {
+                text-align: center;
+                color: var(--primary-dark);
+                font-size: 27px;
+            }
+
+        .circulo {
+            width: 155px;
+            height: 155px;
+            border-radius: 50%;
+            margin: 25px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f5eafb;
+            border: 9px solid #d9b9e8;
+        }
+
+            .circulo strong {
+                color: var(--primary-dark);
+                font-size: 38px;
+            }
+
+            .circulo span {
+                color: var(--muted);
+                font-size: 12px;
+            }
+
+        .interpretacion {
+            text-align: center;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+
+        .categoria-resultado {
+            padding: 17px;
+            margin: 12px 0;
+            background: #fbf7fd;
+            border: 1px solid #eee3f4;
+            border-radius: 14px;
+        }
+
+            .categoria-resultado strong {
+                display: block;
+                color: var(--primary-dark);
+                margin-bottom: 8px;
+            }
+
+            .categoria-resultado p {
+                margin: 0;
+                color: var(--muted);
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+        .barra-categoria {
+            height: 7px;
+            background: #eadff0;
+            border-radius: 20px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+            .barra-categoria div {
+                height: 100%;
+                background: linear-gradient(90deg, var(--primary), var(--pink));
+                border-radius: 20px;
+            }
+
+        .botones-finales {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 25px;
+            padding: 13px 23px;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-principal {
+            color: white;
+            background: var(--primary);
+        }
+
+            .btn-principal:hover {
+                background: var(--primary-dark);
+            }
+
+        .btn-secundario {
+            color: var(--primary-dark);
+            background: #f3e8f8;
+        }
+
+        .mensaje-guardado {
+            text-align: center;
+            margin-top: 15px;
+            color: var(--primary-dark);
+            font-size: 14px;
+        }
+
+        .oculto {
+            display: none;
+        }
+
+        @@media (max-width: 600px) {
+            .tarjeta {
+                padding: 24px 18px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .pregunta {
+                font-size: 18px;
+            }
+
+            .opcion {
+                padding: 14px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    @Html.AntiForgeryToken()
+
+    <div class="contenedor">
+
+        <header class="encabezado">
+            <a class="marca" href="@Url.Action("Index", "Home")">
+                Amor Bajo Lupa
+            </a>
+
+        </header>
+
+        <main class="tarjeta">
+
+            <section id="zonaTest">
+
+                <h1><b>Descubre tus Patrones</b></h1>
+
+                <p class="descripcion">
+                    Análisis profundo de tus emociones, expectativas,
+                    hábitos y formas de relacionarte.
+                    Responde con sinceridad y descubre aspectos
+                    que pueden ayudarte a conocerte mejor.
+                </p>
+
+                <div style="text-align:center;">
+                    <span class="etiqueta">ANÁLISIS AVANZADO · 30 PREGUNTAS</span>
+                </div>
+
+                <div class="progreso-texto">
+                    <span id="numeroPregunta">Pregunta 1 de 30</span>
+                    <span id="porcentajeProgreso">0%</span>
+                </div>
+
+                <div class="barra-fondo">
+                    <div class="barra" id="barraProgreso"></div>
+                </div>
+
+                <div id="categoriaPregunta" class="etiqueta"></div>
+
+                <div class="pregunta" id="textoPregunta"></div>
+
+                <div class="opciones" id="contenedorOpciones"></div>
+
+                <div style="margin-top: 15px;">
+                    <a href="@Url.Action("Index", "Home")"
+                       class="btn btn-secundario"
+                       style="display: inline-block; text-decoration: none;">
+                        <b> ← Volver a la página principal</b>
+                    </a>
+                </div>
+                
+                <p class="nota">
+                    No existen respuestas buenas o malas.
+                    Este ejercicio busca fomentar la reflexión personal.
+                </p>
+
+            </section>
+
+            <section id="zonaResultado" class="resultado">
+
+                <h2>Tu análisis personal</h2>
+
+                <p class="descripcion">
+                    Este resultado es una orientación para reflexionar
+                    sobre tus respuestas.
+                </p>
+
+                <div class="circulo">
+                    <strong id="porcentajeResultado">0%</strong>
+                    <span>Índice orientativo</span>
+                </div>
+
+                <p class="interpretacion" id="interpretacionGeneral"></p>
+
+                <h3 style="color:var(--primary-dark); margin-top:30px;">
+                    Análisis por categorías
+                </h3>
+
+                <div id="resultadosCategorias"></div>
+
+                <p class="nota">
+                    Este resultado no constituye un diagnóstico psicológico
+                    ni determina tu capacidad para mantener una relación.
+                    Un porcentaje elevado no significa que exista un problema
+                    ni que tu relación esté destinada a fracasar.
+                </p>
+
+                <div class="mensaje-guardado" id="mensajeGuardado">
+                    Guardando tu resultado...
+                </div>
+
+                <div class="botones-finales">
+                    <button class="btn btn-principal" id="repetirTest">
+                        Repetir test
+                    </button>
+
+                    <a class="btn btn-secundario"
+                       href="@Url.Action("Index", "Home")">
+                        Volver al inicio
+                    </a>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const preguntas = [
+
+            // EMOCIONES (1-6)
+
+            {
+                texto: "Cuando siento inseguridad dentro de una relación, normalmente...",
+                categoria: "Emociones",
+                opciones: [
+                    { texto: "Reconozco lo que siento y trato de comprenderlo.", valor: 0 },
+                    { texto: "Necesito un tiempo para ordenar mis pensamientos.", valor: 1 },
+                    { texto: "Me cuesta controlar mis pensamientos y preocupaciones.", valor: 2 },
+                    { texto: "La inseguridad termina afectando gran parte de mi día.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando mi pareja está distante emocionalmente...",
+                categoria: "Emociones",
+                opciones: [
+                    { texto: "Respeto su espacio y busco hablar cuando sea oportuno.", valor: 0 },
+                    { texto: "Me pregunto si hice algo que le molestó.", valor: 1 },
+                    { texto: "Me preocupo bastante y busco señales de lo que sucede.", valor: 2 },
+                    { texto: "Siento mucha angustia y necesito una respuesta inmediata.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando siento celos, mi reacción habitual es...",
+                categoria: "Emociones",
+                opciones: [
+                    { texto: "Identifico la emoción y analizo si tiene fundamento.", valor: 0 },
+                    { texto: "Me cuesta un poco, pero intento manejarla.", valor: 1 },
+                    { texto: "Suelo imaginar situaciones que me generan preocupación.", valor: 2 },
+                    { texto: "Los celos influyen mucho en mi comportamiento.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando discutimos, me resulta difícil...",
+                categoria: "Emociones",
+                opciones: [
+                    { texto: "Mantener la calma y escuchar la otra perspectiva.", valor: 0 },
+                    { texto: "Expresar lo que siento sin ponerme a la defensiva.", valor: 1 },
+                    { texto: "Evitar reaccionar impulsivamente.", valor: 2 },
+                    { texto: "Controlar mis emociones durante el conflicto.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando cometo un error en mi relación...",
+                categoria: "Emociones",
+                opciones: [
+                    { texto: "Lo reconozco y trato de repararlo.", valor: 0 },
+                    { texto: "Me cuesta aceptarlo, pero puedo hablarlo.", valor: 1 },
+                    { texto: "Me culpo durante bastante tiempo.", valor: 2 },
+                    { texto: "Siento que el error puede hacer que me dejen.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando algo no sale como esperaba en mi relación...",
+                categoria: "Emociones",
+                opciones: [
+                    { texto: "Acepto que no todo puede salir como lo planeo.", valor: 0 },
+                    { texto: "Me decepciono, pero consigo adaptarme.", valor: 1 },
+                    { texto: "Me cuesta dejar de pensar en lo que salió mal.", valor: 2 },
+                    { texto: "La decepción afecta mucho mi estado de ánimo.", valor: 3 }
+                ]
+            },
+
+            // EXPECTATIVAS (7-12)
+
+            {
+                texto: "Cuando imagino cómo debería ser una relación...",
+                categoria: "Expectativas",
+                opciones: [
+                    { texto: "Considero que cada relación tiene su propio ritmo.", valor: 0 },
+                    { texto: "Tengo algunas expectativas que puedo adaptar.", valor: 1 },
+                    { texto: "Me cuesta aceptar que la realidad sea distinta a lo que imaginé.", valor: 2 },
+                    { texto: "Espero que mi pareja cumpla casi siempre con lo que imagino.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Si mi pareja no demuestra cariño de la manera que espero...",
+                categoria: "Expectativas",
+                opciones: [
+                    { texto: "Comprendo que cada persona expresa cariño de forma diferente.", valor: 0 },
+                    { texto: "Me gustaría que conociera mejor mis necesidades.", valor: 1 },
+                    { texto: "Puedo llegar a sentir que no le importo lo suficiente.", valor: 2 },
+                    { texto: "Pienso que si me quisiera debería demostrarlo como yo espero.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando necesito algo de mi pareja...",
+                categoria: "Expectativas",
+                opciones: [
+                    { texto: "Lo comunico claramente y escucho su disponibilidad.", valor: 0 },
+                    { texto: "Espero que lo note, aunque puedo pedirlo.", valor: 1 },
+                    { texto: "Me decepciona que no lo descubra por sí misma.", valor: 2 },
+                    { texto: "Siento que debería saber lo que necesito sin que lo diga.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando mi pareja tiene planes diferentes a los míos...",
+                categoria: "Expectativas",
+                opciones: [
+                    { texto: "Entiendo que ambos podemos tener intereses propios.", valor: 0 },
+                    { texto: "A veces me cuesta, pero trato de aceptarlo.", valor: 1 },
+                    { texto: "Puedo sentir que no soy una prioridad.", valor: 2 },
+                    { texto: "Me molesta mucho que no elija hacer lo que yo esperaba.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Respecto al futuro de una relación...",
+                categoria: "Expectativas",
+                opciones: [
+                    { texto: "Prefiero construirlo mediante acuerdos y decisiones compartidas.", valor: 0 },
+                    { texto: "Me gusta tener una idea de hacia dónde vamos.", valor: 1 },
+                    { texto: "Me inquieta bastante no tener certezas.", valor: 2 },
+                    { texto: "Necesito saber con seguridad qué ocurrirá para sentirme tranquilo.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando mi pareja no cumple una expectativa que tenía...",
+                categoria: "Expectativas",
+                opciones: [
+                    { texto: "Reviso si la expectativa fue comunicada y si era razonable.", valor: 0 },
+                    { texto: "Me decepciono y después intento conversarlo.", valor: 1 },
+                    { texto: "Me cuesta dejar pasar esa decepción.", valor: 2 },
+                    { texto: "Lo interpreto como una señal de falta de interés.", valor: 3 }
+                ]
+            },
+
+            // HÁBITOS (13-18)
+
+            {
+                texto: "En mi vida cotidiana, cuando estoy en una relación...",
+                categoria: "Hábitos",
+                opciones: [
+                    { texto: "Mantengo mis rutinas y también comparto tiempo en pareja.", valor: 0 },
+                    { texto: "A veces modifico mis horarios para coincidir.", valor: 1 },
+                    { texto: "Suelo dejar actividades propias para estar disponible.", valor: 2 },
+                    { texto: "Mi rutina gira casi por completo alrededor de la relación.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando tengo un problema personal...",
+                categoria: "Hábitos",
+                opciones: [
+                    { texto: "Puedo buscar soluciones y pedir apoyo cuando lo necesito.", valor: 0 },
+                    { texto: "Prefiero intentar resolverlo antes de compartirlo.", valor: 1 },
+                    { texto: "Dependo bastante de mi pareja para sentirme mejor.", valor: 2 },
+                    { texto: "Me cuesta funcionar con normalidad si mi pareja no me ayuda.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando paso tiempo sin comunicarme con mi pareja...",
+                categoria: "Hábitos",
+                opciones: [
+                    { texto: "Continúo con mis actividades sin mayor preocupación.", valor: 0 },
+                    { texto: "La extraño, pero puedo concentrarme en otras cosas.", valor: 1 },
+                    { texto: "Reviso frecuentemente si ha enviado algún mensaje.", valor: 2 },
+                    { texto: "Me cuesta concentrarme hasta recibir una respuesta.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando comienzo una relación nueva...",
+                categoria: "Hábitos",
+                opciones: [
+                    { texto: "Procuro conocer a la persona sin dejar de lado mi vida.", valor: 0 },
+                    { texto: "Al principio puedo dedicarle más tiempo del habitual.", valor: 1 },
+                    { texto: "Dejo algunas actividades para priorizar la relación.", valor: 2 },
+                    { texto: "Cambio rápidamente gran parte de mis hábitos por esa persona.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando algo me molesta de manera repetida...",
+                categoria: "Hábitos",
+                opciones: [
+                    { texto: "Lo converso y busco acuerdos para cambiarlo.", valor: 0 },
+                    { texto: "Espero un poco para ver si mejora.", valor: 1 },
+                    { texto: "Me acostumbro aunque siga incomodándome.", valor: 2 },
+                    { texto: "Repito la misma situación sin expresar lo que necesito.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Al tomar decisiones importantes sobre mi vida...",
+                categoria: "Hábitos",
+                opciones: [
+                    { texto: "Considero mis necesidades y escucho opiniones.", valor: 0 },
+                    { texto: "Me gusta consultar a mi pareja antes de decidir.", valor: 1 },
+                    { texto: "Me cuesta decidir si mi pareja no está de acuerdo.", valor: 2 },
+                    { texto: "Necesito su aprobación para sentirme seguro de decidir.", valor: 3 }
+                ]
+            },
+
+            // COMUNICACIÓN (19-24)
+
+            {
+                texto: "Cuando algo me preocupa de mi relación...",
+                categoria: "Comunicación",
+                opciones: [
+                    { texto: "Busco un momento adecuado para hablarlo.", valor: 0 },
+                    { texto: "Espero a sentirme preparado para expresarlo.", valor: 1 },
+                    { texto: "A veces guardo lo que siento para evitar problemas.", valor: 2 },
+                    { texto: "Casi nunca digo lo que me molesta directamente.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando mi pareja expresa una opinión diferente...",
+                categoria: "Comunicación",
+                opciones: [
+                    { texto: "Escucho y trato de comprender su punto de vista.", valor: 0 },
+                    { texto: "Necesito un momento para procesar lo que dice.", valor: 1 },
+                    { texto: "Me pongo a la defensiva con facilidad.", valor: 2 },
+                    { texto: "Siento que está cuestionándome y reacciono con enojo.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando discutimos sobre un problema...",
+                categoria: "Comunicación",
+                opciones: [
+                    { texto: "Intento hablar del problema sin atacar a la persona.", valor: 0 },
+                    { texto: "A veces me cuesta encontrar las palabras adecuadas.", valor: 1 },
+                    { texto: "Puedo recordar errores anteriores durante la discusión.", valor: 2 },
+                    { texto: "La conversación suele convertirse en reproches o ataques.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando necesito establecer un límite...",
+                categoria: "Comunicación",
+                opciones: [
+                    { texto: "Lo expreso con respeto y claridad.", valor: 0 },
+                    { texto: "Me cuesta un poco, pero termino comunicándolo.", valor: 1 },
+                    { texto: "Temo que la otra persona se moleste si lo digo.", valor: 2 },
+                    { texto: "Prefiero aceptar algo que no quiero antes que expresar mi límite.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando no entiendo el comportamiento de mi pareja...",
+                categoria: "Comunicación",
+                opciones: [
+                    { texto: "Pregunto directamente antes de sacar conclusiones.", valor: 0 },
+                    { texto: "Primero intento interpretar lo que pudo ocurrir.", valor: 1 },
+                    { texto: "Suelo imaginar varias explicaciones negativas.", valor: 2 },
+                    { texto: "Saco conclusiones sin hablarlo y reacciono desde ellas.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando necesito pedir disculpas...",
+                categoria: "Comunicación",
+                opciones: [
+                    { texto: "Reconozco mi responsabilidad y escucho cómo afectó.", valor: 0 },
+                    { texto: "Me cuesta al principio, pero puedo hacerlo.", valor: 1 },
+                    { texto: "Me justifico antes de reconocer mi error.", valor: 2 },
+                    { texto: "Evito disculparme porque siento que sería perder.", valor: 3 }
+                ]
+            },
+
+            // AUTONOMÍA Y LÍMITES (25-30)
+
+            {
+                texto: "Cuando mi pareja quiere pasar tiempo con sus amistades...",
+                categoria: "Autonomía y límites",
+                opciones: [
+                    { texto: "Respeto ese espacio y también disfruto mis actividades.", valor: 0 },
+                    { texto: "A veces la extraño, pero respeto sus planes.", valor: 1 },
+                    { texto: "Me cuesta no sentirme desplazado.", valor: 2 },
+                    { texto: "Me molesta que prefiera pasar tiempo con otras personas.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Respecto a la privacidad de mi pareja...",
+                categoria: "Autonomía y límites",
+                opciones: [
+                    { texto: "Respeto su privacidad y espero confianza mutua.", valor: 0 },
+                    { texto: "A veces siento curiosidad, pero no invado su espacio.", valor: 1 },
+                    { texto: "Me cuesta no querer revisar algunas cosas.", valor: 2 },
+                    { texto: "Siento que tengo derecho a revisar sus conversaciones o dispositivos.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando mi pareja no está de acuerdo conmigo...",
+                categoria: "Autonomía y límites",
+                opciones: [
+                    { texto: "Acepto que podemos pensar diferente.", valor: 0 },
+                    { texto: "Me incomoda, pero puedo respetar su opinión.", valor: 1 },
+                    { texto: "Insisto bastante para que vea las cosas como yo.", valor: 2 },
+                    { texto: "Me cuesta aceptar que tome una decisión distinta a la mía.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Si una relación afecta mis amistades o intereses personales...",
+                categoria: "Autonomía y límites",
+                opciones: [
+                    { texto: "Procuro mantener un equilibrio entre mi relación y mi vida personal.", valor: 0 },
+                    { texto: "A veces reduzco algunas actividades por la relación.", valor: 1 },
+                    { texto: "He dejado de lado varias cosas que antes disfrutaba.", valor: 2 },
+                    { texto: "Mi vida personal queda casi completamente en segundo plano.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Cuando algo va en contra de mis valores personales...",
+                categoria: "Autonomía y límites",
+                opciones: [
+                    { texto: "Puedo expresar mi desacuerdo y mantener mis principios.", valor: 0 },
+                    { texto: "Intento llegar a un punto medio sin renunciar a lo importante.", valor: 1 },
+                    { texto: "A veces cedo para evitar perder la relación.", valor: 2 },
+                    { texto: "Suelo renunciar a mis valores para evitar conflictos o rupturas.", valor: 3 }
+                ]
+            },
+            {
+                texto: "Si siento que una relación no está siendo saludable para mí...",
+                categoria: "Autonomía y límites",
+                opciones: [
+                    { texto: "Puedo reconocerlo y considerar qué cambios necesito.", valor: 0 },
+                    { texto: "Me cuesta aceptarlo, pero intento buscar soluciones.", valor: 1 },
+                    { texto: "Permanezco aunque varias situaciones me hagan daño.", valor: 2 },
+                    { texto: "Me resulta muy difícil alejarme incluso cuando reconozco el daño.", valor: 3 }
+                ]
+            }
+        ];
+
+        let indice = 0;
+        let respuestas = new Array(preguntas.length).fill(null);
+
+        const zonaTest = document.getElementById("zonaTest");
+        const zonaResultado = document.getElementById("zonaResultado");
+
+
+        function mostrarPregunta() {
+
+            const pregunta = preguntas[indice];
+
+            document.getElementById("numeroPregunta").textContent =
+                "Pregunta " + (indice + 1) + " de " + preguntas.length;
+
+            const progreso = (indice / preguntas.length) * 100;
+
+            document.getElementById("porcentajeProgreso").textContent =
+                Math.round(progreso) + "%";
+
+            document.getElementById("barraProgreso").style.width =
+                progreso + "%";
+
+            document.getElementById("categoriaPregunta").textContent =
+                pregunta.categoria;
+
+            document.getElementById("textoPregunta").textContent =
+                pregunta.texto;
+
+            const contenedor = document.getElementById("contenedorOpciones");
+            contenedor.innerHTML = "";
+
+            pregunta.opciones.forEach(function (opcion) {
+
+                const etiqueta = document.createElement("label");
+                etiqueta.className = "opcion";
+
+                const radio = document.createElement("input");
+                radio.type = "radio";
+                radio.name = "respuesta";
+                radio.value = opcion.valor;
+
+                radio.checked = respuestas[indice] === opcion.valor;
+
+                if (radio.checked) {
+                    etiqueta.classList.add("seleccionada");
+                }
+
+                radio.addEventListener("change", function () {
+
+                    respuestas[indice] = opcion.valor;
+
+                    const todas = document.querySelectorAll(".opcion");
+
+                    todas.forEach(function (elemento) {
+                        elemento.classList.remove("seleccionada");
+                    });
+
+                    etiqueta.classList.add("seleccionada");
+
+                    setTimeout(function () {
+
+                        if (indice < preguntas.length - 1) {
+                            indice++;
+                            mostrarPregunta();
+                        } else {
+                            mostrarResultado();
+                        }
+
+                    }, 250);
+
+                });
+
+                etiqueta.appendChild(radio);
+                etiqueta.appendChild(document.createTextNode(opcion.texto));
+
+                contenedor.appendChild(etiqueta);
+            });
+        }
+
+
+        function mostrarResultado() {
+
+            zonaTest.style.display = "none";
+            zonaResultado.style.display = "block";
+
+            document.getElementById("barraProgreso").style.width = "100%";
+
+            let total = 0;
+
+            respuestas.forEach(function (valor) {
+                total += valor;
+            });
+
+            const maximo = preguntas.length * 3;
+            const porcentaje = Math.round((total / maximo) * 100);
+
+            document.getElementById("porcentajeResultado").textContent =
+                porcentaje + "%";
+
+            let interpretacion = "";
+
+            if (porcentaje <= 25) {
+                interpretacion =
+                    "Tus respuestas reflejan, en general, recursos personales " +
+                    "que pueden ayudarte a gestionar tus emociones, expectativas " +
+                    "y límites. Sigue fortaleciendo la comunicación y el equilibrio personal.";
+            } else if (porcentaje <= 50) {
+                interpretacion =
+                    "Tus respuestas muestran algunas áreas que podrían beneficiarse " +
+                    "de mayor atención. Reflexionar sobre tus necesidades y la forma " +
+                    "en que te relacionas puede ayudarte a construir vínculos más equilibrados.";
+            } else if (porcentaje <= 75) {
+                interpretacion =
+                    "Tus respuestas señalan varias áreas de reflexión. Puede ser útil " +
+                    "observar qué situaciones generan inseguridad, dificultad para comunicarte " +
+                    "o problemas para mantener tu autonomía.";
+            } else {
+                interpretacion =
+                    "Tus respuestas indican que hay varios aspectos de tu forma de " +
+                    "relacionarte que merecen una reflexión cuidadosa. Considera buscar " +
+                    "apoyo y trabajar en tus necesidades, límites y bienestar emocional.";
+            }
+
+            document.getElementById("interpretacionGeneral").textContent =
+                interpretacion;
+
+            const categorias = [
+                "Emociones",
+                "Expectativas",
+                "Hábitos",
+                "Comunicación",
+                "Autonomía y límites"
+            ];
+
+            const descripciones = {
+                "Emociones": "Explora cómo reconoces, expresas y gestionas tus emociones.",
+                "Expectativas": "Refleja cómo manejas tus expectativas y necesidades afectivas.",
+                "Hábitos": "Observa el equilibrio entre tus rutinas personales y la relación.",
+                "Comunicación": "Analiza cómo expresas tus ideas, necesidades y desacuerdos.",
+                "Autonomía y límites": "Reflexiona sobre tu independencia, privacidad y límites personales."
+            };
+
+            const contenedorResultados =
+                document.getElementById("resultadosCategorias");
+
+            contenedorResultados.innerHTML = "";
+
+            categorias.forEach(function (categoria) {
+
+                let suma = 0;
+                let cantidad = 0;
+
+                preguntas.forEach(function (pregunta, i) {
+
+                    if (pregunta.categoria === categoria) {
+                        suma += respuestas[i];
+                        cantidad++;
+                    }
+
+                });
+
+                const maximoCategoria = cantidad * 3;
+                const porcentajeCategoria =
+                    Math.round((suma / maximoCategoria) * 100);
+
+                const tarjeta = document.createElement("div");
+                tarjeta.className = "categoria-resultado";
+
+                const titulo = document.createElement("strong");
+                titulo.textContent = categoria + " · " +
+                    porcentajeCategoria + "%";
+
+                const descripcion = document.createElement("p");
+                descripcion.textContent = descripciones[categoria];
+
+                const barraFondo = document.createElement("div");
+                barraFondo.className = "barra-categoria";
+
+                const barra = document.createElement("div");
+                barra.style.width = porcentajeCategoria + "%";
+
+                barraFondo.appendChild(barra);
+
+                tarjeta.appendChild(titulo);
+                tarjeta.appendChild(descripcion);
+                tarjeta.appendChild(barraFondo);
+
+                contenedorResultados.appendChild(tarjeta);
+            });
+
+            guardarResultado(porcentaje);
+        }
+
+        function guardarResultado(porcentaje) {
+
+            const token = document.querySelector(
+                'input[name="__RequestVerificationToken"]'
+            ).value;
+
+            const datos = new URLSearchParams();
+
+            datos.append("__RequestVerificationToken", token);
+            datos.append("respuestas", respuestas.join(","));
+            datos.append("porcentaje", porcentaje);
+
+            fetch('@Url.Action("GuardarResultadoPatronesAvanzado", "Home")', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                body: datos.toString()
+            })
+            .then(function (respuesta) {
+                if (!respuesta.ok) {
+                    throw new Error("No se pudo guardar el resultado.");
+                }
+
+                return respuesta.json();
+            })
+            .then(function (datos) {
+
+                if (datos.ok) {
+                    document.getElementById("mensajeGuardado").textContent =
+                        "✓ " + (datos.mensaje || "Tu resultado se guardó correctamente.");
+                } else {
+                    document.getElementById("mensajeGuardado").textContent =
+                        datos.mensaje || "No se pudo guardar el resultado.";
+                }
+
+            })
+            .catch(function () {
+                document.getElementById("mensajeGuardado").textContent =
+                    "No se pudo guardar el resultado. Comprueba la conexión e inténtalo más tarde.";
+            });
+        }
+
+        document.getElementById("repetirTest").addEventListener("click", function () {
+
+            indice = 0;
+            respuestas = new Array(preguntas.length).fill(null);
+
+            zonaResultado.style.display = "none";
+            zonaTest.style.display = "block";
+
+            mostrarPregunta();
+        });
+
+        mostrarPregunta();
+    </script>
+
+</body>
+</html>

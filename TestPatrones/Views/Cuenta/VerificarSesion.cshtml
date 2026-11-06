@@ -1,0 +1,70 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "Verificación de sesión";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Verificación - Amor Bajo Lupa</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(135deg, #f1e5ff, #ffe8f3);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 10px 30px #0002;
+        }
+
+        h2 {
+            color: #9251a8;
+        }
+
+        .dato {
+            padding: 12px;
+            margin: 12px 0;
+            background: #f8f3fc;
+            border-radius: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        strong {
+            color: #713787;
+        }
+    </style>
+</head>
+<body>
+    <div class="tarjeta">
+        <h2>Verificación de sesión</h2>
+
+        <div class="dato">
+            <strong>Autenticado:</strong> @ViewBag.Autenticado
+        </div>
+
+        <div class="dato">
+            <strong>Nombre:</strong> @ViewBag.Nombre
+        </div>
+
+        <div class="dato">
+            <strong>Google ID:</strong> @ViewBag.GoogleId
+        </div>
+
+        <div class="dato">
+            <strong>Correo:</strong> @ViewBag.Correo
+        </div>
+    </div>
+</body>
+</html>

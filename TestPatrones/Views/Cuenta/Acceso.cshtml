@@ -1,0 +1,90 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "Iniciar sesión";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Iniciar sesión - Amor Bajo Lupa</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 25px 12px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f1e5ff, #ffe8f3);
+            color: #30283a;
+        }
+
+        .tarjeta {
+            width: 90%;
+            max-width: 430px;
+            padding: 40px 30px;
+            text-align: center;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 12px 35px rgba(80, 40, 100, .12);
+        }
+
+        h1 {
+            color: #9251a8;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #81788b;
+        }
+
+        .boton {
+            display: block;
+            margin-top: 28px;
+            padding: 15px;
+            border-radius: 30px;
+            background: #9251a8;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+            .boton:hover {
+                background: #713787;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="tarjeta">
+        <h1>Amor Bajo Lupa</h1>
+
+        <p>
+            Para acceder a este test avanzado,
+            primero necesitas iniciar sesión con tu cuenta de Google.
+        </p>
+
+        <a class="boton"
+           href="@Url.Action("IniciarSesion", "Cuenta",
+           new { returnUrl = ViewBag.ReturnUrl })">
+            Iniciar sesión con Google
+        </a>
+        <p></p>
+        <a class="btn btn-secundario"
+           href="@Url.Action("Index", "Home")">
+            Volver al inicio
+        </a>
+    </div>
+</body>
+</html>

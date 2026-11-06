@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+
+	<connectionStrings>
+		<add name="AmorBajoLupa"
+			 connectionString="Data Source=SERVIDOR;Initial Catalog=AmorBajoLupa;Integrated Security=True"
+			 providerName="System.Data.SqlClient" />
+	</connectionStrings>
+
+	<appSettings>
+		<add key="GoogleClientId" value="TU_CLIENT_ID" />
+		<add key="GoogleClientSecret" value="TU_CLIENT_SECRET" />
+
+		<add key="webpages:Version" value="3.0.0.0" />
+		<add key="webpages:Enabled" value="false" />
+		<add key="ClientValidationEnabled" value="true" />
+		<add key="UnobtrusiveJavaScriptEnabled" value="true" />
+	</appSettings>
+
+</configuration>

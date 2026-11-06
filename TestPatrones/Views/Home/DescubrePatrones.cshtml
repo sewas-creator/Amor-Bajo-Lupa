@@ -1,0 +1,691 @@
+﻿
+@{ Layout = null;
+                ViewBag.Title = "Descubre tus Patrones"; }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Descubre tus Patrones | Amor Bajo Lupa</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 28px 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: #59516f;
+            background: radial-gradient(ellipse at 15% 15%, rgba(226, 201, 255, .55), transparent 45%), radial-gradient(ellipse at 85% 85%, rgba(255, 207, 228, .55), transparent 45%), linear-gradient(135deg, #f1e5ff 0%, #fbf5ff 48%, #ffe8f3 100%);
+        }
+
+        .pagina {
+            width: 100%;
+            max-width: 850px;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tarjeta {
+            background: rgba(255, 255, 255, .94);
+            border: 1px solid rgba(255, 255, 255, .95);
+            border-radius: 30px;
+            padding: 42px 48px;
+            box-shadow: 0 25px 75px rgba(117, 70, 143, .16);
+            animation: aparecer .5s ease;
+        }
+
+        .centrado {
+            text-align: center;
+        }
+
+        .corazon {
+            width: 66px;
+            height: 66px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 18px;
+            border-radius: 23px;
+            background: linear-gradient(135deg, #f3e6fc, #fceafa);
+            color: #9a5bb1;
+            font-size: 33px;
+            box-shadow: 0 7px 20px rgba(154, 91, 177, .10);
+        }
+
+        .etiqueta {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background: #f6eafa;
+            color: #87549a;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .5px;
+        }
+
+        h1 {
+            margin: 15px 0;
+            color: #58366f;
+            font-size: clamp(28px, 5vw, 38px);
+            letter-spacing: -.7px;
+        }
+
+        h2 {
+            color: #654477;
+            font-size: 23px;
+            line-height: 1.4;
+        }
+
+        .subtitulo {
+            max-width: 570px;
+            margin: 0 auto;
+            line-height: 1.8;
+            color: #756b83;
+            font-size: 15px;
+        }
+
+        .detalles {
+            margin: 22px 0 27px;
+            font-size: 13px;
+            color: #8a7c97;
+        }
+
+        .boton {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 9px;
+            border: 0;
+            border-radius: 14px;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #a15bb5, #85449c);
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 7px 18px rgba(146, 81, 168, .20);
+            transition: transform .2s, box-shadow .2s, background .2s;
+        }
+
+            .boton:hover {
+                background: linear-gradient(135deg, #9251a8, #713787);
+                transform: translateY(-2px);
+                box-shadow: 0 10px 23px rgba(146, 81, 168, .27);
+                color: white;
+            }
+
+        .boton-secundario {
+            color: #713787;
+            background: #f8f1fc;
+            border: 1px solid #e8daf1;
+            box-shadow: none;
+        }
+
+            .boton-secundario:hover {
+                color: #713787;
+                background: #eee1f7;
+                box-shadow: none;
+            }
+
+        .botones {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .aviso {
+            max-width: 600px;
+            margin: 23px auto 0;
+            color: #8b8195;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .beneficios {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 22px;
+            margin-top: 28px;
+            padding-top: 23px;
+            border-top: 1px solid #f0e8f5;
+        }
+
+        .beneficio {
+            color: #7c7189;
+            font-size: 13px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .barra-fondo {
+            height: 9px;
+            margin: 13px 0 28px;
+            border-radius: 20px;
+            background: #eee7f2;
+            overflow: hidden;
+        }
+
+        .barra {
+            height: 100%;
+            width: 0;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #a86ac0, #e7a6cb);
+            transition: width .3s ease;
+        }
+
+        .contador {
+            color: #947ba0;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .pregunta {
+            margin: 0 0 10px;
+            color: #58366f;
+            font-size: 25px;
+            line-height: 1.5;
+        }
+
+        .ayuda {
+            color: #897e93;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .opciones {
+            display: grid;
+            gap: 13px;
+            margin-top: 24px;
+        }
+
+        .opcion {
+            width: 100%;
+            padding: 18px 20px;
+            text-align: left;
+            border-radius: 16px;
+            border: 1px solid #e9dff0;
+            background: #fff;
+            color: #5e526c;
+            font-size: 15px;
+            line-height: 1.55;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+            .opcion:hover, .opcion:focus {
+                border-color: #bc8bce;
+                background: #fbf5ff;
+                outline: none;
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(117, 70, 143, .08);
+            }
+
+            .opcion:focus-visible {
+                outline: 3px solid #dfc4e9;
+                outline-offset: 2px;
+            }
+
+        .resultado-circulo {
+            width: 145px;
+            height: 145px;
+            border-radius: 50%;
+            margin: 25px auto;
+            display: grid;
+            place-items: center;
+            background: conic-gradient(#9251a8 0%, #eee7f2 0%);
+            position: relative;
+            box-shadow: 0 8px 25px rgba(117, 70, 143, .12);
+        }
+
+            .resultado-circulo::before {
+                content: "";
+                position: absolute;
+                inset: 10px;
+                border-radius: 50%;
+                background: #fff;
+            }
+
+            .resultado-circulo span {
+                position: relative;
+                font-size: 33px;
+                font-weight: 800;
+                color: #75428a;
+            }
+
+        .caja-resultado {
+            background: linear-gradient(135deg, #faf5fd, #fff8fc);
+            border: 1px solid #efe3f5;
+            border-radius: 19px;
+            padding: 22px;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+
+            .caja-resultado h3 {
+                margin: 0 0 9px;
+                color: #68417b;
+            }
+
+        .categoria {
+            margin: 20px 0;
+        }
+
+        .categoria-cabecera {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        .categoria-fondo {
+            height: 10px;
+            border-radius: 20px;
+            background: #eee7f2;
+            overflow: hidden;
+        }
+
+        .categoria-valor {
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #a86ac0, #e7a6cb);
+            transition: width .5s ease;
+        }
+
+        .nota-final {
+            font-size: 12px;
+            line-height: 1.7;
+            color: #8b8195;
+            margin-top: 22px;
+        }
+
+        @@keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @@media (max-width: 600px) {
+            body {
+                padding: 15px 10px;
+            }
+
+            .tarjeta {
+                padding: 28px 19px;
+                border-radius: 23px;
+            }
+
+            .pregunta {
+                font-size: 21px;
+            }
+
+            .opcion {
+                padding: 15px;
+                font-size: 14px;
+            }
+
+            .beneficios {
+                gap: 12px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <main class="pagina">
+        <section id="inicio" class="tarjeta centrado">
+            <div class="corazon">♡</div>
+            <span class="etiqueta">AMOR BAJO LUPA</span>
+            <h1>Descubre tus Patrones</h1>
+            <p class="subtitulo">Explora cómo respondes ante tus emociones, qué esperas de una relación y qué hábitos aparecen cuando algo te importa.</p>
+            <p class="detalles">12 preguntas · Resultado orientativo · 3–5 minutos</p>
+            <button type="button" id="comenzar" class="boton">Comenzar test <span aria-hidden="true">→</span></button>
+            <div class="botones">
+                <a class="boton boton-secundario" href="@Url.Action("Index", "Home")">← Volver a Amor Bajo Lupa</a>
+            </div>
+            <p class="aviso">No hay respuestas buenas o malas. Responde pensando en cómo sueles actuar, no en cómo crees que deberías actuar.</p>
+            <div class="beneficios">
+                <span class="beneficio">♡ Reflexión personal</span>
+                <span class="beneficio">✧ Hábitos y emociones</span>
+                <span class="beneficio">⌁ Privacidad</span>
+            </div>
+        </section>
+
+        <section id="test" class="tarjeta hidden" aria-live="polite">
+            <div class="contador" id="contador">Pregunta 1 de 12</div>
+            <div class="barra-fondo"><div id="barra" class="barra"></div></div>
+            <h2 id="pregunta" class="pregunta"></h2>
+            <p class="ayuda">Elige la respuesta que más se acerque a lo que sueles hacer.</p>
+            <div id="opciones" class="opciones"></div>
+            <div class="botones">
+                <button type="button" id="anterior" class="boton boton-secundario hidden">← Pregunta anterior</button>
+            </div>
+        </section>
+
+        <section id="resultado" class="tarjeta hidden">
+            <div class="centrado">
+                <div class="corazon">♡</div>
+                <span class="etiqueta">TU REFLEXIÓN PERSONAL</span>
+                <h1>Estos son tus patrones</h1>
+                <p class="subtitulo">Una lectura orientativa de las respuestas que elegiste.</p>
+                <div class="resultado-circulo" id="scoreCircle"><span id="porcentaje">0%</span></div>
+                <h2 id="nivel"></h2>
+            </div>
+            <div class="caja-resultado">
+                <h3>¿Qué puede significar?</h3>
+                <p id="descripcion"></p>
+            </div>
+            <h2>Resumen por áreas</h2>
+            <p class="ayuda">Estas barras muestran qué áreas tuvieron más respuestas asociadas a dificultad o tensión.</p>
+            <div id="categoriasVisuales"></div>
+            <div class="caja-resultado">
+                <h3>Un paso para empezar</h3>
+                <p id="consejo"></p>
+            </div>
+            <p class="nota-final">Este cuestionario es una herramienta de reflexión, no un diagnóstico psicológico. Tus respuestas no definen quién eres y pueden cambiar según la situación, la relación y el momento que estés viviendo.</p>
+            <p id="estadoGuardado" class="nota-final" aria-live="polite"></p>
+
+            <div style="display:none">
+                @Html.AntiForgeryToken()
+            </div>
+            <div class="botones">
+                <button type="button" id="reiniciar" class="boton">Volver a comenzar ↻</button>
+                <a class="boton boton-secundario" href="@Url.Action("Index", "Home")">Volver al inicio</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+(function () {
+            const preguntas = [
+                { texto: "Cuando algo en una relación me preocupa, normalmente…", categoria: "Emociones", opciones: [
+                    { texto: "Lo identifico y busco un momento tranquilo para hablarlo.", valor: 0 },
+                    { texto: "Necesito un poco de tiempo antes de expresarlo.", valor: 1 },
+                    { texto: "Le doy muchas vueltas y me cuesta concentrarme en otra cosa.", valor: 2 },
+                    { texto: "Reacciono impulsivamente o me guardo lo que siento hasta explotar.", valor: 3 }
+                ]},
+                { texto: "Si la persona que quiero tarda en responder un mensaje…", categoria: "Emociones", opciones: [
+                    { texto: "Sigo con mis actividades; entiendo que puede estar ocupada.", valor: 0 },
+                    { texto: "Me pregunto qué estará pasando, pero espero.", valor: 1 },
+                    { texto: "Me pongo ansioso/a y reviso el teléfono con frecuencia.", valor: 2 },
+                    { texto: "Pienso que algo va mal y necesito una respuesta inmediata.", valor: 3 }
+                ]},
+                { texto: "Cuando siento celos o inseguridad…", categoria: "Emociones", opciones: [
+                    { texto: "Intento entender de dónde viene lo que siento.", valor: 0 },
+                    { texto: "Me cuesta, pero puedo hablarlo sin acusar.", valor: 1 },
+                    { texto: "Busco señales que confirmen mis sospechas.", valor: 2 },
+                    { texto: "Acuso, controlo o pido pruebas para tranquilizarme.", valor: 3 }
+                ]},
+                { texto: "Cuando necesito apoyo emocional…", categoria: "Expectativas", opciones: [
+                    { texto: "Explico con claridad qué necesito.", valor: 0 },
+                    { texto: "Espero que la otra persona lo note, aunque a veces lo digo.", valor: 1 },
+                    { texto: "Me cuesta pedirlo por miedo a parecer una carga.", valor: 2 },
+                    { texto: "Me frustro si no lo adivina y me alejo o me enfado.", valor: 3 }
+                ]},
+                { texto: "Para mí, una relación sana debería…", categoria: "Expectativas", opciones: [
+                    { texto: "Combinar cercanía, confianza, autonomía y respeto.", valor: 0 },
+                    { texto: "Tener mucha cercanía, aunque cada uno conserve su espacio.", valor: 1 },
+                    { texto: "Priorizar la relación casi siempre sobre otras cosas.", valor: 2 },
+                    { texto: "Evitar las dudas: la otra persona debería demostrar amor constantemente.", valor: 3 }
+                ]},
+                { texto: "Cuando mi pareja y yo queremos cosas distintas…", categoria: "Expectativas", opciones: [
+                    { texto: "Busco entender ambas necesidades y negociar.", valor: 0 },
+                    { texto: "Cedo algunas veces para evitar tensión.", valor: 1 },
+                    { texto: "Me cuesta aceptar que no pensemos igual.", valor: 2 },
+                    { texto: "Lo interpreto como falta de amor o me niego a ceder.", valor: 3 }
+                ]},
+                { texto: "Cuando discutimos, suelo…", categoria: "Hábitos", opciones: [
+                    { texto: "Escuchar, explicar mi punto y buscar una solución.", valor: 0 },
+                    { texto: "Necesitar una pausa y retomar la conversación después.", valor: 1 },
+                    { texto: "Defenderme mucho o sacar temas anteriores.", valor: 2 },
+                    { texto: "Gritar, insultar, amenazar con terminar o dejar de hablar como castigo.", valor: 3 }
+                ]},
+                { texto: "Si me doy cuenta de que cometí un error…", categoria: "Hábitos", opciones: [
+                    { texto: "Lo reconozco y trato de reparar el daño.", valor: 0 },
+                    { texto: "Me cuesta al principio, pero puedo disculparme.", valor: 1 },
+                    { texto: "Me justifico porque temo quedar como culpable.", valor: 2 },
+                    { texto: "Culpo a la otra persona o actúo como si nada hubiera pasado.", valor: 3 }
+                ]},
+                { texto: "Cuando temo que una relación termine…", categoria: "Emociones", opciones: [
+                    { texto: "Puedo sentir tristeza sin abandonar mis propias necesidades.", valor: 0 },
+                    { texto: "Busco hablar para saber dónde estamos.", valor: 1 },
+                    { texto: "Me adapto demasiado para evitar que se aleje.", valor: 2 },
+                    { texto: "Insisto repetidamente, intento controlar o corto la relación primero.", valor: 3 }
+                ]},
+                { texto: "Respecto a mis límites personales…", categoria: "Expectativas", opciones: [
+                    { texto: "Puedo expresarlos y respetar también los de la otra persona.", valor: 0 },
+                    { texto: "Los expreso, aunque me cuesta mantenerlos a veces.", valor: 1 },
+                    { texto: "Los dejo de lado para no decepcionar.", valor: 2 },
+                    { texto: "Espero que la otra persona sepa mis límites sin que tenga que explicarlos.", valor: 3 }
+                ]},
+                { texto: "Después de un desacuerdo importante…", categoria: "Hábitos", opciones: [
+                    { texto: "Reflexiono y converso sobre qué podemos hacer distinto.", valor: 0 },
+                    { texto: "Necesito tiempo para calmarme antes de hablar.", valor: 1 },
+                    { texto: "Sigo repasando la discusión y me cuesta soltarla.", valor: 2 },
+                    { texto: "Evito el tema, castigo con silencio o vuelvo a discutirlo de forma hiriente.", valor: 3 }
+                ]},
+                { texto: "Cuando mi pareja quiere tiempo para sí misma…", categoria: "Hábitos", opciones: [
+                    { texto: "Lo respeto y también disfruto de mis propios espacios.", valor: 0 },
+                    { texto: "A veces lo extraño, pero puedo gestionarlo.", valor: 1 },
+                    { texto: "Me lo tomo de forma personal y me cuesta estar tranquilo/a.", valor: 2 },
+                    { texto: "Lo interpreto como rechazo y reclamo o intento impedirlo.", valor: 3 }
+                ]}
+            ];
+
+            let indice = 0;
+            let respuestas = new Array(preguntas.length).fill(null);
+            const inicio = document.getElementById("inicio");
+            const test = document.getElementById("test");
+            const resultado = document.getElementById("resultado");
+
+            document.getElementById("comenzar").addEventListener("click", function () {
+                indice = 0;
+                respuestas.fill(null);
+                inicio.classList.add("hidden");
+                resultado.classList.add("hidden");
+                test.classList.remove("hidden");
+                mostrarPregunta();
+            });
+
+            document.getElementById("anterior").addEventListener("click", function () {
+                if (indice > 0) {
+                    indice--;
+                    mostrarPregunta();
+                }
+            });
+
+            document.getElementById("reiniciar").addEventListener("click", function () {
+                resultado.classList.add("hidden");
+                inicio.classList.remove("hidden");
+                test.classList.add("hidden");
+                indice = 0;
+                respuestas.fill(null);
+                document.getElementById("barra").style.width = "0%";
+            });
+
+            function mostrarPregunta() {
+                const pregunta = preguntas[indice];
+                document.getElementById("contador").textContent = "Pregunta " + (indice + 1) + " de " + preguntas.length;
+                document.getElementById("barra").style.width = (indice / preguntas.length * 100) + "%";
+                document.getElementById("pregunta").textContent = pregunta.texto;
+                const contenedor = document.getElementById("opciones");
+                contenedor.innerHTML = "";
+                pregunta.opciones.forEach(function (opcion) {
+                    const boton = document.createElement("button");
+                    boton.type = "button";
+                    boton.className = "opcion";
+                    boton.textContent = opcion.texto;
+                    boton.addEventListener("click", function () {
+                        respuestas[indice] = { categoria: pregunta.categoria, valor: opcion.valor };
+                        if (indice < preguntas.length - 1) {
+                            indice++;
+                            mostrarPregunta();
+                        } else {
+                            mostrarResultado();
+                        }
+                    });
+                    contenedor.appendChild(boton);
+                });
+                document.getElementById("anterior").classList.toggle("hidden", indice === 0);
+            }
+
+            function mostrarResultado() {
+                test.classList.add("hidden");
+                resultado.classList.remove("hidden");
+                const maximo = preguntas.length * 3;
+                const total = respuestas.reduce(function (suma, r) { return suma + r.valor; }, 0);
+                const porcentaje = Math.round(total / maximo * 100);
+                document.getElementById("porcentaje").textContent = porcentaje + "%";
+                document.getElementById("scoreCircle").style.background =
+                    "conic-gradient(#9251a8 0% " + porcentaje + "%, #eee7f2 " + porcentaje + "% 100%)";
+
+                let nivel, descripcion, consejo;
+                if (porcentaje <= 25) {
+                    nivel = "Recursos personales presentes";
+                    descripcion = "Tus respuestas sugieren que sueles recurrir a formas relativamente equilibradas de expresar necesidades, afrontar diferencias y cuidar tu espacio personal. Aun así, cada situación es distinta y siempre hay aspectos que podemos aprender.";
+                    consejo = "Identifica qué haces cuando te sientes seguro/a en una relación y qué te ayuda a mantener esa comunicación cuando aparece el estrés.";
+                } else if (porcentaje <= 50) {
+                    nivel = "Algunos hábitos que puedes explorar";
+                    descripcion = "Tus respuestas muestran una mezcla de recursos útiles y reacciones que podrían aparecer cuando sientes incertidumbre o tensión. Observar cuándo ocurren puede ayudarte a elegir respuestas que te hagan sentir mejor.";
+                    consejo = "Elige una situación reciente y escribe qué sentiste, qué necesitabas y cómo podrías comunicarlo con claridad y respeto.";
+                } else if (porcentaje <= 75) {
+                    nivel = "Patrones que merecen atención";
+                    descripcion = "Varias respuestas apuntan a reacciones que podrían dificultar la comunicación o aumentar tu malestar en momentos sensibles. No te definen: pueden ser hábitos aprendidos y es posible trabajar en ellos poco a poco.";
+                    consejo = "Antes de responder en un momento intenso, haz una pausa y distingue entre lo que sabes, lo que temes y lo que necesitas preguntar.";
+                } else {
+                    nivel = "Una oportunidad para cambiar respuestas";
+                    descripcion = "Tus respuestas señalan que algunas situaciones de relación pueden activar reacciones intensas o difíciles de manejar. El resultado no es una etiqueta: puede servir como punto de partida para comprender tus necesidades y buscar formas más seguras de expresarlas.";
+                    consejo = "Empieza por un cambio pequeño y concreto: pedir una pausa, nombrar una emoción sin acusar o conversar con una persona de confianza o un profesional si sientes que lo necesitas.";
+                }
+                document.getElementById("nivel").textContent = nivel;
+                document.getElementById("descripcion").textContent = descripcion;
+                document.getElementById("consejo").textContent = consejo;
+
+                const categorias = { "Emociones": { suma: 0, maximo: 0 }, "Expectativas": { suma: 0, maximo: 0 }, "Hábitos": { suma: 0, maximo: 0 } };
+                respuestas.forEach(function (r) {
+                    categorias[r.categoria].suma += r.valor;
+                    categorias[r.categoria].maximo += 3;
+                });
+                const visual = document.getElementById("categoriasVisuales");
+                visual.innerHTML = "";
+                Object.keys(categorias).forEach(function (nombre) {
+                    const datos = categorias[nombre];
+                    const p = Math.round(datos.suma / datos.maximo * 100);
+                    const fila = document.createElement("div");
+                    fila.className = "categoria";
+                    fila.innerHTML = '<div class="categoria-cabecera"><strong></strong><span></span></div><div class="categoria-fondo"><div class="categoria-valor"></div></div>';
+                    fila.querySelector("strong").textContent = nombre;
+                    fila.querySelector(".categoria-cabecera span").textContent = p + "%";
+                    fila.querySelector(".categoria-valor").style.width = p + "%";
+                    visual.appendChild(fila);
+                });
+                // Buscar la categoría con el porcentaje más alto
+                let categoriaPrincipal = "";
+                let mayorPorcentaje = -1;
+
+                Object.keys(categorias).forEach(function (nombre) {
+                    const datos = categorias[nombre];
+                    const porcentajeCategoria = datos.maximo > 0
+                        ? (datos.suma / datos.maximo) * 100
+                        : 0;
+
+                    if (porcentajeCategoria > mayorPorcentaje) {
+                        mayorPorcentaje = porcentajeCategoria;
+                        categoriaPrincipal = nombre;
+                    }
+                });
+
+                // Guardar el resultado en SQL Server
+                guardarResultadoPatrones(porcentaje, categoriaPrincipal);
+            }
+
+        function guardarResultadoPatrones(porcentaje, categoriaPrincipal) {
+
+    const estado = document.getElementById("estadoGuardado");
+
+    estado.textContent = "Guardando tu resultado...";
+
+    const tokenInput = document.querySelector(
+        'input[name="__RequestVerificationToken"]'
+    );
+
+    if (!tokenInput) {
+        estado.textContent = "No se encontró el token de seguridad.";
+        console.error("No existe el token antifalsificación en la página.");
+        return;
+    }
+
+    const datos = new URLSearchParams();
+
+    datos.append("porcentaje", porcentaje);
+    datos.append("categoriaPrincipal", categoriaPrincipal);
+    datos.append("__RequestVerificationToken", tokenInput.value);
+
+    const solicitud = new XMLHttpRequest();
+
+    const urlGuardar = '@Url.Action("GuardarResultadoPatrones", "Home")';
+
+    solicitud.open("POST", urlGuardar, true);
+
+    solicitud.setRequestHeader(
+        "Content-Type",
+        "application/x-www-form-urlencoded; charset=UTF-8"
+    );
+
+    solicitud.onreadystatechange = function () {
+
+        if (solicitud.readyState === 4) {
+
+            console.log("Código HTTP:", solicitud.status);
+            console.log("Respuesta:", solicitud.responseText);
+
+            try {
+
+                const respuesta = JSON.parse(solicitud.responseText);
+
+                if (solicitud.status === 200 && respuesta.ok) {
+                    estado.textContent =
+                        "✓ Resultado guardado correctamente.";
+                } else {
+                    estado.textContent =
+                        "No se pudo guardar: " + respuesta.mensaje;
+                }
+
+            } catch (error) {
+
+                estado.textContent =
+                    "Error del servidor (HTTP " + solicitud.status + ").";
+
+                console.error(error);
+            }
+        }
+    };
+
+    solicitud.send(datos.toString());
+}
+        })();</script>
+</body>
+</html>

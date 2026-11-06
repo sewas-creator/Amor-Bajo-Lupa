@@ -1,0 +1,1374 @@
+﻿@{
+    ViewBag.Title = "Test de Patrones";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Test de Patrones</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #9251a8;
+            --primary-dark: #713787;
+            --pink: #dc8fb9;
+            --background: #fbf5ff;
+            --text: #30283a;
+            --muted: #81788b;
+            --border: #eae3f0;
+            --white: #ffffff;
+        }
+
+        html {
+            min-height: 100%;
+            margin: 0;
+            background: var(--background);
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--text);
+            background: linear-gradient( 135deg, #f1e5ff 0%, #fbf5ff 48%, #ffe8f3 100% );
+            overflow-x: hidden;
+        }
+
+            body::before,
+            body::after {
+                content: "";
+                position: fixed;
+                z-index: 0;
+                pointer-events: none;
+                border-radius: 50%;
+            }
+
+            body::before {
+                width: 420px;
+                height: 420px;
+                top: -190px;
+                left: -150px;
+                background: rgba(204, 164, 246, 0.15);
+            }
+
+            body::after {
+                width: 440px;
+                height: 440px;
+                right: -180px;
+                bottom: -220px;
+                background: rgba(255, 174, 215, 0.17);
+            }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ===== INICIO ===== */
+
+        #inicio {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tarjeta-inicio {
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 30px 55px 26px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(234, 227, 240, 0.9);
+            border-radius: 28px;
+            box-shadow: 0 25px 70px rgba(117, 70, 143, 0.15);
+            animation: aparecer 0.45s ease;
+        }
+
+        .icono-corazon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #f0dfff, #ffe4f3);
+            color: #984bb2;
+            font-size: 40px;
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            color: #63338f;
+            font-size: clamp(32px, 4vw, 44px);
+            font-weight: 800;
+            letter-spacing: -1.2px;
+        }
+
+        .subtitulo {
+            max-width: 650px;
+            margin: 0 auto;
+            color: #59516f;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .detalles {
+            margin: 15px 0 22px;
+            color: #8c7ca7;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .separador {
+            padding: 0 5px;
+            color: #bc85d0;
+        }
+
+        .btn-comenzar {
+            min-width: 330px;
+            padding: 17px 30px;
+            border: none;
+            border-radius: 40px;
+            background: linear-gradient(110deg, #9250bd, #ad50b1, #d65cae);
+            box-shadow: 0 12px 25px rgba(151, 75, 179, 0.24);
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+            .btn-comenzar:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 16px 30px rgba(151, 75, 179, 0.32);
+            }
+
+            .btn-comenzar:focus-visible,
+            .btn:focus-visible,
+            .btn-volver:focus-visible,
+            .option:focus-within {
+                outline: 3px solid #d8b6e8;
+                outline-offset: 3px;
+            }
+
+        .flecha {
+            margin-left: 10px;
+            font-size: 22px;
+        }
+
+        .volver-inicio {
+            margin: 12px 0 18px;
+        }
+
+        .btn-volver {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            border: 1px solid #e8daf1;
+            border-radius: 13px;
+            background: #f8f1fc;
+            color: var(--primary-dark);
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+            .btn-volver:hover {
+                background: #eee1f7;
+                transform: translateY(-1px);
+            }
+
+        .aviso {
+            max-width: 650px;
+            margin: 20px auto 22px;
+            color: #8a7c9e;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .linea-divisoria {
+            width: 100%;
+            height: 1px;
+            background: #eee3f5;
+        }
+
+        .beneficios {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            padding-top: 17px;
+        }
+
+        .beneficio {
+            min-height: 65px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
+            color: #625080;
+            font-size: 13px;
+        }
+
+            .beneficio + .beneficio {
+                border-left: 1px solid #dfc9ef;
+            }
+
+        .beneficio-icono {
+            color: #9b5dc1;
+            font-size: 29px;
+            line-height: 1;
+        }
+
+        /* ===== TARJETAS DEL TEST Y RESULTADO ===== */
+
+        .card {
+            width: calc(100% - 40px);
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 36px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(234, 227, 240, 0.9);
+            border-radius: 24px;
+            box-shadow: 0 18px 55px rgba(87, 49, 104, 0.09);
+            animation: aparecer 0.35s ease;
+        }
+
+        /* Centrar solamente la pantalla de preguntas.
+           La tarjeta conserva su altura natural. */
+
+        body:has(#test:not(.hidden)) main.container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 0;
+        }
+
+        #test:not(.hidden) {
+            min-height: 0;
+            margin: 0 auto;
+        }
+
+        /* Los resultados pueden ocupar más de una pantalla. */
+
+        body:has(#resultado:not(.hidden)) main.container {
+            display: block;
+            padding: 24px 0;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .small {
+            font-size: 13px;
+        }
+
+        h2 {
+            font-size: 25px;
+            line-height: 1.5;
+            font-weight: 700;
+        }
+
+        h3 {
+            margin-top: 5px;
+            color: var(--primary-dark);
+        }
+
+        p {
+            line-height: 1.8;
+        }
+
+        /* ===== CONTADOR Y PROGRESO ===== */
+
+        #contador {
+            display: inline-block;
+            padding: 8px 13px;
+            border-radius: 30px;
+            background: #f3e9f9;
+            color: var(--primary-dark);
+            font-size: 14px;
+        }
+
+        .progress {
+            height: 9px;
+            margin: 20px 0 30px;
+            overflow: hidden;
+            border-radius: 30px;
+            background: #eee7f2;
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 100%;
+            border-radius: 30px;
+            background: linear-gradient(90deg, #d88eb9, #9455b0);
+            transition: width 0.35s ease;
+        }
+
+        #pregunta {
+            margin-top: 0;
+            color: #514269;
+        }
+
+        /* ===== OPCIONES DE RESPUESTA ===== */
+
+        #opciones {
+            margin-top: 22px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 58px;
+            margin: 12px 0;
+            padding: 15px 20px;
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            background: white;
+            color: var(--text);
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s, transform 0.2s;
+        }
+
+            .option:hover {
+                border-color: #c39bd5;
+                background: #fcf8ff;
+                transform: translateY(-1px);
+            }
+
+            .option:has(input:checked) {
+                border-color: var(--primary);
+                background: #f7effb;
+                color: var(--primary-dark);
+            }
+
+            .option input {
+                width: 19px;
+                height: 19px;
+                flex-shrink: 0;
+                accent-color: var(--primary);
+                cursor: pointer;
+            }
+
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 48px;
+            padding: 13px 25px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #a56bc0, #8650a4);
+            color: white;
+            font-size: 15px;
+            font-weight: 650;
+            cursor: pointer;
+            box-shadow: 0 7px 18px rgba(146, 81, 168, 0.22);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+            .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 24px rgba(146, 81, 168, 0.3);
+            }
+
+        .btn-secondary {
+            color: var(--primary-dark);
+            background: #f2eaf7;
+            box-shadow: none;
+        }
+
+            .btn-secondary:hover {
+                background: #e8daf1;
+                box-shadow: none;
+            }
+
+        #anterior {
+            margin-top: 15px;
+        }
+
+        /* ===== RESULTADO ===== */
+
+        .score-circle {
+            position: relative;
+            width: 190px;
+            height: 190px;
+            margin: 25px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: conic-gradient( #9251a8 0%, #dc8fb9 0%, #eee7f2 0% );
+        }
+
+            .score-circle::before {
+                content: "";
+                position: absolute;
+                inset: 17px;
+                border-radius: 50%;
+                background: white;
+            }
+
+        #porcentaje {
+            position: relative;
+            z-index: 1;
+            color: var(--primary-dark);
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .result-box {
+            margin: 25px 0;
+            padding: 24px;
+            border: 1px solid #eee1f5;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #faf5ff, #fff7fb);
+        }
+
+        .category-item {
+            margin: 20px 0;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .category-track {
+            height: 9px;
+            overflow: hidden;
+            border-radius: 20px;
+            background: #eee7f2;
+        }
+
+        .category-fill {
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #dc8fb9, #9251a8);
+            transition: width 0.5s ease;
+        }
+
+        .advice {
+            margin: 15px 0;
+            padding: 19px 21px;
+            border: 1px solid #eee4f3;
+            border-left: 4px solid var(--pink);
+            border-radius: 12px;
+            background: #fffafd;
+        }
+
+            .advice p {
+                margin-bottom: 5px;
+            }
+
+        /* ===== ANIMACIONES ===== */
+
+        @@keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== PANTALLAS PEQUEÑAS ===== */
+
+        @@media (max-width: 600px) {
+            #inicio {
+                min-height: 100vh;
+                padding: 16px 12px;
+            }
+
+            .tarjeta-inicio {
+                padding: 26px 18px 20px;
+                border-radius: 22px;
+            }
+
+            .icono-corazon {
+                width: 65px;
+                height: 65px;
+                font-size: 35px;
+            }
+
+            .tarjeta-inicio h1 {
+                font-size: 32px;
+            }
+
+            .subtitulo {
+                font-size: 15px;
+            }
+
+            .detalles {
+                font-size: 13px;
+                margin: 15px 0 20px;
+            }
+
+            .btn-comenzar {
+                min-width: 0;
+                width: 100%;
+                padding: 16px 12px;
+                font-size: 16px;
+            }
+
+            .aviso {
+                font-size: 11px;
+            }
+
+            .beneficios {
+                gap: 3px;
+            }
+
+            .beneficio {
+                padding: 0 3px;
+                font-size: 11px;
+                text-align: center;
+            }
+
+            .beneficio-icono {
+                font-size: 26px;
+            }
+
+            .card {
+                width: calc(100% - 24px);
+                padding: 24px 18px;
+                border-radius: 20px;
+            }
+
+            body:has(#test:not(.hidden)) main.container {
+                padding: 12px 0;
+            }
+
+            body:has(#resultado:not(.hidden)) main.container {
+                padding: 12px 0;
+            }
+
+            h2 {
+                font-size: 21px;
+            }
+
+            .option {
+                padding: 14px;
+            }
+
+            .btn {
+                max-width: 100%;
+            }
+
+            .score-circle {
+                width: 165px;
+                height: 165px;
+            }
+
+                .score-circle::before {
+                    inset: 15px;
+                }
+
+            #porcentaje {
+                font-size: 36px;
+            }
+
+            body::before {
+                width: 260px;
+                height: 260px;
+            }
+
+            body::after {
+                width: 280px;
+                height: 280px;
+            }
+        }
+
+        /* Ajuste para escritorio con poca altura */
+
+        @@media (min-width: 601px) and (max-height: 760px) {
+            .tarjeta-inicio {
+                padding-top: 22px;
+                padding-bottom: 20px;
+            }
+
+            .icono-corazon {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 10px;
+            }
+
+                .icono-corazon span {
+                    font-size: 34px;
+                }
+
+            .tarjeta-inicio h1 {
+                font-size: 34px;
+            }
+
+            .subtitulo {
+                font-size: 16px;
+            }
+
+            .detalles {
+                margin: 10px 0 16px;
+            }
+
+            .aviso {
+                margin: 14px auto;
+            }
+
+            .beneficios {
+                padding-top: 12px;
+            }
+        }
+
+        @@media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+
+        <!-- ===== PANTALLA INICIAL ===== -->
+
+        <section id="inicio">
+            <div class="tarjeta-inicio">
+
+                <div class="icono-corazon">
+                    <span>♥</span>
+                </div>
+
+                <h1>Test de Patrones</h1>
+
+                <p class="subtitulo">
+                    Reflexiona sobre los comportamientos, la comunicación
+                    y la confianza dentro de tu relación.
+                </p>
+
+                <p class="detalles">
+                    <span>12 preguntas</span>
+                    <span class="separador">·</span>
+                    <span>Resultado personalizado</span>
+                    <span class="separador">·</span>
+                    <span>3–5 minutos</span>
+                </p>
+
+                <button type="button" id="comenzar" class="btn-comenzar">
+                    Comenzar test <span class="flecha">→</span>
+                </button>
+
+                <div class="volver-inicio">
+                    <a href="@Url.Action("Index", "Home")" class="btn-volver">
+                        ← Volver a Amor Bajo Lupa
+                    </a>
+                </div>
+
+                <p class="aviso">
+                    Este test es orientativo. Las respuestas no demuestran
+                    una infidelidad ni calculan su probabilidad real.
+                </p>
+
+                <div class="linea-divisoria"></div>
+
+                <div class="beneficios">
+                    <div class="beneficio">
+                        <span class="beneficio-icono">♡</span>
+                        <span>Reflexión personal</span>
+                    </div>
+
+                    <div class="beneficio">
+                        <span class="beneficio-icono">▥</span>
+                        <span>Resultado orientativo</span>
+                    </div>
+
+                    <div class="beneficio">
+                        <span class="beneficio-icono">♙</span>
+                        <span>Privacidad</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== PANTALLA DE PREGUNTAS ===== -->
+
+        <section id="test" class="card hidden">
+
+            <div id="contador">
+                Pregunta 1 de 12
+            </div>
+
+            <div class="progress">
+                <div id="barra" class="progress-bar"></div>
+            </div>
+
+            <h2 id="pregunta"></h2>
+
+            <p class="muted">
+                Selecciona una respuesta para continuar.
+            </p>
+
+            <div id="opciones"></div>
+
+            <div class="center">
+                <button type="button" id="anterior"
+                        class="btn btn-secondary hidden">
+                    Pregunta anterior
+                </button>
+            </div>
+
+        </section>
+
+        <!-- ===== PANTALLA DE RESULTADOS ===== -->
+
+        <section id="resultado" class="card hidden">
+
+            <div class="center">
+                <div class="icono-corazon">
+                    <span>♥</span>
+                </div>
+
+                <h1>Tu resultado</h1>
+
+                <p class="muted">Indicador de patrones observados</p>
+
+                <div class="score-circle" id="scoreCircle">
+                    <span id="porcentaje">0%</span>
+                </div>
+
+                <h2 id="nivel"></h2>
+            </div>
+
+            <div class="result-box">
+                <h2>¿Qué significa?</h2>
+                <p id="descripcion"></p>
+            </div>
+
+            <h2>Resumen por categorías</h2>
+
+            <p class="muted">
+                Revisa qué temas destacaron en tus respuestas.
+            </p>
+
+            <div id="categoriasVisuales"></div>
+
+            <h2>Observaciones y consejos</h2>
+
+            <div id="consejos"></div>
+
+            <p class="muted small">
+                Un puntaje alto no significa que exista infidelidad.
+                Estas respuestas solo reflejan conductas que pueden
+                motivar una conversación. El contexto y la comunicación
+                son fundamentales.
+            </p>
+            <p id="estadoGuardado" class="muted small center"
+               aria-live="polite"></p>
+
+            <div style="display:none">
+                @Html.AntiForgeryToken()
+            </div>
+            <div class="center">
+                <button type="button" id="reiniciar" class="btn">
+                    Volver a comenzar
+                </button>
+            </div>
+            <div class="volver-inicio">
+                <a href="@Url.Action("Index", "Home")" class="btn-volver">
+                    ← Volver a Amor Bajo Lupa
+                </a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // ==========================================
+        // PREGUNTAS Y RESPUESTAS PERSONALIZADAS
+        // Valores: 0 = bajo, 2 = intermedio, 5 = alto.
+        // Son indicadores orientativos, no probabilidades.
+        // ==========================================
+
+        const preguntas = [
+            {
+                texto: "¿Deja el celular boca abajo o con la pantalla apagada cuando están juntos?",
+                categoria: "Digital",
+                peso: 3,
+                opciones: [
+                    { texto: "Nunca", valor: 0 },
+                    { texto: "A veces", valor: 2 },
+                    { texto: "Siempre", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Se molesta o cambia de tema cuando le preguntas con quién chateaba?",
+                categoria: "Comunicación",
+                peso: 3,
+                opciones: [
+                    { texto: "No, responde con tranquilidad", valor: 0 },
+                    { texto: "A veces evita responder", valor: 2 },
+                    { texto: "Sí, suele molestarse o cambiar de tema", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Has notado cambios recientes en sus hábitos personales que no han conversado?",
+                categoria: "Cambios",
+                peso: 2,
+                opciones: [
+                    { texto: "No he notado cambios importantes", valor: 0 },
+                    { texto: "He notado algún cambio reciente", valor: 2 },
+                    { texto: "He notado varios cambios recientes", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Has notado que archiva chats, oculta conversaciones o las borra con frecuencia?",
+                categoria: "Digital",
+                peso: 3,
+                opciones: [
+                    { texto: "Nunca he notado ese comportamiento", valor: 0 },
+                    { texto: "Lo he notado algunas veces", valor: 2 },
+                    { texto: "Lo he notado con frecuencia", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Dice que trabajará hasta tarde o saldrá con amigos, pero evita dar detalles de sus planes?",
+                categoria: "Tiempo",
+                peso: 2,
+                opciones: [
+                    { texto: "Suele contarme sus planes con naturalidad", valor: 0 },
+                    { texto: "A veces da pocos detalles", valor: 2 },
+                    { texto: "Frecuentemente evita hablar de sus planes", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Mantiene contacto frecuente con su expareja mediante mensajes, likes o comentarios?",
+                categoria: "Límites",
+                peso: 2,
+                opciones: [
+                    { texto: "No he observado ese tipo de contacto", valor: 0 },
+                    { texto: "Hay contacto ocasional", valor: 2 },
+                    { texto: "Hay contacto frecuente que me genera dudas", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Ha disminuido su interés en hacer planes a futuro contigo?",
+                categoria: "Comunicación",
+                peso: 2,
+                opciones: [
+                    { texto: "No, mantiene el mismo interés", valor: 0 },
+                    { texto: "Sí, ha disminuido un poco", valor: 2 },
+                    { texto: "Sí, ha disminuido mucho", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Has notado que oculta o niega el uso de otras cuentas de redes sociales?",
+                categoria: "Digital",
+                peso: 3,
+                opciones: [
+                    { texto: "No he notado que oculte otras cuentas", valor: 0 },
+                    { texto: "Tengo dudas, pero no lo he aclarado", valor: 2 },
+                    { texto: "He notado que oculta o niega otras cuentas", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Se ríe o reacciona a algo en el celular, pero evita contarte qué le causa gracia?",
+                categoria: "Comunicación",
+                peso: 1,
+                opciones: [
+                    { texto: "Suele contarme qué le causa gracia", valor: 0 },
+                    { texto: "A veces prefiere no contármelo", valor: 2 },
+                    { texto: "Frecuentemente evita responder", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Menciona repetidamente a una persona nueva de su trabajo o universidad, o te compara con ella?",
+                categoria: "Límites",
+                peso: 2,
+                opciones: [
+                    { texto: "No suele mencionarla ni compararme", valor: 0 },
+                    { texto: "La menciona ocasionalmente", valor: 2 },
+                    { texto: "La menciona mucho o hace comparaciones", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Ha cambiado la forma en que maneja la privacidad de sus dispositivos respecto a antes?",
+                categoria: "Digital",
+                peso: 3,
+                opciones: [
+                    { texto: "No he notado cambios importantes", valor: 0 },
+                    { texto: "Ha habido algunos cambios", valor: 2 },
+                    { texto: "Ha habido un cambio importante que no hemos conversado", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Sientes que evita compartir aspectos de su día a día contigo, aunque hablan a diario?",
+                categoria: "Comunicación",
+                peso: 1,
+                opciones: [
+                    { texto: "Suele compartir su día conmigo", valor: 0 },
+                    { texto: "A veces siento que omite cosas", valor: 2 },
+                    { texto: "Frecuentemente siento que evita contarme cosas", valor: 5 }
+                ]
+            }
+        ];
+
+        // ==========================================
+        // ESTADO DEL TEST
+        // ==========================================
+
+        let indice = 0;
+        let respuestas = new Array(preguntas.length).fill(null);
+        let avancePendiente = false;
+
+        const inicio = document.getElementById("inicio");
+        const test = document.getElementById("test");
+        const resultado = document.getElementById("resultado");
+
+        // ==========================================
+        // INICIAR TEST
+        // ==========================================
+
+        document.getElementById("comenzar").addEventListener("click", function () {
+            indice = 0;
+            respuestas.fill(null);
+            avancePendiente = false;
+
+            inicio.classList.add("hidden");
+            resultado.classList.add("hidden");
+            test.classList.remove("hidden");
+
+            mostrarPregunta();
+        });
+
+        // ==========================================
+        // MOSTRAR PREGUNTA Y SUS OPCIONES PROPIAS
+        // ==========================================
+
+        function mostrarPregunta() {
+            const actual = preguntas[indice];
+
+            document.getElementById("contador").textContent =
+                "Pregunta " + (indice + 1) + " de " + preguntas.length;
+
+            document.getElementById("barra").style.width =
+                ((indice + 1) / preguntas.length * 100) + "%";
+
+            document.getElementById("pregunta").textContent = actual.texto;
+
+            const contenedor = document.getElementById("opciones");
+            contenedor.innerHTML = "";
+
+            actual.opciones.forEach(function (opcion, numero) {
+                const label = document.createElement("label");
+                label.className = "option";
+
+                const radio = document.createElement("input");
+                radio.type = "radio";
+                radio.name = "respuesta";
+                radio.value = opcion.valor;
+                radio.checked = respuestas[indice] === opcion.valor;
+
+                const texto = document.createElement("span");
+                texto.textContent = opcion.texto;
+
+                label.appendChild(radio);
+                label.appendChild(texto);
+                contenedor.appendChild(label);
+
+                radio.addEventListener("change", function () {
+                    // Evita avanzar más de una vez por selección.
+                    if (avancePendiente) {
+                        return;
+                    }
+
+                    respuestas[indice] = opcion.valor;
+                    avancePendiente = true;
+
+                    // Permite ver brevemente la selección.
+                    window.setTimeout(function () {
+                        avancePendiente = false;
+
+                        if (indice < preguntas.length - 1) {
+                            indice++;
+                            mostrarPregunta();
+                        } else {
+                            mostrarResultado();
+                        }
+                    }, 220);
+                });
+            });
+
+            document.getElementById("anterior")
+                .classList.toggle("hidden", indice === 0);
+        }
+
+        // ==========================================
+        // VOLVER A LA PREGUNTA ANTERIOR
+        // ==========================================
+
+        document.getElementById("anterior").addEventListener("click", function () {
+            if (avancePendiente) {
+                return;
+            }
+
+            if (indice > 0) {
+                indice--;
+                mostrarPregunta();
+            }
+        });
+
+        // ==========================================
+        // CALCULAR RESULTADOS
+        // ==========================================
+
+        function mostrarResultado() {
+            test.classList.add("hidden");
+            resultado.classList.remove("hidden");
+
+            let puntos = 0;
+            let maximo = 0;
+
+            const puntajesCategoria = {};
+
+            preguntas.forEach(function (pregunta, i) {
+                const valor = respuestas[i] === null ? 0 : respuestas[i];
+                const subtotal = valor * pregunta.peso;
+
+                puntos += subtotal;
+                maximo += 5 * pregunta.peso;
+
+                if (!puntajesCategoria[pregunta.categoria]) {
+                    puntajesCategoria[pregunta.categoria] = {
+                        puntos: 0,
+                        maximo: 0
+                    };
+                }
+
+                puntajesCategoria[pregunta.categoria].puntos += subtotal;
+                puntajesCategoria[pregunta.categoria].maximo +=
+                    5 * pregunta.peso;
+            });
+
+            const porcentaje = maximo > 0
+                ? Math.round((puntos / maximo) * 100)
+                : 0;
+
+            document.getElementById("porcentaje").textContent =
+                porcentaje + "%";
+
+            document.getElementById("scoreCircle").style.background =
+                "conic-gradient(#9251a8 0%, #dc8fb9 " +
+                porcentaje + "%, #eee7f2 " + porcentaje + "% 100%)";
+
+            let nivel;
+            let descripcion;
+
+            if (porcentaje <= 20) {
+                nivel = "Pocos patrones señalados";
+                descripcion =
+                    "Tus respuestas señalan pocos de los comportamientos " +
+                    "consultados. Esto no garantiza que no existan " +
+                    "dificultades en la relación.";
+            } else if (porcentaje <= 45) {
+                nivel = "Algunos aspectos para conversar";
+                descripcion =
+                    "Algunas respuestas señalan situaciones que podrías " +
+                    "conversar con tu pareja para aclarar dudas y comprender " +
+                    "mejor cómo se siente cada uno.";
+            } else if (porcentaje <= 70) {
+                nivel = "Varios aspectos que merecen atención";
+                descripcion =
+                    "Has señalado varios comportamientos que te generan " +
+                    "inquietud. Revisa el contexto de cada respuesta y " +
+                    "busca una conversación honesta y respetuosa.";
+            } else {
+                nivel = "Muchos patrones señalados";
+                descripcion =
+                    "Tus respuestas coinciden con muchos de los patrones " +
+                    "consultados. Esto no demuestra infidelidad. Puede ser " +
+                    "útil hablar sobre confianza, límites y necesidades.";
+            }
+
+            document.getElementById("nivel").textContent = nivel;
+            document.getElementById("descripcion").textContent = descripcion;
+
+            generarGraficoCategorias(puntajesCategoria);
+            generarConsejos(puntajesCategoria);
+            // Identificar la categoría principal
+            let categoriaPrincipal = "";
+            let mayorPorcentaje = -1;
+
+            Object.keys(puntajesCategoria).forEach(function (categoria) {
+                const datos = puntajesCategoria[categoria];
+
+                const porcentajeCategoria = datos.maximo > 0
+                    ? (datos.puntos / datos.maximo) * 100
+                    : 0;
+
+                if (porcentajeCategoria > mayorPorcentaje) {
+                    mayorPorcentaje = porcentajeCategoria;
+                    categoriaPrincipal = categoria;
+                }
+            });
+
+            // Guardar el resultado anónimo
+            guardarResultado(porcentaje, categoriaPrincipal);
+
+            // Lleva los resultados al principio de la página.
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+
+function guardarResultado(porcentaje, categoriaPrincipal) {
+
+    const estado = document.getElementById("estadoGuardado");
+    estado.textContent = "Guardando tu resultado...";
+
+    const token = document.querySelector(
+        'input[name="__RequestVerificationToken"]'
+    ).value;
+
+    const datos = new URLSearchParams();
+
+    datos.append("porcentaje", porcentaje);
+    datos.append("categoriaPrincipal", categoriaPrincipal);
+    datos.append("__RequestVerificationToken", token);
+
+    const solicitud = new XMLHttpRequest();
+
+    solicitud.open(
+        "POST",
+        '@Url.Action("GuardarResultado", "Home")',
+        true
+    );
+
+    solicitud.setRequestHeader(
+        "Content-Type",
+        "application/x-www-form-urlencoded; charset=UTF-8"
+    );
+
+    solicitud.onreadystatechange = function () {
+
+        if (solicitud.readyState === 4) {
+
+            try {
+                const respuesta = JSON.parse(solicitud.responseText);
+
+                if (solicitud.status === 200 && respuesta.ok) {
+                    estado.textContent = "✓ Resultado guardado correctamente.";
+                } else {
+                    estado.textContent = "No se pudo guardar: " + respuesta.mensaje;
+                }
+
+            } catch (error) {
+                estado.textContent = "No se pudo confirmar el guardado del resultado.";
+            }
+        }
+    };
+
+    solicitud.send(datos.toString());
+}
+
+
+
+
+        // ==========================================
+        // CONSEJOS SEGÚN LAS CATEGORÍAS
+        // ==========================================
+
+        function generarConsejos(categorias) {
+            const consejos = {
+                "Digital": {
+                    titulo: "Privacidad y confianza digital",
+                    texto:
+                        "Hablen sobre qué significa la privacidad para " +
+                        "cada uno y qué acuerdos desean tener. Tener otra " +
+                        "cuenta o proteger un dispositivo no demuestra " +
+                        "engaño por sí solo. La confianza requiere respeto mutuo."
+                },
+                "Comunicación": {
+                    titulo: "Comunicación emocional",
+                    texto:
+                        "Expresa lo que sientes con ejemplos concretos, " +
+                        "sin acusaciones. Escucha también su perspectiva " +
+                        "y acuerden un momento tranquilo para conversar."
+                },
+                "Cambios": {
+                    titulo: "Cambios de hábitos",
+                    texto:
+                        "Los cambios personales no son prueba de engaño. " +
+                        "Pregunta con curiosidad cómo se encuentra y qué " +
+                        "nuevas actividades son importantes para esa persona."
+                },
+                "Tiempo": {
+                    titulo: "Tiempo y disponibilidad",
+                    texto:
+                        "Conversen sobre sus horarios, planes y expectativas " +
+                        "de comunicación. Busquen acuerdos realistas sin " +
+                        "convertir la relación en una obligación de informar " +
+                        "cada movimiento."
+                },
+                "Límites": {
+                    titulo: "Límites y acuerdos de pareja",
+                    texto:
+                        "Hablen de qué consideran apropiado respecto a " +
+                        "exparejas, amistades y nuevas relaciones. Los límites " +
+                        "deben acordarse entre ambos y no imponerse mediante " +
+                        "control o amenazas."
+                }
+            };
+
+            const contenedor = document.getElementById("consejos");
+            contenedor.innerHTML = "";
+
+            let encontrados = 0;
+
+            Object.keys(categorias).forEach(function (categoria) {
+                const datos = categorias[categoria];
+
+                const porcentajeCategoria =
+                    datos.maximo > 0
+                        ? (datos.puntos / datos.maximo) * 100
+                        : 0;
+
+                if (porcentajeCategoria >= 40 && consejos[categoria]) {
+                    encontrados++;
+
+                    const bloque = document.createElement("div");
+                    bloque.className = "advice";
+
+                    const titulo = document.createElement("h3");
+                    titulo.textContent = consejos[categoria].titulo;
+
+                    const texto = document.createElement("p");
+                    texto.textContent = consejos[categoria].texto;
+
+                    bloque.appendChild(titulo);
+                    bloque.appendChild(texto);
+                    contenedor.appendChild(bloque);
+                }
+            });
+
+            if (encontrados === 0) {
+                const texto = document.createElement("p");
+
+                texto.textContent =
+                    "No hay una categoría destacada según el criterio " +
+                    "utilizado. Aun así, pueden conversar regularmente " +
+                    "sobre confianza, comunicación y expectativas.";
+
+                contenedor.appendChild(texto);
+            }
+        }
+
+        // ==========================================
+        // GRÁFICO POR CATEGORÍAS
+        // ==========================================
+
+        function generarGraficoCategorias(categorias) {
+            const contenedor =
+                document.getElementById("categoriasVisuales");
+
+            contenedor.innerHTML = "";
+
+            Object.keys(categorias).forEach(function (categoria) {
+                const datos = categorias[categoria];
+
+                const porcentaje = datos.maximo > 0
+                    ? Math.round((datos.puntos / datos.maximo) * 100)
+                    : 0;
+
+                const item = document.createElement("div");
+                item.className = "category-item";
+
+                const encabezado = document.createElement("div");
+                encabezado.className = "category-header";
+
+                const nombre = document.createElement("strong");
+                nombre.textContent = categoria;
+
+                const valor = document.createElement("span");
+                valor.textContent = porcentaje + "%";
+
+                encabezado.appendChild(nombre);
+                encabezado.appendChild(valor);
+
+                const pista = document.createElement("div");
+                pista.className = "category-track";
+
+                const barra = document.createElement("div");
+                barra.className = "category-fill";
+                barra.style.width = porcentaje + "%";
+
+                pista.appendChild(barra);
+                item.appendChild(encabezado);
+                item.appendChild(pista);
+
+                contenedor.appendChild(item);
+            });
+        }
+
+        // ==========================================
+        // REINICIAR EL TEST
+        // ==========================================
+
+        document.getElementById("reiniciar").addEventListener("click", function () {
+            indice = 0;
+            respuestas.fill(null);
+            avancePendiente = false;
+
+            resultado.classList.add("hidden");
+            test.classList.add("hidden");
+            inicio.classList.remove("hidden");
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    </script>
+</body>
+</html>

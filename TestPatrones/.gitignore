@@ -1,0 +1,12 @@
+﻿# Configuración privada
+/Web.config
+
+# Archivos temporales de Visual Studio
+.vs/
+bin/
+obj/
+*.user
+*.suo
+
+# Archivos temporales
+*.log

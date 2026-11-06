@@ -1,0 +1,1225 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "¿Qué está ocultando? - Amor Bajo Lupa";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>¿Qué está ocultando? | Amor Bajo Lupa</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #30283a;
+            background: linear-gradient(135deg, #f1e5ff 0%, #fbf5ff 48%, #ffe8f3 100%);
+            padding: 30px 16px;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        .encabezado {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .marca {
+            color: #713787;
+            font-size: 25px;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: .3px;
+        }
+
+        .contenedor {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .tarjeta {
+            background: rgba(255,255,255,.94);
+            border-radius: 28px;
+            padding: 38px;
+            box-shadow: 0 12px 40px rgba(91, 50, 115, .12);
+            border: 1px solid rgba(255,255,255,.8);
+        }
+
+        .etiqueta {
+            display: inline-block;
+            background: #f2e5fa;
+            color: #713787;
+            border-radius: 30px;
+            padding: 8px 17px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #713787;
+            font-size: 32px;
+            margin: 0 0 12px;
+            text-align: center;
+        }
+
+        .descripcion {
+            text-align: center;
+            color: #81788b;
+            line-height: 1.7;
+            max-width: 650px;
+            margin: 0 auto 28px;
+        }
+
+        .aviso {
+            background: #fff5fa;
+            border-left: 4px solid #dc8fb9;
+            border-radius: 12px;
+            padding: 14px 17px;
+            color: #6f596b;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .datos-pregunta {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            color: #81788b;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .categoria {
+            color: #9251a8;
+            font-weight: 700;
+        }
+
+        .barra-fondo {
+            width: 100%;
+            height: 10px;
+            background: #eee6f3;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        .barra-progreso {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #9251a8, #dc8fb9);
+            border-radius: 20px;
+            transition: width .3s ease;
+        }
+
+        .numero {
+            color: #dc8fb9;
+            font-weight: 800;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .pregunta {
+            font-size: 22px;
+            color: #30283a;
+            line-height: 1.5;
+            margin: 0 0 25px;
+        }
+
+        .opciones {
+            display: grid;
+            gap: 13px;
+        }
+
+        .opcion {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            border: 2px solid #eee7f2;
+            border-radius: 15px;
+            padding: 16px 18px;
+            cursor: pointer;
+            transition: .2s ease;
+            color: #51475a;
+            line-height: 1.5;
+        }
+
+        .opcion:hover {
+            border-color: #c99bd9;
+            background: #fcf8ff;
+        }
+
+        .opcion.seleccionada {
+            border-color: #9251a8;
+            background: #f7edfc;
+            color: #713787;
+            font-weight: 600;
+        }
+
+        .opcion input {
+            accent-color: #9251a8;
+            width: 19px;
+            height: 19px;
+            flex-shrink: 0;
+        }
+
+        .navegacion {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 30px;
+            padding: 13px 27px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .btn-principal {
+            color: white;
+            background: linear-gradient(135deg, #9251a8, #bd79bd);
+            box-shadow: 0 5px 14px rgba(146, 81, 168, .2);
+        }
+
+        .btn-principal:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(146, 81, 168, .3);
+        }
+
+        .btn-secundario {
+            background: #f1e8f5;
+            color: #713787;
+        }
+
+        .btn:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .ayuda {
+            text-align: center;
+            color: #a096aa;
+            font-size: 12px;
+            margin-top: 18px;
+        }
+
+        /* Resultados */
+
+        .resultado {
+            text-align: center;
+        }
+
+        .circulo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 25px auto;
+            background: linear-gradient(135deg, #9251a8, #dc8fb9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 8px 25px rgba(146, 81, 168, .2);
+        }
+
+        .circulo strong {
+            font-size: 38px;
+        }
+
+        .circulo span {
+            font-size: 12px;
+        }
+
+        .mensaje-resultado {
+            background: #fbf5ff;
+            padding: 20px;
+            border-radius: 16px;
+            color: #66556d;
+            line-height: 1.7;
+            margin: 20px 0;
+        }
+
+        .subtitulo {
+            color: #713787;
+            font-size: 20px;
+            margin-top: 32px;
+            margin-bottom: 17px;
+        }
+
+        .categoria-resultado {
+            text-align: left;
+            margin-bottom: 17px;
+        }
+
+        .categoria-cabecera {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .categoria-cabecera strong {
+            color: #713787;
+        }
+
+        .categoria-barra {
+            height: 9px;
+            background: #eee6f3;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .categoria-relleno {
+            height: 100%;
+            background: linear-gradient(90deg, #9251a8, #dc8fb9);
+            border-radius: 20px;
+        }
+
+        .nota-final {
+            color: #81788b;
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 25px 0;
+        }
+
+        .acciones-resultado {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        @@media (max-width: 600px) {
+            body {
+                padding: 18px 10px;
+            }
+
+            .tarjeta {
+                padding: 25px 19px;
+                border-radius: 22px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .pregunta {
+                font-size: 19px;
+            }
+
+            .navegacion {
+                flex-direction: column-reverse;
+            }
+
+            .navegacion .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    @Html.AntiForgeryToken()
+
+
+    <main class="contenedor">
+
+        <section class="tarjeta" id="tarjetaTest">
+
+            <div style="text-align:center;">
+                <span class="etiqueta">TEST AVANZADO · 30 PREGUNTAS</span>
+            </div>
+
+            <h1>¿Qué está ocultando?</h1>
+
+            <p class="descripcion">
+                Una evaluación más profunda sobre la comunicación,
+                la confianza, los comportamientos y los límites dentro
+                de tu relación.
+            </p>
+
+
+            <div class="datos-pregunta">
+                <span id="contador">Pregunta 1 de 30</span>
+                <span class="categoria" id="nombreCategoria">Digital</span>
+            </div>
+
+            <div class="barra-fondo">
+                <div class="barra-progreso" id="barraProgreso"></div>
+            </div>
+
+            <div class="numero" id="numeroPregunta">PREGUNTA 01</div>
+
+            <h2 class="pregunta" id="textoPregunta"></h2>
+
+            <div class="opciones" id="opciones"></div>
+
+            <div class="navegacion">
+                <button type="button" class="btn btn-secundario"
+                        id="btnAnterior" disabled>
+                    Anterior
+                </button>
+
+
+            </div>
+            <div style="margin-top: 15px;">
+                <a href="@Url.Action("Index", "Home")"
+                   class="btn btn-secundario"
+                   style="display: inline-block; text-decoration: none;">
+                    ← Volver a la página principal
+                </a>
+            </div>
+
+            <p class="ayuda">
+                Selecciona una respuesta para continuar.
+            </p>
+            <p class="ayuda" id="estadoGuardado" hidden>
+            </p>
+
+        </section>
+
+        <section class="tarjeta resultado" id="tarjetaResultado" hidden>
+
+            <span class="etiqueta">ANÁLISIS COMPLETADO</span>
+
+            <h1>Tu resultado</h1>
+
+            <p class="descripcion">
+                Este resultado representa las situaciones que identificaste
+                durante el test. No es una medida de infidelidad.
+            </p>
+
+            <div class="circulo">
+                <strong id="porcentaje">0%</strong>
+                <span>Índice orientativo</span>
+            </div>
+
+            <h2 id="tituloResultado" style="color:#713787;"></h2>
+
+            <div class="mensaje-resultado" id="mensajeResultado"></div>
+
+            <h3 class="subtitulo">Resultado por categorías</h3>
+
+            <div id="resultadosCategorias"></div>
+
+            <p class="nota-final">
+                Recuerda que una puntuación elevada no demuestra engaño.
+                Los cambios de comportamiento pueden tener distintas
+                explicaciones. Lo más importante es conversar sobre lo que
+                te preocupa, establecer acuerdos claros y valorar cómo se
+                sienten ambas personas dentro de la relación.
+            </p>
+
+            <div class="acciones-resultado">
+                <button type="button" class="btn btn-principal"
+                        id="btnReiniciar">
+                    Repetir test
+                </button>
+
+                <a href="@Url.Action("Index", "Home")"
+                   class="btn btn-secundario"
+                   style="text-decoration:none; display:inline-block;">
+                    Volver al inicio
+                </a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+
+        // ==========================================
+        // PREGUNTAS DEL TEST AVANZADO
+        // 30 preguntas - 5 categorías
+        // ==========================================
+
+        const preguntas = [
+
+            // ======================================
+            // CATEGORÍA 1: DIGITAL (6 preguntas)
+            // ======================================
+
+            {
+                texto: "¿Han conversado sobre qué consideran privacidad y qué consideran ocultar dentro del uso de dispositivos y redes sociales?",
+                categoria: "Digital",
+                peso: 3,
+                opciones: [
+                    { texto: "Sí, tenemos acuerdos claros y los respetamos", valor: 0 },
+                    { texto: "Lo hemos hablado, pero todavía hay diferencias", valor: 2 },
+                    { texto: "Nunca hemos llegado a un acuerdo y esto genera conflictos", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Has observado cambios importantes en la manera en que interactúa públicamente en redes sociales?",
+                categoria: "Digital",
+                peso: 2,
+                opciones: [
+                    { texto: "No, su comportamiento se mantiene como siempre", valor: 0 },
+                    { texto: "Sí, he notado algunos cambios", valor: 2 },
+                    { texto: "Sí, hay cambios frecuentes que no hemos conversado", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Cuando hablan sobre interacciones digitales con otras personas, logran aclarar las dudas sin discusiones?",
+                categoria: "Digital",
+                peso: 2,
+                opciones: [
+                    { texto: "Sí, podemos hablarlo tranquilamente", valor: 0 },
+                    { texto: "A veces la conversación se vuelve incómoda", valor: 2 },
+                    { texto: "Generalmente evita hablar del tema o terminamos discutiendo", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Han tenido desacuerdos sobre el tipo de conversaciones o interacciones que consideran apropiadas en internet?",
+                categoria: "Digital",
+                peso: 2,
+                opciones: [
+                    { texto: "No, coincidimos en nuestros acuerdos", valor: 0 },
+                    { texto: "Tenemos algunas diferencias", valor: 2 },
+                    { texto: "Es un problema recurrente que no hemos resuelto", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Sientes que existen diferencias entre los acuerdos digitales que tienen como pareja y las conductas que observas?",
+                categoria: "Digital",
+                peso: 3,
+                opciones: [
+                    { texto: "No, sus acciones coinciden con nuestros acuerdos", valor: 0 },
+                    { texto: "En algunas ocasiones he notado diferencias", valor: 2 },
+                    { texto: "Frecuentemente observo comportamientos que contradicen nuestros acuerdos", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Las conversaciones sobre privacidad digital terminan sin aclarar tus inquietudes?",
+                categoria: "Digital",
+                peso: 2,
+                opciones: [
+                    { texto: "No, normalmente llegamos a entendernos", valor: 0 },
+                    { texto: "Algunas inquietudes quedan pendientes", valor: 2 },
+                    { texto: "Casi nunca conseguimos aclarar el tema", valor: 5 }
+                ]
+            },
+
+            // ======================================
+            // CATEGORÍA 2: COMUNICACIÓN (6 preguntas)
+            // ======================================
+
+            {
+                texto: "¿Has notado que la explicación de una misma situación cambia cuando vuelven a conversar sobre ella?",
+                categoria: "Comunicación",
+                peso: 3,
+                opciones: [
+                    { texto: "No, mantiene una explicación coherente", valor: 0 },
+                    { texto: "A veces recuerda o explica algunos detalles de otra manera", valor: 2 },
+                    { texto: "Con frecuencia encuentro contradicciones que no se aclaran", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Puedes expresar tus dudas o preocupaciones sin sentir que serán ridiculizadas o minimizadas?",
+                categoria: "Comunicación",
+                peso: 2,
+                opciones: [
+                    { texto: "Sí, escucha y toma en cuenta lo que siento", valor: 0 },
+                    { texto: "A veces siento que no comprende mi preocupación", valor: 2 },
+                    { texto: "Frecuentemente minimiza o ridiculiza lo que siento", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Cuando comete un error o incumple un acuerdo, reconoce su responsabilidad?",
+                categoria: "Comunicación",
+                peso: 2,
+                opciones: [
+                    { texto: "Sí, normalmente reconoce sus errores", valor: 0 },
+                    { texto: "A veces le cuesta reconocerlos", valor: 2 },
+                    { texto: "Frecuentemente niega su responsabilidad o culpa a otros", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Sientes que necesitas preguntar repetidamente para obtener claridad sobre asuntos importantes de la relación?",
+                categoria: "Comunicación",
+                peso: 2,
+                opciones: [
+                    { texto: "No, podemos hablar de forma clara", valor: 0 },
+                    { texto: "En algunas ocasiones necesito insistir", valor: 2 },
+                    { texto: "Frecuentemente tengo que insistir y aun así no obtengo claridad", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Evitan conversar sobre temas importantes por temor a que se produzca una discusión?",
+                categoria: "Comunicación",
+                peso: 2,
+                opciones: [
+                    { texto: "No, podemos conversar incluso sobre temas difíciles", valor: 0 },
+                    { texto: "A veces posponemos conversaciones incómodas", valor: 2 },
+                    { texto: "Frecuentemente evitamos hablar de asuntos importantes", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Los acuerdos que establecen durante sus conversaciones se cumplen de manera consistente?",
+                categoria: "Comunicación",
+                peso: 3,
+                opciones: [
+                    { texto: "Sí, normalmente cumplimos lo que acordamos", valor: 0 },
+                    { texto: "Algunos acuerdos se olvidan o se cumplen parcialmente", valor: 2 },
+                    { texto: "Con frecuencia los acuerdos se incumplen sin una explicación", valor: 5 }
+                ]
+            },
+
+            // ======================================
+            // CATEGORÍA 3: CAMBIOS (6 preguntas)
+            // ======================================
+
+            {
+                texto: "¿Has notado cambios persistentes en la manera en que expresa cariño o afecto hacia ti?",
+                categoria: "Cambios",
+                peso: 2,
+                opciones: [
+                    { texto: "No, nuestra forma de demostrar afecto se mantiene", valor: 0 },
+                    { texto: "Sí, ha habido algunos cambios", valor: 2 },
+                    { texto: "Sí, el cambio es importante y no hemos hablado de ello", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Ha incorporado nuevas rutinas que modifican significativamente la dinámica de la relación?",
+                categoria: "Cambios",
+                peso: 2,
+                opciones: [
+                    { texto: "No, los cambios se conversan y organizan juntos", valor: 0 },
+                    { texto: "Sí, hay nuevas rutinas que estamos adaptando", valor: 2 },
+                    { texto: "Sí, hay cambios importantes que nunca conseguimos conversar", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Has sentido que sus prioridades personales han cambiado de forma repentina y afectan los acuerdos de pareja?",
+                categoria: "Cambios",
+                peso: 2,
+                opciones: [
+                    { texto: "No, seguimos organizando nuestras prioridades juntos", valor: 0 },
+                    { texto: "Ha habido cambios que estamos tratando de comprender", valor: 2 },
+                    { texto: "Los cambios afectan nuestros acuerdos y no encontramos una explicación", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Ha cambiado la manera en que se comporta contigo después de pasar tiempo con determinadas personas o grupos?",
+                categoria: "Cambios",
+                peso: 2,
+                opciones: [
+                    { texto: "No he observado ese tipo de cambios", valor: 0 },
+                    { texto: "He observado algunos cambios ocasionales", valor: 2 },
+                    { texto: "Es un comportamiento repetido que no hemos conversado", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Notas que reacciona de manera muy diferente ante preguntas o temas que antes podía conversar con tranquilidad?",
+                categoria: "Cambios",
+                peso: 2,
+                opciones: [
+                    { texto: "No, podemos conversar como antes", valor: 0 },
+                    { texto: "En ciertos temas se muestra más sensible", valor: 2 },
+                    { texto: "Su reacción ha cambiado mucho y evita esos temas", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Los cambios de comportamiento que te preocupan continúan incluso después de haberlos conversado?",
+                categoria: "Cambios",
+                peso: 3,
+                opciones: [
+                    { texto: "No, generalmente logramos hablar y resolverlos", valor: 0 },
+                    { texto: "Algunos cambios continúan, aunque estamos conversando", valor: 2 },
+                    { texto: "Los cambios persisten y no conseguimos llegar a acuerdos", valor: 5 }
+                ]
+            },
+
+            // ======================================
+            // CATEGORÍA 4: TIEMPO (6 preguntas)
+            // ======================================
+
+            {
+                texto: "¿Cancela o modifica planes contigo a última hora sin conversar sobre los motivos?",
+                categoria: "Tiempo",
+                peso: 2,
+                opciones: [
+                    { texto: "Rara vez sucede y normalmente explica el motivo", valor: 0 },
+                    { texto: "Sucede en algunas ocasiones", valor: 2 },
+                    { texto: "Sucede frecuentemente y evita dar explicaciones", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Sientes que cada vez resulta más difícil encontrar momentos de calidad para compartir juntos?",
+                categoria: "Tiempo",
+                peso: 2,
+                opciones: [
+                    { texto: "No, encontramos tiempo para nuestra relación", valor: 0 },
+                    { texto: "Últimamente tenemos menos tiempo juntos", valor: 2 },
+                    { texto: "Frecuentemente no conseguimos compartir tiempo de calidad", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Hay periodos en los que deja de comunicarse en momentos en los que habían acordado mantenerse en contacto?",
+                categoria: "Tiempo",
+                peso: 2,
+                opciones: [
+                    { texto: "No, normalmente respetamos nuestros acuerdos", valor: 0 },
+                    { texto: "Ocurre algunas veces por diferentes motivos", valor: 2 },
+                    { texto: "Ocurre frecuentemente y no conseguimos aclararlo", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Sientes que los planes con otras personas reciben prioridad constantemente frente a los compromisos que tienen como pareja?",
+                categoria: "Tiempo",
+                peso: 2,
+                opciones: [
+                    { texto: "No, existe un equilibrio entre nuestros espacios", valor: 0 },
+                    { texto: "A veces siento que nuestra relación queda en segundo plano", valor: 2 },
+                    { texto: "Es una situación repetida que afecta nuestra relación", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Resulta difícil organizar actividades juntos porque sus horarios o disponibilidad cambian constantemente?",
+                categoria: "Tiempo",
+                peso: 2,
+                opciones: [
+                    { texto: "No, podemos organizar nuestros horarios", valor: 0 },
+                    { texto: "En ocasiones tenemos dificultades para coordinarnos", valor: 2 },
+                    { texto: "Frecuentemente no podemos concretar nuestros planes", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Cuando pregunta o conversas sobre cambios en sus planes, recibes explicaciones claras y coherentes?",
+                categoria: "Tiempo",
+                peso: 3,
+                opciones: [
+                    { texto: "Sí, normalmente me explica los cambios", valor: 0 },
+                    { texto: "A veces las explicaciones son incompletas", valor: 2 },
+                    { texto: "Frecuentemente no consigo entender qué ocurrió", valor: 5 }
+                ]
+            },
+
+            // ======================================
+            // CATEGORÍA 5: LÍMITES (6 preguntas)
+            // ======================================
+
+            {
+                texto: "¿Tienen acuerdos claros sobre qué significa respetar la exclusividad dentro de su relación?",
+                categoria: "Límites",
+                peso: 3,
+                opciones: [
+                    { texto: "Sí, ambos conocemos y respetamos nuestros acuerdos", valor: 0 },
+                    { texto: "Los hemos conversado, pero existen diferencias", valor: 2 },
+                    { texto: "No tenemos acuerdos claros y esto genera conflictos", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Has observado interacciones con otras personas que consideras que sobrepasan los límites acordados como pareja?",
+                categoria: "Límites",
+                peso: 3,
+                opciones: [
+                    { texto: "No, sus interacciones respetan nuestros acuerdos", valor: 0 },
+                    { texto: "En algunas ocasiones me he sentido incómodo/a", valor: 2 },
+                    { texto: "Ha ocurrido repetidamente y no hemos resuelto el problema", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Han establecido límites claros sobre cómo relacionarse con exparejas?",
+                categoria: "Límites",
+                peso: 2,
+                opciones: [
+                    { texto: "Sí, tenemos acuerdos que ambos respetamos", valor: 0 },
+                    { texto: "Hemos hablado del tema, pero hay diferencias", valor: 2 },
+                    { texto: "No logramos establecer acuerdos o se incumplen frecuentemente", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Sientes que tu pareja respeta los límites que ambos han acordado respecto a las amistades?",
+                categoria: "Límites",
+                peso: 2,
+                opciones: [
+                    { texto: "Sí, existe respeto y confianza", valor: 0 },
+                    { texto: "A veces tenemos desacuerdos sobre esos límites", valor: 2 },
+                    { texto: "Frecuentemente se ignoran los límites conversados", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Cuando expresas que una situación te incomoda, tu pareja intenta comprender tu punto de vista?",
+                categoria: "Límites",
+                peso: 2,
+                opciones: [
+                    { texto: "Sí, escucha y busca llegar a un acuerdo", valor: 0 },
+                    { texto: "A veces le cuesta comprenderlo", valor: 2 },
+                    { texto: "Frecuentemente ignora o descalifica mi incomodidad", valor: 5 }
+                ]
+            },
+            {
+                texto: "¿Sientes que las reglas y límites que acuerdan se aplican de manera justa para ambos?",
+                categoria: "Límites",
+                peso: 2,
+                opciones: [
+                    { texto: "Sí, ambos tenemos los mismos compromisos", valor: 0 },
+                    { texto: "A veces siento que existen diferencias", valor: 2 },
+                    { texto: "Frecuentemente se exigen reglas que no se cumplen de ambos lados", valor: 5 }
+                ]
+            }
+
+        ];
+
+        // ==========================================
+        // VARIABLES DEL TEST
+        // ==========================================
+
+        let indice = 0;
+
+        let respuestas = new Array(preguntas.length).fill(null);
+
+        const categorias = [
+            "Digital",
+            "Comunicación",
+            "Cambios",
+            "Tiempo",
+            "Límites"
+        ];
+
+        const tarjetaTest = document.getElementById("tarjetaTest");
+        const tarjetaResultado = document.getElementById("tarjetaResultado");
+
+        const contador = document.getElementById("contador");
+        const nombreCategoria = document.getElementById("nombreCategoria");
+        const numeroPregunta = document.getElementById("numeroPregunta");
+        const textoPregunta = document.getElementById("textoPregunta");
+        const opciones = document.getElementById("opciones");
+        const barraProgreso = document.getElementById("barraProgreso");
+
+        const btnAnterior = document.getElementById("btnAnterior");
+        const btnReiniciar = document.getElementById("btnReiniciar");
+
+        // ==========================================
+        // MOSTRAR PREGUNTA
+        // ==========================================
+
+        function mostrarPregunta() {
+
+            const pregunta = preguntas[indice];
+
+            contador.textContent =
+                "Pregunta " + (indice + 1) + " de " + preguntas.length;
+
+            nombreCategoria.textContent = pregunta.categoria;
+
+            numeroPregunta.textContent =
+                "PREGUNTA " + String(indice + 1).padStart(2, "0");
+
+            textoPregunta.textContent = pregunta.texto;
+
+            const progreso = ((indice + 1) / preguntas.length) * 100;
+
+            barraProgreso.style.width = progreso + "%";
+
+            opciones.innerHTML = "";
+
+            pregunta.opciones.forEach(function (opcion, posicion) {
+
+                const etiqueta = document.createElement("label");
+
+                etiqueta.className = "opcion";
+
+                const radio = document.createElement("input");
+
+                radio.type = "radio";
+                radio.name = "respuesta";
+                radio.value = opcion.valor;
+
+                if (respuestas[indice] === opcion.valor) {
+                    radio.checked = true;
+                    etiqueta.classList.add("seleccionada");
+                }
+
+                const texto = document.createElement("span");
+
+                texto.textContent = opcion.texto;
+
+                etiqueta.appendChild(radio);
+                etiqueta.appendChild(texto);
+
+                opciones.appendChild(etiqueta);
+
+                radio.addEventListener("change", function () {
+
+                    respuestas[indice] = Number(this.value);
+
+                    document.querySelectorAll(".opcion").forEach(function (elemento) {
+                        elemento.classList.remove("seleccionada");
+                    });
+
+                    etiqueta.classList.add("seleccionada");
+
+                    // Avanzar automáticamente después de seleccionar
+                    setTimeout(function () {
+
+                        if (indice < preguntas.length - 1) {
+
+                            indice++;
+                            mostrarPregunta();
+
+                        } else {
+
+                            mostrarResultado();
+
+                        }
+
+                    }, 250);
+
+                });
+
+            });
+
+            btnAnterior.disabled = indice === 0;
+
+
+        }
+
+        // ==========================================
+        // BOTÓN ANTERIOR
+        // ==========================================
+
+        btnAnterior.addEventListener("click", function () {
+
+            if (indice > 0) {
+                indice--;
+                mostrarPregunta();
+            }
+
+        });
+
+        // ==========================================
+        // CALCULAR RESULTADO
+        // ==========================================
+
+        function calcularResultados() {
+
+            let puntuacionTotal = 0;
+            let puntuacionMaxima = 0;
+
+            categorias.forEach(function (categoria) {
+
+                let puntosCategoria = 0;
+                let maximoCategoria = 0;
+
+                preguntas.forEach(function (pregunta, i) {
+
+                    if (pregunta.categoria === categoria) {
+
+                        puntosCategoria += respuestas[i] * pregunta.peso;
+
+                        maximoCategoria += 5 * pregunta.peso;
+
+                    }
+
+                });
+
+                puntuacionTotal += puntosCategoria;
+                puntuacionMaxima += maximoCategoria;
+
+            });
+
+            const porcentaje = puntuacionMaxima > 0
+                ? Math.round((puntuacionTotal / puntuacionMaxima) * 100)
+                : 0;
+
+            const detalleCategorias = categorias.map(function (categoria) {
+
+                let puntos = 0;
+                let maximo = 0;
+
+                preguntas.forEach(function (pregunta, i) {
+
+                    if (pregunta.categoria === categoria) {
+
+                        puntos += respuestas[i] * pregunta.peso;
+
+                        maximo += 5 * pregunta.peso;
+
+                    }
+
+                });
+
+                return {
+                    nombre: categoria,
+                    puntos: puntos,
+                    maximo: maximo,
+                    porcentaje: maximo > 0
+                        ? Math.round((puntos / maximo) * 100)
+                        : 0
+                };
+
+            });
+
+            detalleCategorias.sort(function (a, b) {
+                return b.porcentaje - a.porcentaje;
+            });
+
+            return {
+                puntuacionTotal: puntuacionTotal,
+                puntuacionMaxima: puntuacionMaxima,
+                porcentaje: porcentaje,
+                detalleCategorias: detalleCategorias
+            };
+
+        }
+
+        // ==========================================
+        // MOSTRAR RESULTADO
+        // ==========================================
+
+        // ==========================================
+// GUARDAR RESULTADO EN SQL SERVER
+// ==========================================
+
+function mostrarResultado() {
+
+    const resultado = calcularResultados();
+
+    const estado = document.getElementById("estadoGuardado");
+
+    const token = document.querySelector(
+        'input[name="__RequestVerificationToken"]'
+    );
+
+    if (!token) {
+        alert("No se encontró el código de seguridad del formulario.");
+        return;
+    }
+
+    estado.hidden = false;
+    estado.textContent = "Guardando tu resultado...";
+
+    const solicitud = new XMLHttpRequest();
+
+    solicitud.open(
+        "POST",
+        '@Url.Action("GuardarResultadoAvanzado", "Home")',
+        true
+    );
+
+    solicitud.setRequestHeader(
+        "Content-Type",
+        "application/x-www-form-urlencoded; charset=UTF-8"
+    );
+
+    const datos =
+        "__RequestVerificationToken=" +
+        encodeURIComponent(token.value) +
+        "&respuestas=" +
+        encodeURIComponent(respuestas.join(","));
+
+    solicitud.onreadystatechange = function () {
+
+        if (solicitud.readyState === 4) {
+
+            let respuestaServidor = null;
+
+            try {
+                respuestaServidor = JSON.parse(solicitud.responseText);
+            }
+            catch (error) {
+                respuestaServidor = null;
+            }
+
+            if (
+                solicitud.status === 200 &&
+                respuestaServidor &&
+                respuestaServidor.ok
+            ) {
+
+                estado.hidden = true;
+
+                mostrarResultadoEnPantalla(resultado);
+
+            } else {
+
+                estado.hidden = true;
+
+                const mensaje = respuestaServidor &&
+                    respuestaServidor.mensaje
+                    ? respuestaServidor.mensaje
+                    : "No se pudo guardar el resultado. Inténtalo nuevamente.";
+
+                alert(mensaje);
+
+                // Permitir volver a intentar guardar
+                respuestas[indice] = null;
+
+                mostrarPregunta();
+            }
+        }
+    };
+
+    solicitud.onerror = function () {
+
+        estado.hidden = true;
+
+        alert("No se pudo conectar con el servidor. Inténtalo nuevamente.");
+
+        respuestas[indice] = null;
+
+        mostrarPregunta();
+
+    };
+
+    solicitud.send(datos);
+}
+
+
+// ==========================================
+// MOSTRAR RESULTADO EN PANTALLA
+// ==========================================
+
+function mostrarResultadoEnPantalla(resultado) {
+
+    document.getElementById("porcentaje").textContent =
+        resultado.porcentaje + "%";
+
+    const titulo = document.getElementById("tituloResultado");
+    const mensaje = document.getElementById("mensajeResultado");
+
+    if (resultado.porcentaje <= 24) {
+
+        titulo.textContent = "Pocas situaciones preocupantes identificadas";
+
+        mensaje.textContent =
+            "Tus respuestas reflejan pocas situaciones que actualmente te generan preocupación. " +
+            "Continúa fortaleciendo la comunicación y manteniendo acuerdos claros.";
+
+    } else if (resultado.porcentaje <= 49) {
+
+        titulo.textContent = "Algunos temas por conversar";
+
+        mensaje.textContent =
+            "Has identificado algunas situaciones que podrían necesitar atención. " +
+            "Puede ser útil conversar con tranquilidad, expresar lo que sientes y aclarar expectativas.";
+
+    } else if (resultado.porcentaje <= 74) {
+
+        titulo.textContent = "Varias situaciones merecen atención";
+
+        mensaje.textContent =
+            "Tus respuestas muestran varias situaciones que te generan inquietud. " +
+            "Conviene hablar sobre los acuerdos, las necesidades y los límites que no están funcionando.";
+
+    } else {
+
+        titulo.textContent = "Muchas situaciones generan inquietud";
+
+        mensaje.textContent =
+            "Has identificado numerosas situaciones que afectan tu tranquilidad. " +
+            "Considera tener una conversación honesta sobre la relación y buscar apoyo si lo necesitas.";
+
+    }
+
+    const contenedorCategorias =
+        document.getElementById("resultadosCategorias");
+
+    contenedorCategorias.innerHTML = "";
+
+    resultado.detalleCategorias.forEach(function (categoria) {
+
+        const bloque = document.createElement("div");
+
+        bloque.className = "categoria-resultado";
+
+        const cabecera = document.createElement("div");
+
+        cabecera.className = "categoria-cabecera";
+
+        const nombre = document.createElement("strong");
+
+        nombre.textContent = categoria.nombre;
+
+        const porcentaje = document.createElement("span");
+
+        porcentaje.textContent = categoria.porcentaje + "%";
+
+        cabecera.appendChild(nombre);
+        cabecera.appendChild(porcentaje);
+
+        const barra = document.createElement("div");
+
+        barra.className = "categoria-barra";
+
+        const relleno = document.createElement("div");
+
+        relleno.className = "categoria-relleno";
+
+        relleno.style.width = categoria.porcentaje + "%";
+
+        barra.appendChild(relleno);
+
+        bloque.appendChild(cabecera);
+        bloque.appendChild(barra);
+
+        contenedorCategorias.appendChild(bloque);
+
+    });
+
+    tarjetaTest.hidden = true;
+    tarjetaResultado.hidden = false;
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+        // ==========================================
+        // REINICIAR TEST
+        // ==========================================
+
+        btnReiniciar.addEventListener("click", function () {
+
+            indice = 0;
+
+            respuestas.fill(null);
+
+            tarjetaResultado.hidden = true;
+            tarjetaTest.hidden = false;
+
+            mostrarPregunta();
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        });
+
+        // ==========================================
+        // INICIAR TEST
+        // ==========================================
+
+        mostrarPregunta();
+
+    </script>
+
+</body>
+</html>
