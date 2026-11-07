@@ -157,6 +157,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\Inicio.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include=".gitignore" />
@@ -185,6 +186,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\ArticuloConocerse.cshtml" />
+    <Content Include="Views\Home\ArticuloComunicacion.cshtml" />
+    <Content Include="Views\Home\ArticuloEmociones.cshtml" />
+    <Content Include="Views\Home\ArticuloLimites.cshtml" />
     <Content Include="Views\Home\Proximamente.cshtml" />
     <Content Include="Views\Home\TestPatrones.cshtml" />
     <Content Include="Views\Home\DescubrePatrones.cshtml" />
@@ -192,10 +197,13 @@
     <Content Include="Views\Cuenta\VerificarSesion.cshtml" />
     <Content Include="Views\Home\TestAvanzado.cshtml" />
     <Content Include="Views\Home\DescubrePatronesAvanzado.cshtml" />
+    <Content Include="Views\Home\TestPreparacionRelacion.cshtml" />
     <Content Include="Web.config.example" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Content Include="App_Data\GoogleAuth.secrets.config.example" />
+    <Content Include="App_Data\SqlServer.secrets.config.example" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

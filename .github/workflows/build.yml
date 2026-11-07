@@ -1,0 +1,31 @@
+name: Compilación automática - Amor Bajo Lupa
+
+on:
+  push:
+    branches:
+      - feature/articles-v0.7.0
+  pull_request:
+    branches:
+      - feature/articles-v0.7.0
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Compilar ASP.NET MVC 5
+    runs-on: windows-latest
+
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Configurar MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Configurar NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restaurar paquetes NuGet
+        run: nuget restore TestPatrones.sln
+
+      - name: Compilar proyecto
+        run: msbuild TestPatrones.sln /p:Configuration=Release /p:Platform="Any CPU" /m

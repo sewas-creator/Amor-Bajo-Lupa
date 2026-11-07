@@ -10,3 +10,7 @@ obj/
 
 # Archivos temporales
 *.log
+  
+# Credenciales privadas de Google OAuth y SQL Server (local y Somee)
+/App_Data/GoogleAuth.secrets.config
+/App_Data/SqlServer.secrets.config

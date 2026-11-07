@@ -1,5 +1,4 @@
-﻿
-using System.Configuration;
+﻿using System.Configuration;
 using System.Data.SqlClient;
 
 namespace TestPatrones
@@ -8,11 +7,16 @@ namespace TestPatrones
     {
         public static SqlConnection ObtenerConexion()
         {
-            string cadena = ConfigurationManager
-                .ConnectionStrings["AmorBajoLupa"]
-                .ConnectionString;
+            var configuracion = ConfigurationManager.ConnectionStrings["AmorBajoLupa"];
 
-            return new SqlConnection(cadena);
+            if (configuracion == null || string.IsNullOrWhiteSpace(configuracion.ConnectionString))
+            {
+                throw new ConfigurationErrorsException(
+                    "No se encontró la cadena de conexión 'AmorBajoLupa'. " +
+                    "Comprueba App_Data/SqlServer.secrets.config y la referencia configSource del Web.config.");
+            }
+
+            return new SqlConnection(configuracion.ConnectionString);
         }
     }
 }

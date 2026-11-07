@@ -1,0 +1,293 @@
+@{
+    Layout = null;
+    ViewBag.Title = "¿Estás listo realmente para una relación? | Amor Bajo Lupa";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>¿Estás listo realmente para una relación? | Amor Bajo Lupa</title>
+    <style>
+        * { box-sizing: border-box; }
+        [hidden] { display: none !important; }
+        body {
+            margin: 0; min-height: 100vh; padding: 26px 15px;
+            font-family: "Segoe UI", Arial, sans-serif; color: #30283a;
+            background: linear-gradient(135deg, #f1e5ff 0%, #fbf5ff 50%, #ffe8f3 100%);
+        }
+        .contenedor { max-width: 850px; margin: 0 auto; }
+        .encabezado { text-align: center; margin-bottom: 22px; }
+        .marca { color: #713787; font-size: 22px; font-weight: 800; text-decoration: none; }
+        .tarjeta {
+            padding: 36px; background: rgba(255,255,255,.96); border: 1px solid #fff;
+            border-radius: 26px; box-shadow: 0 12px 38px rgba(91,50,115,.12);
+        }
+        .etiqueta {
+            display: inline-block; padding: 7px 14px; border-radius: 20px;
+            background: #f4eafa; color: #713787; font-size: 12px; font-weight: 800;
+        }
+        h1 { margin: 14px 0 12px; text-align: center; color: #713787; font-size: 30px; line-height: 1.25; }
+        .descripcion { max-width: 660px; margin: 0 auto 24px; text-align: center; color: #81788b; line-height: 1.7; }
+        .aviso { padding: 14px 16px; margin: 20px 0 25px; border-left: 4px solid #dc8fb9; border-radius: 12px; background: #fff5fa; color: #6f596b; font-size: 13px; line-height: 1.65; }
+        .progreso-texto { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 9px; color: #81788b; font-size: 13px; }
+        .barra-fondo { height: 9px; margin-bottom: 28px; overflow: hidden; border-radius: 20px; background: #eee6f3; }
+        .barra { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#9251a8,#dc8fb9); transition: width .25s ease; }
+        .categoria { margin-bottom: 9px; color: #9251a8; font-size: 13px; font-weight: 800; }
+        .pregunta { margin: 0 0 22px; color: #30283a; font-size: 22px; line-height: 1.5; }
+        .opciones { display: grid; gap: 11px; }
+        .opcion {
+            display: flex; align-items: center; gap: 12px; padding: 14px 16px;
+            border: 2px solid #eee7f2; border-radius: 14px; color: #51475a;
+            cursor: pointer; line-height: 1.45; transition: .18s ease;
+        }
+        .opcion:hover { border-color: #c99bd9; background: #fcf8ff; }
+        .opcion.seleccionada { border-color: #9251a8; background: #f7edfc; color: #713787; font-weight: 600; }
+        .opcion input { width: 18px; height: 18px; flex-shrink: 0; accent-color: #9251a8; }
+        .ayuda { margin-top: 17px; text-align: center; color: #978da0; font-size: 12px; line-height: 1.5; }
+        .resultado { text-align: center; }
+        .resultado h2 { color: #713787; font-size: 26px; }
+        .resumen { margin: 18px 0; padding: 20px; border-radius: 16px; background: #fbf5ff; color: #66556d; line-height: 1.75; }
+        .categoria-resultado { margin: 13px 0; padding: 17px; border: 1px solid #eee5f2; border-radius: 14px; background: #fff; text-align: left; }
+        .categoria-cabecera { display: flex; justify-content: space-between; gap: 12px; color: #713787; font-weight: 700; }
+        .categoria-resultado p { margin: 9px 0 0; color: #756b7e; font-size: 14px; line-height: 1.6; }
+        .barra-categoria { height: 8px; margin-top: 11px; overflow: hidden; border-radius: 20px; background: #eee6f3; }
+        .barra-categoria span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#9251a8,#dc8fb9); }
+        .reflexion { margin: 20px 0; padding: 18px; border-radius: 15px; background: #fff7fb; text-align: left; color: #6f596b; line-height: 1.7; }
+        .reflexion strong { display: block; margin-bottom: 7px; color: #713787; }
+        .botones { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 25px; }
+        .btn { display: inline-block; padding: 12px 22px; border: 0; border-radius: 25px; cursor: pointer; text-decoration: none; font-weight: 700; }
+        .btn-principal { color: #fff; background: linear-gradient(135deg,#9251a8,#bd79bd); }
+        .btn-secundario { color: #713787; background: #f1e8f5; }
+        .nota-final { margin-top: 23px; color: #81788b; font-size: 12px; line-height: 1.7; }
+        @@media(max-width:600px) {
+            body { padding: 15px 9px; }
+            .tarjeta { padding: 25px 18px; border-radius: 21px; }
+            h1 { font-size: 25px; }
+            .pregunta { font-size: 19px; }
+            .opcion { padding: 13px; font-size: 14px; }
+            .categoria-cabecera { flex-direction: column; gap: 4px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <header class="encabezado">
+            <a class="marca" href="@Url.Action("Index", "Home")">Amor Bajo Lupa</a>
+        </header>
+
+        <main class="tarjeta">
+            <section id="introduccion">
+                <div style="text-align:center"><span class="etiqueta">REFLEXIÓN PERSONAL · 10 PREGUNTAS</span></div>
+                <h1>¿Estás listo realmente para una relación?</h1>
+                <p class="descripcion">
+                    Antes de compartir tu vida con alguien, también vale la pena mirar cómo te encuentras contigo.
+                    Esta experiencia te invita a explorar tu bienestar emocional, tus experiencias pasadas,
+                    lo que buscas en el amor y el espacio que tienes para construir un vínculo sano.
+                </p>
+                <div class="aviso">
+                    No hay respuestas buenas o malas. Responde pensando en cómo te has sentido durante los últimos meses,
+                    no en cómo crees que deberías sentirte. Puedes tomarte tu tiempo.
+                </div>
+                <div class="botones">
+                    <button type="button" class="btn btn-principal" id="comenzar">Comenzar reflexión</button>
+                </div>
+                <p class="ayuda">Esta pantalla es una vista de preparación. El acceso definitivo se habilitará cuando esté listo el sistema de pago.</p>
+            </section>
+
+            <section id="cuestionario" hidden>
+                <div class="progreso-texto"><span id="contador">Pregunta 1 de 10</span><span id="porcentaje">10%</span></div>
+                <div class="barra-fondo"><div class="barra" id="barra"></div></div>
+                <div class="categoria" id="categoria"></div>
+                <h2 class="pregunta" id="pregunta"></h2>
+                <div class="opciones" id="opciones"></div>
+                <p class="ayuda">Elige la opción que mejor represente tu experiencia. Avanzarás al seleccionar una respuesta.</p>
+            </section>
+
+            <section id="resultado" class="resultado" hidden>
+                <span class="etiqueta">TU ESPACIO DE REFLEXIÓN</span>
+                <h2 id="tituloResultado"></h2>
+                <div class="resumen" id="resumenResultado"></div>
+                <h3 style="color:#713787;text-align:left">Lo que puedes explorar en cada área</h3>
+                <div id="categoriasResultado"></div>
+                <div class="reflexion"><strong>Una pregunta para llevar contigo</strong><span id="preguntaReflexion"></span></div>
+                <p class="nota-final">
+                    Este resultado es orientativo y se basa únicamente en tus respuestas. No diagnostica dependencia emocional,
+                    trauma ni ninguna condición psicológica, y no determina si debes o no iniciar una relación.
+                    Si alguna experiencia te genera sufrimiento persistente, conversar con un profesional puede ayudarte.
+                </p>
+                <div class="botones">
+                    <button type="button" class="btn btn-secundario" id="reiniciar">Volver a responder</button>
+                    <a class="btn btn-principal" href="@Url.Action("Index", "Home")">Volver al inicio</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        (function () {
+            "use strict";
+
+            var preguntas = [
+                { categoria: "Bienestar emocional", texto: "En general, puedo reconocer cómo me siento y darme espacio para atender mis emociones.", positiva: true },
+                { categoria: "Bienestar emocional", texto: "Cuando atravieso un momento difícil, siento que necesito una pareja para poder estar bien.", positiva: false },
+                { categoria: "Experiencias pasadas", texto: "Puedo reconocer que una experiencia pasada me afectó sin asumir automáticamente que una nueva persona actuará de la misma manera.", positiva: true },
+                { categoria: "Experiencias pasadas", texto: "Cuando alguien se acerca emocionalmente, suelo anticipar que podría hacerme daño o abandonarme.", positiva: false },
+                { categoria: "Amor y apego", texto: "Me interesa construir un vínculo con alguien por quien realmente es, no solo por la atención que me ofrece.", positiva: true },
+                { categoria: "Amor y apego", texto: "Busco una relación principalmente para aliviar la soledad o sentir que alguien me necesita.", positiva: false },
+                { categoria: "Autonomía personal", texto: "Puedo disfrutar de mi tiempo, mis proyectos y mis amistades sin sentir que me falta una pareja.", positiva: true },
+                { categoria: "Autonomía personal", texto: "Creo que estar en una relación me haría sentir más valioso o una persona más completa.", positiva: false },
+                { categoria: "Preparación emocional", texto: "Puedo expresar mis necesidades y respetar los límites de otra persona, incluso cuando no coincidimos.", positiva: true },
+                { categoria: "Preparación emocional", texto: "Estoy dispuesto a construir una relación con paciencia, comunicación y responsabilidad afectiva.", positiva: true }
+            ];
+
+            var opciones = [
+                { texto: "No me describe", valor: 1 },
+                { texto: "Me describe poco", valor: 2 },
+                { texto: "A veces me describe", valor: 3 },
+                { texto: "Me describe bastante", valor: 4 },
+                { texto: "Me describe mucho", valor: 5 }
+            ];
+
+            var descripciones = {
+                "Bienestar emocional": "Observa cómo reconoces tus emociones y qué recursos personales utilizas cuando atraviesas momentos difíciles.",
+                "Experiencias pasadas": "Explora si recuerdos o aprendizajes anteriores influyen en la confianza que construyes hoy, sin juzgarte por ello.",
+                "Amor y apego": "Reflexiona sobre cuánto espacio tienen el deseo de compartir, la compañía y la necesidad de aliviar la soledad.",
+                "Autonomía personal": "Considera cómo conviven tu vida individual, tus intereses y el deseo de formar una pareja.",
+                "Preparación emocional": "Piensa en tu disposición para comunicarte, respetar límites y asumir responsabilidades dentro de un vínculo."
+            };
+
+            var nombres = ["Bienestar emocional", "Experiencias pasadas", "Amor y apego", "Autonomía personal", "Preparación emocional"];
+            var respuestas = new Array(preguntas.length).fill(null);
+            var indice = 0;
+
+            var intro = document.getElementById("introduccion");
+            var cuestionario = document.getElementById("cuestionario");
+            var resultado = document.getElementById("resultado");
+
+            function mostrarPregunta() {
+                var actual = preguntas[indice];
+                document.getElementById("contador").textContent = "Pregunta " + (indice + 1) + " de " + preguntas.length;
+                document.getElementById("porcentaje").textContent = Math.round(((indice + 1) / preguntas.length) * 100) + "%";
+                document.getElementById("barra").style.width = ((indice + 1) / preguntas.length * 100) + "%";
+                document.getElementById("categoria").textContent = actual.categoria;
+                document.getElementById("pregunta").textContent = actual.texto;
+
+                var contenedor = document.getElementById("opciones");
+                contenedor.innerHTML = "";
+
+                opciones.forEach(function (opcion) {
+                    var etiqueta = document.createElement("label");
+                    etiqueta.className = "opcion";
+                    if (respuestas[indice] === opcion.valor) etiqueta.classList.add("seleccionada");
+
+                    var radio = document.createElement("input");
+                    radio.type = "radio";
+                    radio.name = "respuesta";
+                    radio.value = opcion.valor;
+                    radio.checked = respuestas[indice] === opcion.valor;
+
+                    var texto = document.createElement("span");
+                    texto.textContent = opcion.texto;
+                    etiqueta.appendChild(radio);
+                    etiqueta.appendChild(texto);
+
+                    etiqueta.addEventListener("click", function () {
+                        respuestas[indice] = opcion.valor;
+                        if (indice < preguntas.length - 1) {
+                            indice++;
+                            mostrarPregunta();
+                        } else {
+                            mostrarResultado();
+                        }
+                    });
+
+                    contenedor.appendChild(etiqueta);
+                });
+            }
+
+            function mostrarResultado() {
+                var puntuaciones = {};
+                nombres.forEach(function (nombre) { puntuaciones[nombre] = []; });
+
+                preguntas.forEach(function (pregunta, i) {
+                    var valor = respuestas[i];
+                    var puntuacion = pregunta.positiva ? valor : 6 - valor;
+                    puntuaciones[pregunta.categoria].push(puntuacion);
+                });
+
+                var porcentajes = nombres.map(function (nombre) {
+                    var valores = puntuaciones[nombre];
+                    var promedio = valores.reduce(function (a, b) { return a + b; }, 0) / valores.length;
+                    return { nombre: nombre, porcentaje: Math.round(((promedio - 1) / 4) * 100) };
+                });
+
+                var general = Math.round(porcentajes.reduce(function (suma, item) { return suma + item.porcentaje; }, 0) / porcentajes.length);
+                var titulo = general >= 70 ? "Hay una base personal que puedes seguir fortaleciendo" :
+                    general >= 40 ? "Estás en un momento de exploración y crecimiento" :
+                    "Puede ser valioso dedicarte más espacio antes de dar el siguiente paso";
+
+                var resumen = general >= 70
+                    ? "Tus respuestas reflejan recursos personales que pueden ayudarte a construir un vínculo desde la elección y no únicamente desde la necesidad. Aun así, cada relación requiere diálogo, aprendizaje y cuidado mutuo."
+                    : general >= 40
+                        ? "Tus respuestas muestran una combinación de recursos y aspectos que quizá merecen más atención. No necesitas tener todo resuelto para vincularte, pero sí puedes avanzar con honestidad sobre lo que sientes y necesitas."
+                        : "Tus respuestas sugieren que ahora podría ser útil priorizar tu bienestar, comprender algunas necesidades y fortalecer tu espacio personal. Esto no significa que no puedas amar ni que debas cumplir una condición para merecer una relación.";
+
+                document.getElementById("tituloResultado").textContent = titulo;
+                document.getElementById("resumenResultado").textContent = resumen;
+
+                var lista = document.getElementById("categoriasResultado");
+                lista.innerHTML = "";
+                porcentajes.forEach(function (item) {
+                    var bloque = document.createElement("div");
+                    bloque.className = "categoria-resultado";
+                    var cabecera = document.createElement("div");
+                    cabecera.className = "categoria-cabecera";
+                    var nombre = document.createElement("span");
+                    nombre.textContent = item.nombre;
+                    var valor = document.createElement("span");
+                    valor.textContent = "Nivel de recursos: " + item.porcentaje + "%";
+                    cabecera.appendChild(nombre);
+                    cabecera.appendChild(valor);
+                    var barraFondo = document.createElement("div");
+                    barraFondo.className = "barra-categoria";
+                    var relleno = document.createElement("span");
+                    relleno.style.width = item.porcentaje + "%";
+                    barraFondo.appendChild(relleno);
+                    var descripcion = document.createElement("p");
+                    descripcion.textContent = descripciones[item.nombre];
+                    bloque.appendChild(cabecera);
+                    bloque.appendChild(barraFondo);
+                    bloque.appendChild(descripcion);
+                    lista.appendChild(bloque);
+                });
+
+                var menor = porcentajes.reduce(function (a, b) { return a.porcentaje <= b.porcentaje ? a : b; });
+                document.getElementById("preguntaReflexion").textContent =
+                    menor.nombre === "Bienestar emocional" ? "¿Qué podrías hacer esta semana para cuidar de ti sin esperar a que otra persona resuelva lo que sientes?" :
+                    menor.nombre === "Experiencias pasadas" ? "¿Qué necesitas reconocer de tu historia para no cargar automáticamente ese temor a un vínculo nuevo?" :
+                    menor.nombre === "Amor y apego" ? "Si hoy te sintieras acompañado y en calma, ¿qué te gustaría compartir con alguien desde la libertad?" :
+                    menor.nombre === "Autonomía personal" ? "¿Qué parte de tu vida individual te gustaría fortalecer y conservar al iniciar una relación?" :
+                    "¿Qué conversación honesta sobre necesidades y límites te gustaría aprender a tener?";
+
+                cuestionario.hidden = true;
+                resultado.hidden = false;
+            }
+
+            document.getElementById("comenzar").addEventListener("click", function () {
+                intro.hidden = true;
+                cuestionario.hidden = false;
+                mostrarPregunta();
+            });
+
+            document.getElementById("reiniciar").addEventListener("click", function () {
+                respuestas = new Array(preguntas.length).fill(null);
+                indice = 0;
+                resultado.hidden = true;
+                cuestionario.hidden = false;
+                mostrarPregunta();
+            });
+        }());
+    </script>
+</body>
+</html>

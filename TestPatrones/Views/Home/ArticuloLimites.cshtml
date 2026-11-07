@@ -1,0 +1,642 @@
+﻿@{
+    Response.ContentEncoding = System.Text.Encoding.UTF8;
+    Response.Charset = "utf-8";
+    Response.ContentType = "text/html";
+    ViewBag.Title = "Aprender a reconocer lo que sentimos | Amor Bajo Lupa";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#fffdfd" />
+    <meta name="description" content="Aprende a establecer límites saludables para comunicar tus necesidades, cuidar tu espacio personal y construir relaciones basadas en el respeto mutuo." />
+    <title>¿Cómo aprender a establecer límites saludables? | Amor Bajo Lupa</title>
+    <style>
+        :root {
+            --ink: #39264d;
+            --ink-soft: #5d4a70;
+            --muted: #7b7087;
+            --purple: #79509a;
+            --purple-deep: #603b7e;
+            --pink: #d98ab6;
+            --lilac: #f8f3fc;
+            --rose: #fff1f6;
+            --line: #eee5f2;
+            --paper: #fffdfd;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 0 5%, rgba(232, 216, 249, .48), transparent 26rem),
+                radial-gradient(circle at 100% 22%, rgba(255, 231, 241, .42), transparent 28rem),
+                var(--paper);
+            font-family: "Segoe UI", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; }
+
+        .article-shell { min-height: 100vh; }
+
+        .article-header {
+            position: sticky;
+            z-index: 20;
+            top: 0;
+            border-bottom: 1px solid rgba(235, 225, 241, .85);
+            background: rgba(255, 253, 253, .92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .article-header-inner {
+            display: flex;
+            width: min(1120px, calc(100% - 44px));
+            min-height: 78px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 0 auto;
+        }
+
+        .article-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            color: var(--ink);
+            text-decoration: none;
+        }
+
+        .article-brand-mark {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            place-items: center;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #eee2f8, #ffeaf3);
+            color: var(--purple);
+            font-size: 21px;
+        }
+
+        .article-brand-name {
+            display: block;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 21px;
+            font-weight: 700;
+            line-height: 1.15;
+        }
+
+        .article-brand-caption {
+            display: block;
+            margin-top: 4px;
+            color: #95889e;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .article-back {
+            display: inline-flex;
+            min-height: 42px;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 16px;
+            border: 1px solid #e8daf1;
+            border-radius: 999px;
+            background: #fff;
+            color: var(--purple-deep);
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background .2s ease, transform .2s ease;
+        }
+
+        .article-back:hover {
+            background: var(--lilac);
+            transform: translateY(-1px);
+        }
+
+        .article-container {
+            width: min(1050px, calc(100% - 44px));
+            margin: 0 auto;
+        }
+
+        .article-intro {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 65px 0 35px;
+            text-align: center;
+        }
+
+        .article-category {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 14px;
+            border: 1px solid #eadcf1;
+            border-radius: 999px;
+            background: #f8f1fc;
+            color: var(--purple-deep);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.1px;
+            text-transform: uppercase;
+        }
+
+        .article-intro h1 {
+            margin: 20px auto 17px;
+            color: var(--ink);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(37px, 5.5vw, 58px);
+            font-weight: 500;
+            letter-spacing: -1.6px;
+            line-height: 1.12;
+        }
+
+        .article-lead {
+            max-width: 720px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 19px;
+            line-height: 1.8;
+        }
+
+        .article-reading-time {
+            margin-top: 22px;
+            color: #a095aa;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .article-hero-image {
+            width: 100%;
+            margin: 0;
+            height: clamp(260px, 42vw, 470px);
+            overflow: hidden;
+            border-radius: 28px;
+            background: #eadfe8;
+            box-shadow: 0 20px 50px rgba(72, 43, 94, .10);
+        }
+
+        .article-hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 42%;
+        }
+
+        .article-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 265px;
+            align-items: start;
+            gap: 52px;
+            padding: 55px 0 70px;
+        }
+
+        .article-content {
+            min-width: 0;
+            color: #655a70;
+            font-size: 17px;
+            line-height: 1.9;
+        }
+
+        .article-content p { margin: 0 0 22px; }
+
+        .article-content h2 {
+            margin: 42px 0 15px;
+            color: var(--ink);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 31px;
+            font-weight: 600;
+            letter-spacing: -.5px;
+            line-height: 1.25;
+        }
+
+        .article-content h3 {
+            margin: 26px 0 9px;
+            color: var(--purple-deep);
+            font-size: 19px;
+            font-weight: 800;
+            line-height: 1.4;
+        }
+
+        .article-content strong { color: #514269; }
+
+        .article-quote {
+            margin: 32px 0;
+            padding: 24px 27px;
+            border-left: 4px solid var(--pink);
+            border-radius: 0 17px 17px 0;
+            background: linear-gradient(110deg, #f8f2fc, #fff5f9);
+            color: var(--purple-deep);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 23px;
+            line-height: 1.5;
+        }
+
+        .article-list {
+            margin: 0 0 24px;
+            padding-left: 23px;
+        }
+
+        .article-list li { margin: 0 0 12px; padding-left: 5px; }
+
+        .article-exercise {
+            margin: 30px 0;
+            padding: 25px;
+            border: 1px solid #eadcf1;
+            border-radius: 20px;
+            background: #fbf7fd;
+        }
+
+        .article-exercise h3 { margin-top: 0; }
+
+        .article-exercise ol {
+            margin: 0;
+            padding-left: 22px;
+        }
+
+        .article-exercise li { margin-bottom: 10px; }
+
+        .article-disclaimer {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid var(--line);
+            color: #92879b;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .article-sidebar {
+            position: sticky;
+            top: 105px;
+            display: grid;
+            gap: 17px;
+        }
+
+        .article-side-card {
+            padding: 21px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .88);
+            box-shadow: 0 8px 24px rgba(72, 43, 94, .04);
+        }
+
+        .article-side-card h2 {
+            margin: 0 0 13px;
+            color: var(--ink);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 20px;
+            line-height: 1.3;
+        }
+
+        .article-toc {
+            display: grid;
+            gap: 11px;
+        }
+
+        .article-toc a {
+            color: #756783;
+            font-size: 14px;
+            line-height: 1.5;
+            text-decoration: none;
+        }
+
+        .article-toc a:hover { color: var(--purple); }
+
+        .article-side-note {
+            background: linear-gradient(145deg, #f6effb, #fff3f8);
+        }
+
+        .article-side-note p {
+            margin: 0;
+            color: #756783;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .article-bottom {
+            padding: 46px 24px;
+            border-radius: 26px;
+            background: linear-gradient(115deg, #65437f, #95669f 55%, #c27fa6);
+            color: #fff;
+            text-align: center;
+        }
+
+        .article-bottom h2 {
+            max-width: 650px;
+            margin: 0 auto 13px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(29px, 4vw, 39px);
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        .article-bottom p {
+            max-width: 550px;
+            margin: 0 auto 22px;
+            color: rgba(255, 255, 255, .84);
+            line-height: 1.7;
+        }
+
+        .article-bottom-link {
+            display: inline-flex;
+            min-height: 46px;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border-radius: 999px;
+            background: #fff;
+            color: var(--purple-deep);
+            font-size: 14px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        .article-bottom-link:hover {
+            background: #fff5fa;
+            transform: translateY(-2px);
+        }
+
+        .article-footer {
+            padding: 30px 0 24px;
+            color: #9a90a3;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        a:focus-visible {
+            outline: 3px solid #d98ab6;
+            outline-offset: 3px;
+        }
+
+        @@media (max-width: 780px) {
+            .article-intro { padding-top: 45px; }
+            .article-layout { grid-template-columns: 1fr; gap: 25px; padding-top: 38px; }
+            .article-sidebar { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @@media (max-width: 540px) {
+            .article-header-inner,
+            .article-container { width: min(100% - 30px, 1050px); }
+            .article-header-inner {
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: center;
+                gap: 10px;
+                padding: 12px 0;
+            }
+            .article-brand { width: 100%; gap: 10px; }
+            .article-brand-mark { width: 38px; height: 38px; flex: 0 0 38px; }
+            .article-brand-name { font-size: 18px; }
+            .article-brand-caption { font-size: 9px; letter-spacing: 1.2px; }
+            .article-back {
+                min-height: 39px;
+                align-self: flex-end;
+                padding: 8px 13px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+            .article-intro { padding: 38px 0 27px; }
+            .article-intro h1 { font-size: 39px; letter-spacing: -1px; }
+            .article-lead { font-size: 16px; }
+            .article-hero-image { height: 255px; border-radius: 19px; }
+            .article-layout { padding: 34px 0 48px; }
+            .article-content { font-size: 16px; line-height: 1.8; }
+            .article-content h2 { margin-top: 33px; font-size: 27px; }
+            .article-quote { padding: 19px; font-size: 20px; }
+            .article-exercise { padding: 20px; }
+            .article-sidebar { grid-template-columns: 1fr; }
+            .article-bottom { padding: 38px 20px; border-radius: 21px; }
+            .article-bottom-link { width: 100%; }
+        }
+
+        @@media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { transition-duration: .01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="article-shell">
+        <header class="article-header">
+            <div class="article-header-inner">
+                <a class="article-brand" href="@Url.Action("Index", "Home")" aria-label="Amor Bajo Lupa, ir al inicio">
+                    <span class="article-brand-mark" aria-hidden="true">♥</span>
+                    <span>
+                        <span class="article-brand-name">Amor Bajo Lupa</span>
+                        <span class="article-brand-caption">Relaciones · Emociones · Tú</span>
+                    </span>
+                </a>
+                <a class="article-back" href="@Url.Action("Index", "Home")#articulos">← Volver a artículos</a>
+            </div>
+        </header>
+
+        <main>
+            <div class="article-container">
+                <section class="article-intro" aria-labelledby="article-title">
+                    <span class="article-category">Límites saludables</span>
+                    <h1 id="article-title">¿Cómo aprender a establecer límites saludables?</h1>
+                    <p class="article-lead">
+                        Establecer límites es una forma de comunicar qué necesitamos, qué nos hace sentir cómodos y qué no estamos dispuestos a aceptar.
+                        No se trata de alejar a los demás, sino de construir relaciones donde exista respeto por ambas partes.
+                    </p>
+                    <p class="article-reading-time">Una lectura para ti · 7 minutos</p>
+                </section>
+
+                <figure class="article-hero-image">
+                    <img src="https://images.pexels.com/photos/7984914/pexels-photo-7984914.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200"
+                         alt="Dos amigas conversan en un ambiente tranquilo y cercano"
+                         fetchpriority="high" />
+                </figure>
+
+                <div class="article-layout">
+                    <article class="article-content">
+                        <p>
+                            Decir que sí cuando queremos decir que no, aceptar comentarios que nos lastiman para evitar una discusión
+                            o sentir culpa por dedicar tiempo a nuestras propias necesidades son experiencias que pueden indicar
+                            que necesitamos revisar nuestros límites.
+                        </p>
+                        <p>
+                            Los límites personales nos ayudan a reconocer hasta dónde queremos llegar en distintas situaciones.
+                            Pueden relacionarse con nuestro tiempo, espacio, privacidad, emociones, decisiones y recursos.
+                            Aprender a expresarlos requiere práctica, pero es una habilidad que puede fortalecer la confianza
+                            y el respeto en nuestras relaciones.
+                        </p>
+
+                        <h2 id="que-son">¿Qué son los límites saludables?</h2>
+                        <p>
+                            Son acuerdos y decisiones personales que comunican qué comportamientos aceptamos, qué necesitamos
+                            y cómo queremos que los demás se relacionen con nosotros. No son reglas para controlar la vida
+                            de otra persona: describen lo que cada uno necesita para sentirse respetado y actuar de acuerdo
+                            con sus valores.
+                        </p>
+                        <p>
+                            Un límite puede ser tan sencillo como pedir que llamen antes de visitarte, reservar un momento
+                            para descansar o expresar que no deseas compartir una contraseña. También puede implicar tomar
+                            distancia de una conversación cuando aparecen insultos y retomarla cuando exista disposición
+                            para hablar con respeto.
+                        </p>
+
+                        <blockquote class="article-quote">
+                            Poner un límite no es rechazar a alguien; es explicar cómo necesitas que te traten.
+                        </blockquote>
+
+                        <h2 id="tipos">Reconoce las áreas donde necesitas límites</h2>
+                        <p>
+                            No todos los límites se expresan de la misma manera. Identificar el área que te preocupa puede
+                            ayudarte a comunicar con más claridad lo que necesitas.
+                        </p>
+                        <ul class="article-list">
+                            <li><strong>Emocionales:</strong> poder expresar lo que sientes sin recibir burlas, amenazas o descalificaciones.</li>
+                            <li><strong>De tiempo:</strong> decidir cuánto tiempo puedes dedicar a otras personas sin descuidar tus responsabilidades y descanso.</li>
+                            <li><strong>Físicos:</strong> comunicar tus preferencias sobre el espacio personal, el contacto y la intimidad.</li>
+                            <li><strong>Digitales:</strong> acordar el respeto a tu privacidad, tus dispositivos, mensajes y disponibilidad en línea.</li>
+                            <li><strong>Personales:</strong> conservar tus opiniones, amistades, intereses y decisiones sin presión ni control.</li>
+                        </ul>
+                        <p>
+                            Tus límites pueden cambiar según la etapa de tu vida y el contexto. Lo importante es revisarlos
+                            con honestidad y comunicarlos de forma coherente, sin asumir que los demás pueden adivinarlos.
+                        </p>
+
+                        <h2 id="dificultades">¿Por qué a veces cuesta decir que no?</h2>
+                        <p>
+                            Algunas personas temen decepcionar a los demás, provocar un conflicto o dejar de ser queridas.
+                            Otras han aprendido a priorizar siempre las necesidades ajenas o sienten que deben justificar
+                            cada decisión. Estas dificultades no significan que seas débil; pueden estar relacionadas con
+                            experiencias previas, inseguridad o hábitos que se pueden trabajar.
+                        </p>
+                        <ul class="article-list">
+                            <li>Sentir culpa cuando eliges descansar o dedicarte tiempo.</li>
+                            <li>Aceptar compromisos por miedo a que alguien se moleste.</li>
+                            <li>Explicar demasiado tus decisiones para conseguir aprobación.</li>
+                            <li>Permitir que revisen tus conversaciones o invadan tu privacidad.</li>
+                            <li>Callar cuando algo te incomoda y acumular resentimiento.</li>
+                        </ul>
+                        <p>
+                            Reconocer estas señales es una invitación a reflexionar, no una razón para juzgarte.
+                            Puedes comenzar con situaciones pequeñas y practicar respuestas claras y respetuosas.
+                        </p>
+
+                        <h2 id="comunicar">Cómo comunicar un límite con claridad</h2>
+                        <p>
+                            Un límite suele ser más comprensible cuando hablas desde tu experiencia, nombras la conducta
+                            concreta y explicas qué harás para cuidarte. Procura elegir un momento tranquilo, usar frases
+                            directas y evitar amenazas o insultos.
+                        </p>
+                        <h3>Una fórmula sencilla</h3>
+                        <p>
+                            Puedes expresar: <strong>«Cuando ocurre [situación], me siento [emoción o efecto].
+                            Necesito [lo que es importante para ti]. Por eso, voy a [acción que depende de ti]».</strong>
+                        </p>
+                        <p>
+                            Por ejemplo: «Cuando revisas mi teléfono sin permiso, siento que mi privacidad no se respeta.
+                            Necesito que mis conversaciones sean personales. Si tienes una preocupación, podemos hablarla,
+                            pero no voy a compartir mis contraseñas».
+                        </p>
+                        <p>
+                            La otra persona puede no estar de acuerdo o necesitar tiempo para comprenderlo. Escuchar su
+                            perspectiva no significa renunciar automáticamente a lo que necesitas. Un diálogo saludable
+                            permite expresar diferencias sin coerción, intimidación ni violencia.
+                        </p>
+
+                        <h2 id="mantener">Mantener tus límites sin sentir que debes disculparte</h2>
+                        <p>
+                            Después de comunicar un límite, intenta sostenerlo con acciones consistentes. No necesitas
+                            repetir explicaciones interminables ni convencer a todo el mundo de que tu necesidad es válida.
+                            Puedes ser amable y firme al mismo tiempo.
+                        </p>
+                        <p>
+                            También es importante recordar que los límites no garantizan que otra persona cambie.
+                            Si alguien los ignora de manera constante, puedes decidir qué medidas están bajo tu control:
+                            terminar una conversación, reducir el contacto o buscar apoyo. Si existe miedo, amenazas,
+                            control o violencia, prioriza tu seguridad y busca ayuda de personas o servicios de confianza.
+                        </p>
+
+                        <h2 id="ejercicio">Un ejercicio para definir tus límites</h2>
+                        <p>
+                            Piensa en una situación reciente en la que te sentiste incómodo, presionado o sin espacio
+                            para decidir. Escribe tus respuestas con sinceridad y sin exigirte encontrar la frase perfecta.
+                        </p>
+                        <div class="article-exercise">
+                            <h3>Construye tu límite en cinco pasos</h3>
+                            <ol>
+                                <li><strong>Situación:</strong> ¿qué ocurrió exactamente y quiénes participaron?</li>
+                                <li><strong>Señal:</strong> ¿qué sentiste o qué necesidad notaste que no estaba siendo respetada?</li>
+                                <li><strong>Necesidad:</strong> ¿qué te gustaría que fuera diferente?</li>
+                                <li><strong>Mensaje:</strong> ¿cómo podrías expresarlo con una frase breve, clara y respetuosa?</li>
+                                <li><strong>Acción:</strong> ¿qué puedes hacer tú si la situación se repite?</li>
+                            </ol>
+                        </div>
+                        <p>
+                            Empieza por un límite pequeño y realista. Practicarlo puede ayudarte a ganar confianza y a
+                            descubrir qué formas de comunicación funcionan mejor en cada relación.
+                        </p>
+
+                        <h2 id="reciprocidad">Los límites también necesitan reciprocidad</h2>
+                        <p>
+                            Así como mereces que respeten tus límites, las demás personas también tienen derecho a expresar
+                            los suyos. Una relación equilibrada no exige que todos quieran lo mismo, sino que puedan hablar
+                            de sus necesidades, negociar acuerdos y aceptar un «no» sin castigos ni presiones.
+                        </p>
+                        <p>
+                            Si una conversación se vuelve difícil, pueden hacer una pausa y retomarla cuando exista calma.
+                            Si no logran resolverlo, buscar orientación profesional puede ofrecer herramientas para
+                            comunicarse mejor. En cualquier caso, el respeto y la seguridad no deberían ser negociables.
+                        </p>
+
+                        <div class="article-disclaimer">
+                            Este artículo tiene fines educativos y de reflexión personal. No constituye un diagnóstico
+                            psicológico ni reemplaza la orientación de un profesional. Si atraviesas una situación de
+                            control, amenazas o violencia, busca apoyo seguro y especializado.
+                        </div>
+                    </article>
+
+                    <aside class="article-sidebar" aria-label="Información del artículo">
+                        <section class="article-side-card">
+                            <h2>En esta lectura</h2>
+                            <nav class="article-toc">
+                                <a href="#que-son">¿Qué son los límites?</a>
+                                <a href="#tipos">Áreas y tipos de límites</a>
+                                <a href="#dificultades">Por qué cuesta decir no</a>
+                                <a href="#comunicar">Cómo comunicarlos</a>
+                                <a href="#mantener">Cómo mantenerlos</a>
+                                <a href="#ejercicio">Ejercicio práctico</a>
+                                <a href="#reciprocidad">Respeto y reciprocidad</a>
+                            </nav>
+                        </section>
+                        <section class="article-side-card article-side-note">
+                            <h2>Una idea para recordar</h2>
+                            <p>
+                                Puedes cuidar tus relaciones y, al mismo tiempo, cuidar tu espacio, tus decisiones y tu bienestar.
+                            </p>
+                        </section>
+                    </aside>
+                </div>
+
+                <section class="article-bottom">
+                    <h2>Aprender a decir lo que necesitas también es una forma de construir relaciones más sanas.</h2>
+                    <p>
+                        Sigue explorando ideas para conocerte, comunicarte y crear vínculos basados en el respeto mutuo.
+                    </p>
+                    <a class="article-bottom-link" href="@Url.Action("Index", "Home")#articulos">Volver a todos los artículos</a>
+                </section>
+
+                <footer class="article-footer">
+                    © @DateTime.Now.Year Amor Bajo Lupa · Relaciones · Emociones · Tú
+                </footer>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

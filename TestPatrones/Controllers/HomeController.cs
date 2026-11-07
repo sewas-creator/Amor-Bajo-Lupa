@@ -444,6 +444,29 @@ namespace TestPatrones.Controllers
             return View();
         }
 
+        // Artículo: autoconocimiento
+        public ActionResult ArticuloConocerse()
+        {
+            return View();
+        }
+
+        // Artículo: comunicación en pareja
+        public ActionResult ArticuloComunicacion()
+        {
+            return View();
+        }
+
+        // Artículo: reconocimiento de las emociones
+        public ActionResult ArticuloEmociones()
+        {
+            return View();
+        }
+
+        public ActionResult ArticuloLimites()
+        {
+            return View();
+        }
+
         // Test actual
         public ActionResult TestPatrones()
         {
