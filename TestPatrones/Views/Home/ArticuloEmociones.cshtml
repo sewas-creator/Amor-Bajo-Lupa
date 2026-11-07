@@ -1,0 +1,611 @@
+﻿@{
+    Response.ContentEncoding = System.Text.Encoding.UTF8;
+    Response.Charset = "utf-8";
+    Response.ContentType = "text/html";
+    ViewBag.Title = "Aprender a reconocer lo que sentimos | Amor Bajo Lupa";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#fffdfd" />
+    <meta name="description" content="La comunicación en pareja permite expresar necesidades, escuchar con respeto y afrontar desacuerdos sin perder de vista el vínculo." />
+    <title>¿Por qué es importante la comunicación en pareja? | Amor Bajo Lupa</title>
+    <style>
+        :root {
+            --ink: #39264d;
+            --ink-soft: #5d4a70;
+            --muted: #7b7087;
+            --purple: #79509a;
+            --purple-deep: #603b7e;
+            --pink: #d98ab6;
+            --lilac: #f8f3fc;
+            --rose: #fff1f6;
+            --line: #eee5f2;
+            --paper: #fffdfd;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 0 5%, rgba(232, 216, 249, .48), transparent 26rem),
+                radial-gradient(circle at 100% 22%, rgba(255, 231, 241, .42), transparent 28rem),
+                var(--paper);
+            font-family: "Segoe UI", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; }
+
+        .article-shell { min-height: 100vh; }
+
+        .article-header {
+            position: sticky;
+            z-index: 20;
+            top: 0;
+            border-bottom: 1px solid rgba(235, 225, 241, .85);
+            background: rgba(255, 253, 253, .92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .article-header-inner {
+            display: flex;
+            width: min(1120px, calc(100% - 44px));
+            min-height: 78px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 0 auto;
+        }
+
+        .article-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            color: var(--ink);
+            text-decoration: none;
+        }
+
+        .article-brand-mark {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            place-items: center;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #eee2f8, #ffeaf3);
+            color: var(--purple);
+            font-size: 21px;
+        }
+
+        .article-brand-name {
+            display: block;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 21px;
+            font-weight: 700;
+            line-height: 1.15;
+        }
+
+        .article-brand-caption {
+            display: block;
+            margin-top: 4px;
+            color: #95889e;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .article-back {
+            display: inline-flex;
+            min-height: 42px;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 16px;
+            border: 1px solid #e8daf1;
+            border-radius: 999px;
+            background: #fff;
+            color: var(--purple-deep);
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background .2s ease, transform .2s ease;
+        }
+
+        .article-back:hover {
+            background: var(--lilac);
+            transform: translateY(-1px);
+        }
+
+        .article-container {
+            width: min(1050px, calc(100% - 44px));
+            margin: 0 auto;
+        }
+
+        .article-intro {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 65px 0 35px;
+            text-align: center;
+        }
+
+        .article-category {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 14px;
+            border: 1px solid #eadcf1;
+            border-radius: 999px;
+            background: #f8f1fc;
+            color: var(--purple-deep);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.1px;
+            text-transform: uppercase;
+        }
+
+        .article-intro h1 {
+            margin: 20px auto 17px;
+            color: var(--ink);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(37px, 5.5vw, 58px);
+            font-weight: 500;
+            letter-spacing: -1.6px;
+            line-height: 1.12;
+        }
+
+        .article-lead {
+            max-width: 720px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 19px;
+            line-height: 1.8;
+        }
+
+        .article-reading-time {
+            margin-top: 22px;
+            color: #a095aa;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .article-hero-image {
+            width: 100%;
+            margin: 0;
+            height: clamp(260px, 42vw, 470px);
+            overflow: hidden;
+            border-radius: 28px;
+            background: #eadfe8;
+            box-shadow: 0 20px 50px rgba(72, 43, 94, .10);
+        }
+
+        .article-hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 42%;
+        }
+
+        .article-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 265px;
+            align-items: start;
+            gap: 52px;
+            padding: 55px 0 70px;
+        }
+
+        .article-content {
+            min-width: 0;
+            color: #655a70;
+            font-size: 17px;
+            line-height: 1.9;
+        }
+
+        .article-content p { margin: 0 0 22px; }
+
+        .article-content h2 {
+            margin: 42px 0 15px;
+            color: var(--ink);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 31px;
+            font-weight: 600;
+            letter-spacing: -.5px;
+            line-height: 1.25;
+        }
+
+        .article-content h3 {
+            margin: 26px 0 9px;
+            color: var(--purple-deep);
+            font-size: 19px;
+            font-weight: 800;
+            line-height: 1.4;
+        }
+
+        .article-content strong { color: #514269; }
+
+        .article-quote {
+            margin: 32px 0;
+            padding: 24px 27px;
+            border-left: 4px solid var(--pink);
+            border-radius: 0 17px 17px 0;
+            background: linear-gradient(110deg, #f8f2fc, #fff5f9);
+            color: var(--purple-deep);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 23px;
+            line-height: 1.5;
+        }
+
+        .article-list {
+            margin: 0 0 24px;
+            padding-left: 23px;
+        }
+
+        .article-list li { margin: 0 0 12px; padding-left: 5px; }
+
+        .article-exercise {
+            margin: 30px 0;
+            padding: 25px;
+            border: 1px solid #eadcf1;
+            border-radius: 20px;
+            background: #fbf7fd;
+        }
+
+        .article-exercise h3 { margin-top: 0; }
+
+        .article-exercise ol {
+            margin: 0;
+            padding-left: 22px;
+        }
+
+        .article-exercise li { margin-bottom: 10px; }
+
+        .article-disclaimer {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid var(--line);
+            color: #92879b;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .article-sidebar {
+            position: sticky;
+            top: 105px;
+            display: grid;
+            gap: 17px;
+        }
+
+        .article-side-card {
+            padding: 21px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .88);
+            box-shadow: 0 8px 24px rgba(72, 43, 94, .04);
+        }
+
+        .article-side-card h2 {
+            margin: 0 0 13px;
+            color: var(--ink);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 20px;
+            line-height: 1.3;
+        }
+
+        .article-toc {
+            display: grid;
+            gap: 11px;
+        }
+
+        .article-toc a {
+            color: #756783;
+            font-size: 14px;
+            line-height: 1.5;
+            text-decoration: none;
+        }
+
+        .article-toc a:hover { color: var(--purple); }
+
+        .article-side-note {
+            background: linear-gradient(145deg, #f6effb, #fff3f8);
+        }
+
+        .article-side-note p {
+            margin: 0;
+            color: #756783;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .article-bottom {
+            padding: 46px 24px;
+            border-radius: 26px;
+            background: linear-gradient(115deg, #65437f, #95669f 55%, #c27fa6);
+            color: #fff;
+            text-align: center;
+        }
+
+        .article-bottom h2 {
+            max-width: 650px;
+            margin: 0 auto 13px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(29px, 4vw, 39px);
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        .article-bottom p {
+            max-width: 550px;
+            margin: 0 auto 22px;
+            color: rgba(255, 255, 255, .84);
+            line-height: 1.7;
+        }
+
+        .article-bottom-link {
+            display: inline-flex;
+            min-height: 46px;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border-radius: 999px;
+            background: #fff;
+            color: var(--purple-deep);
+            font-size: 14px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        .article-bottom-link:hover {
+            background: #fff5fa;
+            transform: translateY(-2px);
+        }
+
+        .article-footer {
+            padding: 30px 0 24px;
+            color: #9a90a3;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        a:focus-visible {
+            outline: 3px solid #d98ab6;
+            outline-offset: 3px;
+        }
+
+        @@media (max-width: 780px) {
+            .article-intro { padding-top: 45px; }
+            .article-layout { grid-template-columns: 1fr; gap: 25px; padding-top: 38px; }
+            .article-sidebar { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @@media (max-width: 540px) {
+            .article-header-inner,
+            .article-container { width: min(100% - 30px, 1050px); }
+            .article-header-inner {
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: center;
+                gap: 10px;
+                padding: 12px 0;
+            }
+            .article-brand { width: 100%; gap: 10px; }
+            .article-brand-mark { width: 38px; height: 38px; flex: 0 0 38px; }
+            .article-brand-name { font-size: 18px; }
+            .article-brand-caption { font-size: 9px; letter-spacing: 1.2px; }
+            .article-back {
+                min-height: 39px;
+                align-self: flex-end;
+                padding: 8px 13px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+            .article-intro { padding: 38px 0 27px; }
+            .article-intro h1 { font-size: 39px; letter-spacing: -1px; }
+            .article-lead { font-size: 16px; }
+            .article-hero-image { height: 255px; border-radius: 19px; }
+            .article-layout { padding: 34px 0 48px; }
+            .article-content { font-size: 16px; line-height: 1.8; }
+            .article-content h2 { margin-top: 33px; font-size: 27px; }
+            .article-quote { padding: 19px; font-size: 20px; }
+            .article-exercise { padding: 20px; }
+            .article-sidebar { grid-template-columns: 1fr; }
+            .article-bottom { padding: 38px 20px; border-radius: 21px; }
+            .article-bottom-link { width: 100%; }
+        }
+
+        @@media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { transition-duration: .01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="article-shell">
+        <header class="article-header">
+            <div class="article-header-inner">
+                <a class="article-brand" href="@Url.Action("Index", "Home")" aria-label="Amor Bajo Lupa, ir al inicio">
+                    <span class="article-brand-mark" aria-hidden="true">♥</span>
+                    <span>
+                        <span class="article-brand-name">Amor Bajo Lupa</span>
+                        <span class="article-brand-caption">Relaciones · Emociones · Tú</span>
+                    </span>
+                </a>
+                <a class="article-back" href="@Url.Action("Index", "Home")#articulos">← Volver a artículos</a>
+            </div>
+        </header>
+
+        <main>
+            <div class="article-container">
+                <section class="article-intro" aria-labelledby="article-title">
+                    <span class="article-category">Inteligencia emocional</span>
+                    <h1 id="article-title">Aprender a reconocer lo que sentimos</h1>
+                    <p class="article-lead">
+                        Las emociones forman parte de nuestra vida cotidiana: nos dan señales sobre lo que vivimos, necesitamos y valoramos.
+                        Aprender a reconocerlas no significa controlarlas todo el tiempo, sino comprenderlas para responder con mayor conciencia.
+                    </p>
+                    <p class="article-reading-time">Una lectura para ti · 6 minutos</p>
+                </section>
+
+                <figure class="article-hero-image">
+                    <img src="https://images.pexels.com/photos/7395295/pexels-photo-7395295.jpeg"
+                         alt="Dos amigas comparten una conversación cercana y de apoyo"
+                         fetchpriority="high" />
+                </figure>
+
+                <div class="article-layout">
+                    <article class="article-content">
+                        <p>
+                            En ocasiones sabemos que algo nos pasa, pero nos cuesta explicar exactamente qué sentimos.
+                            Podemos decir «estoy mal», «estoy raro» o «me molestó», sin distinguir si detrás hay tristeza,
+                            frustración, miedo, decepción o varias emociones al mismo tiempo.
+                        </p>
+                        <p>
+                            Reconocer una emoción es el primer paso para comprender qué la acompaña y decidir cómo queremos
+                            actuar. No se trata de clasificar lo que sentimos como correcto o incorrecto, sino de escucharlo
+                            sin permitir que una reacción momentánea decida por nosotros.
+                        </p>
+
+                        <h2 id="que-son">¿Qué son las emociones?</h2>
+                        <p>
+                            Las emociones son respuestas que aparecen ante situaciones, recuerdos, pensamientos o necesidades.
+                            Pueden influir en nuestro cuerpo, nuestra atención y nuestras decisiones. Algunas se sienten
+                            agradables y otras incómodas, pero todas pueden aportar información sobre nuestra experiencia.
+                        </p>
+                        <p>
+                            Una emoción no es una orden ni una descripción completa de quién eres. Sentir miedo no significa
+                            que seas una persona cobarde; sentir enojo no te convierte en alguien agresivo. Lo importante
+                            es reconocer lo que ocurre y elegir una forma de expresarlo que no te haga daño ni dañe a otros.
+                        </p>
+
+                        <blockquote class="article-quote">
+                            No siempre podemos elegir lo que sentimos, pero podemos aprender a elegir cómo responder.
+                        </blockquote>
+
+                        <h2 id="poner-nombre">Poner nombre a lo que sentimos</h2>
+                        <p>
+                            Ampliar nuestro vocabulario emocional ayuda a describir con más precisión lo que vivimos.
+                            Por ejemplo, detrás de «estoy enojado» puede haber frustración porque algo no salió como
+                            esperabas, impotencia porque no puedes cambiar una situación o decepción porque una expectativa
+                            no se cumplió.
+                        </p>
+                        <ul class="article-list">
+                            <li><strong>Alegría:</strong> puede aparecer cuando disfrutamos algo, conectamos con alguien o alcanzamos una meta.</li>
+                            <li><strong>Tristeza:</strong> puede acompañar una pérdida, una decepción o la necesidad de apoyo y descanso.</li>
+                            <li><strong>Miedo:</strong> puede alertarnos ante una amenaza real o percibida y prepararnos para buscar seguridad.</li>
+                            <li><strong>Enojo:</strong> puede señalar frustración, una necesidad ignorada o la percepción de una injusticia.</li>
+                            <li><strong>Vergüenza:</strong> puede surgir cuando tememos ser juzgados o sentimos que no cumplimos una expectativa.</li>
+                        </ul>
+                        <p>
+                            Estas asociaciones son orientativas: una misma emoción puede tener causas distintas para cada persona.
+                            En lugar de asumir su significado, conviene preguntarnos qué estaba ocurriendo en ese momento.
+                        </p>
+
+                        <h2 id="senales">Aprende a observar las señales</h2>
+                        <p>
+                            Las emociones también pueden manifestarse físicamente. Quizá notes tensión en los hombros,
+                            respiración rápida, un nudo en el estómago, ganas de llorar o mucha energía. Estas señales
+                            no permiten identificar por sí solas una emoción exacta, pero pueden invitarte a hacer una pausa.
+                        </p>
+                        <ul class="article-list">
+                            <li>Observa qué estaba pasando justo antes de sentir el cambio.</li>
+                            <li>Identifica qué notas en tu cuerpo, sin sacar conclusiones apresuradas.</li>
+                            <li>Pregúntate qué pensamiento apareció y qué significado le diste a la situación.</li>
+                            <li>Considera si necesitas conversar, descansar, pedir apoyo o tomar distancia un momento.</li>
+                        </ul>
+
+                        <h2 id="aceptar">Aceptar una emoción no es dejarse llevar por ella</h2>
+                        <p>
+                            Aceptar lo que sientes significa reconocerlo sin negarlo ni castigarte por ello. No implica
+                            justificar cualquier conducta. Puedes estar muy enojado y, aun así, decidir no insultar;
+                            puedes sentir miedo y buscar información antes de tomar una decisión.
+                        </p>
+                        <p>
+                            Si la intensidad es alta, intenta hacer una pausa segura: respira lentamente, cambia de espacio
+                            si lo necesitas y retoma la conversación cuando puedas expresarte con mayor calma. Evita usar
+                            el silencio como castigo o como una forma de controlar a otra persona.
+                        </p>
+
+                        <h2 id="ejercicio">Un ejercicio para identificar tus emociones</h2>
+                        <p>
+                            Dedica unos minutos a revisar una situación reciente. No necesitas escribir mucho; basta con
+                            registrar lo que ocurrió y observar tu experiencia con curiosidad.
+                        </p>
+                        <div class="article-exercise">
+                            <h3>Tu registro emocional en cinco pasos</h3>
+                            <ol>
+                                <li><strong>Situación:</strong> ¿qué ocurrió? Describe los hechos sin interpretarlos.</li>
+                                <li><strong>Emoción:</strong> ¿qué sentiste? Intenta elegir una o dos palabras concretas.</li>
+                                <li><strong>Intensidad:</strong> del 1 al 10, ¿qué tan intensa fue?</li>
+                                <li><strong>Necesidad:</strong> ¿qué necesitabas en ese momento: seguridad, apoyo, descanso, claridad o espacio?</li>
+                                <li><strong>Respuesta:</strong> ¿qué hiciste y qué podrías probar la próxima vez?</li>
+                            </ol>
+                        </div>
+                        <p>
+                            Si no encuentras una palabra exacta, puedes escribir «todavía no lo sé». Identificar emociones
+                            es una habilidad que se desarrolla con práctica, no una tarea que debas resolver perfectamente.
+                        </p>
+
+                        <h2 id="compartir">Cómo expresar lo que sientes</h2>
+                        <p>
+                            Cuando decidas compartirlo, intenta hablar desde tu experiencia en lugar de atribuir intenciones
+                            a los demás. Puedes decir «me sentí desplazado cuando ocurrió esto y me gustaría que lo
+                            conversáramos», en vez de afirmar «no te importo». La primera frase abre espacio para explicar
+                            y escuchar; la segunda puede hacer que la otra persona se ponga a la defensiva.
+                        </p>
+                        <p>
+                            También puedes elegir con quién hablar. Busca a alguien que te escuche con respeto y recuerda
+                            que pedir apoyo profesional es válido si tus emociones te desbordan, se mantienen durante mucho
+                            tiempo o interfieren con tu vida cotidiana.
+                        </p>
+
+                        <div class="article-disclaimer">
+                            Este artículo tiene fines educativos y de reflexión personal. No constituye un diagnóstico
+                            psicológico ni reemplaza la orientación de un profesional de salud mental.
+                        </div>
+                    </article></article>
+
+                    <aside class="article-sidebar" aria-label="Información del artículo">
+                        <section class="article-side-card">
+                            <h2>En esta lectura</h2>
+                            <nav class="article-toc">
+                                <a href="#que-son">¿Qué son las emociones?</a>
+                                <a href="#poner-nombre">Ponerles nombre</a>
+                                <a href="#senales">Observar las señales</a>
+                                <a href="#aceptar">Aceptar lo que sientes</a>
+                                <a href="#ejercicio">Ejercicio práctico</a>
+                                <a href="#compartir">Cómo expresarlo</a>
+                            </nav></nav>
+                        </section>
+                        <section class="article-side-card article-side-note">
+                            <h2>Una idea para recordar</h2>
+                            <p>
+                                Reconocer lo que sientes requiere curiosidad y paciencia; no necesitas encontrar todas las respuestas de inmediato.
+                            </p>
+                        </section>
+                    </aside>
+                </div>
+
+                <section class="article-bottom">
+                    <h2>Darte un momento para reconocer lo que sientes también es una forma de cuidarte.</h2>
+                    <p>
+                        Sigue explorando ideas para comprender tus emociones y construir relaciones más conscientes en Amor Bajo Lupa.
+                    </p>
+                    <a class="article-bottom-link" href="@Url.Action("Index", "Home")#articulos">Volver a todos los artículos</a>
+                </section>
+
+                <footer class="article-footer">
+                    © @DateTime.Now.Year Amor Bajo Lupa · Relaciones · Emociones · Tú
+                </footer>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
