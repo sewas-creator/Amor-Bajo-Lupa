@@ -341,6 +341,24 @@
             }
         }
     
+
+        /* Informe ampliado para resultados de los tests avanzados */
+        .informe-avanzado { margin-top: 28px; text-align: left; }
+        .informe-seccion { margin: 22px 0; padding: 20px; border: 1px solid #eee3f4; border-radius: 18px; background: #fff; }
+        .informe-seccion h3 { margin: 0 0 12px; color: #713787; font-size: 19px; }
+        .informe-seccion p { color: #6f6479; line-height: 1.75; margin: 8px 0; }
+        .informe-seccion ul { margin: 10px 0 0; padding-left: 22px; color: #6f6479; line-height: 1.8; }
+        .informe-nivel { display: inline-block; margin: 5px 0 10px; padding: 6px 12px; border-radius: 999px; background: #f5eafb; color: #713787; font-size: 12px; font-weight: 800; }
+        .informe-categoria { margin: 15px 0; padding: 16px; border: 1px solid #eee5f2; border-radius: 14px; background: #fcf9fe; }
+        .informe-categoria-cabecera { display: flex; justify-content: space-between; gap: 12px; color: #713787; font-weight: 700; }
+        .informe-categoria p { margin: 8px 0 0; font-size: 14px; }
+        .informe-barra { height: 8px; margin-top: 10px; overflow: hidden; border-radius: 20px; background: #eee6f3; }
+        .informe-barra span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #9251a8, #dc8fb9); }
+        .informe-dos-columnas { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+        .informe-punto { padding: 15px; border-radius: 14px; background: #faf5fd; }
+        .informe-punto strong { display: block; margin-bottom: 6px; color: #713787; }
+        @@media (max-width: 600px) { .informe-dos-columnas { grid-template-columns: 1fr; } .informe-seccion { padding: 16px; } }
+
         /* ===== IDENTIDAD VISUAL COMPARTIDA: AMOR BAJO LUPA ===== */
         :root {
             --abl-primary: #9251a8;
@@ -798,9 +816,43 @@
 
             <div class="mensaje-resultado" id="mensajeResultado"></div>
 
-            <h3 class="subtitulo">Resultado por categorías</h3>
+            <div class="informe-avanzado" id="informeAvanzado">
+                <section class="informe-seccion">
+                    <h3>¿Cómo interpretar tu resultado?</h3>
+                    <span class="informe-nivel" id="nivelResultado"></span>
+                    <p id="explicacionResultado"></p>
+                    <p id="contextoResultado"></p>
+                </section>
 
-            <div id="resultadosCategorias"></div>
+                <section class="informe-seccion">
+                    <h3>Análisis detallado de las cinco áreas</h3>
+                    <p>Estos porcentajes muestran en qué áreas identificaste más situaciones que te generan dudas o requieren conversación. No representan una prueba de engaño.</p>
+                    <div id="resultadosCategorias"></div>
+                </section>
+
+                <section class="informe-seccion">
+                    <h3>Aspectos que conviene conversar</h3>
+                    <div class="informe-dos-columnas">
+                        <div class="informe-punto"><strong>Área de mayor atención</strong><span id="areaAtencion"></span></div>
+                        <div class="informe-punto"><strong>Área con menos señales de inquietud</strong><span id="areaFortaleza"></span></div>
+                    </div>
+                    <p id="lecturaPrioridades"></p>
+                </section>
+
+                <section class="informe-seccion">
+                    <h3>Recomendaciones prácticas</h3>
+                    <ul id="recomendacionesResultado"></ul>
+                </section>
+
+                <section class="informe-seccion">
+                    <h3>Preguntas para reflexionar en pareja</h3>
+                    <ul>
+                        <li>¿Qué acuerdos necesitamos aclarar para sentirnos respetados y tranquilos?</li>
+                        <li>¿Podemos hablar de nuestras inquietudes sin recurrir a acusaciones o revisar la privacidad del otro?</li>
+                        <li>¿Qué cambios concretos ayudarían a recuperar la confianza y mantener límites saludables?</li>
+                    </ul>
+                </section>
+            </div>
 
             <p class="nota-final">
                 Recuerda que una puntuación elevada no demuestra engaño.
@@ -1491,100 +1543,120 @@ function mostrarResultado() {
 // ==========================================
 
 function mostrarResultadoEnPantalla(resultado) {
+    document.getElementById("porcentaje").textContent = resultado.porcentaje + "%";
 
-    document.getElementById("porcentaje").textContent =
-        resultado.porcentaje + "%";
+    const nivel = resultado.porcentaje <= 24 ? "Pocas situaciones identificadas"
+        : resultado.porcentaje <= 49 ? "Algunas situaciones por conversar"
+        : resultado.porcentaje <= 74 ? "Varias áreas requieren atención"
+        : "Muchas situaciones generan inquietud";
 
-    const titulo = document.getElementById("tituloResultado");
-    const mensaje = document.getElementById("mensajeResultado");
+    document.getElementById("nivelResultado").textContent = nivel;
 
-    if (resultado.porcentaje <= 24) {
+    document.getElementById("tituloResultado").textContent =
+        resultado.porcentaje <= 24 ? "Hay una base favorable para el diálogo"
+        : resultado.porcentaje <= 49 ? "Hay temas que pueden aclararse"
+        : resultado.porcentaje <= 74 ? "Conviene revisar algunos acuerdos"
+        : "Es importante atender lo que te preocupa";
 
-        titulo.textContent = "Pocas situaciones preocupantes identificadas";
+    document.getElementById("mensajeResultado").textContent =
+        resultado.porcentaje <= 24
+        ? "Tus respuestas reflejan pocas situaciones de inquietud en las áreas evaluadas. Esto puede ser una oportunidad para mantener los acuerdos que funcionan y seguir conversando de manera abierta."
+        : resultado.porcentaje <= 49
+        ? "Tus respuestas señalan algunas diferencias, dudas o situaciones pendientes. No significan que exista engaño; pueden servir como punto de partida para conversar con claridad y escuchar ambas perspectivas."
+        : resultado.porcentaje <= 74
+        ? "Has señalado varias situaciones que merecen atención. Antes de sacar conclusiones, identifica hechos concretos, conversa sobre cómo te afectan y acuerda cambios observables que respeten a ambas personas."
+        : "Tus respuestas reflejan una acumulación importante de inquietudes en las áreas evaluadas. Prioriza tu tranquilidad, busca una conversación segura y considera apoyo profesional si el malestar o los conflictos persisten.";
 
-        mensaje.textContent =
-            "Tus respuestas reflejan pocas situaciones que actualmente te generan preocupación. " +
-            "Continúa fortaleciendo la comunicación y manteniendo acuerdos claros.";
+    document.getElementById("explicacionResultado").textContent =
+        "El índice resume tus respuestas ponderadas en 30 preguntas. Un valor más alto indica que seleccionaste con mayor frecuencia opciones asociadas a situaciones que te generan preocupación o que necesitan acuerdos más claros.";
 
-    } else if (resultado.porcentaje <= 49) {
+    document.getElementById("contextoResultado").textContent =
+        "Este resultado describe tu percepción actual y no verifica lo que hace tu pareja. Un mismo comportamiento puede tener distintas explicaciones; por eso es importante contrastar tus inquietudes con conversaciones y hechos, sin invadir la privacidad.";
 
-        titulo.textContent = "Algunos temas por conversar";
+    const contenedor = document.getElementById("resultadosCategorias");
+    contenedor.innerHTML = "";
 
-        mensaje.textContent =
-            "Has identificado algunas situaciones que podrían necesitar atención. " +
-            "Puede ser útil conversar con tranquilidad, expresar lo que sientes y aclarar expectativas.";
-
-    } else if (resultado.porcentaje <= 74) {
-
-        titulo.textContent = "Varias situaciones merecen atención";
-
-        mensaje.textContent =
-            "Tus respuestas muestran varias situaciones que te generan inquietud. " +
-            "Conviene hablar sobre los acuerdos, las necesidades y los límites que no están funcionando.";
-
-    } else {
-
-        titulo.textContent = "Muchas situaciones generan inquietud";
-
-        mensaje.textContent =
-            "Has identificado numerosas situaciones que afectan tu tranquilidad. " +
-            "Considera tener una conversación honesta sobre la relación y buscar apoyo si lo necesitas.";
-
-    }
-
-    const contenedorCategorias =
-        document.getElementById("resultadosCategorias");
-
-    contenedorCategorias.innerHTML = "";
+    const textos = {
+        "Digital": "Privacidad, redes sociales y acuerdos sobre interacciones en internet.",
+        "Comunicación": "Claridad de las explicaciones, escucha, diálogo y resolución de desacuerdos.",
+        "Cambios": "Variaciones de hábitos o comportamientos que has observado y que conviene comprender en contexto.",
+        "Tiempo": "Disponibilidad, prioridades compartidas y equilibrio entre la relación y la vida personal.",
+        "Límites": "Respeto mutuo, acuerdos, espacios personales y expectativas dentro de la relación."
+    };
 
     resultado.detalleCategorias.forEach(function (categoria) {
-
         const bloque = document.createElement("div");
-
-        bloque.className = "categoria-resultado";
+        bloque.className = "informe-categoria";
 
         const cabecera = document.createElement("div");
+        cabecera.className = "informe-categoria-cabecera";
 
-        cabecera.className = "categoria-cabecera";
-
-        const nombre = document.createElement("strong");
-
+        const nombre = document.createElement("span");
         nombre.textContent = categoria.nombre;
 
-        const porcentaje = document.createElement("span");
-
-        porcentaje.textContent = categoria.porcentaje + "%";
+        const valor = document.createElement("span");
+        valor.textContent = categoria.porcentaje + "%";
 
         cabecera.appendChild(nombre);
-        cabecera.appendChild(porcentaje);
+        cabecera.appendChild(valor);
 
         const barra = document.createElement("div");
-
-        barra.className = "categoria-barra";
-
-        const relleno = document.createElement("div");
-
-        relleno.className = "categoria-relleno";
-
+        barra.className = "informe-barra";
+        const relleno = document.createElement("span");
         relleno.style.width = categoria.porcentaje + "%";
-
         barra.appendChild(relleno);
+
+        const descripcion = document.createElement("p");
+        descripcion.textContent = textos[categoria.nombre] || "Área de reflexión sobre la relación.";
+
+        const lectura = document.createElement("p");
+        lectura.textContent = categoria.porcentaje <= 24
+            ? "En tus respuestas aparecen pocas inquietudes en esta área. Mantén los acuerdos y la comunicación que te resultan útiles."
+            : categoria.porcentaje <= 49
+            ? "Hay algunos puntos que podrían aclararse. Identifica qué situación concreta te genera dudas y exprésala sin asumir intenciones."
+            : categoria.porcentaje <= 74
+            ? "Esta área concentra varias inquietudes. Conviene conversar sobre ejemplos concretos y definir acuerdos realistas."
+            : "Es una de las áreas que más inquietud concentra en tus respuestas. Dale prioridad en una conversación respetuosa y considera qué límites necesitas.";
 
         bloque.appendChild(cabecera);
         bloque.appendChild(barra);
+        bloque.appendChild(descripcion);
+        bloque.appendChild(lectura);
+        contenedor.appendChild(bloque);
+    });
 
-        contenedorCategorias.appendChild(bloque);
+    const mayor = resultado.detalleCategorias[0];
+    const menor = resultado.detalleCategorias[resultado.detalleCategorias.length - 1];
 
+    document.getElementById("areaAtencion").textContent =
+        mayor ? mayor.nombre + " (" + mayor.porcentaje + "%)" : "Sin datos";
+    document.getElementById("areaFortaleza").textContent =
+        menor ? menor.nombre + " (" + menor.porcentaje + "%)" : "Sin datos";
+    document.getElementById("lecturaPrioridades").textContent = mayor
+        ? "La categoría con mayor puntuación es " + mayor.nombre +
+          ". Empieza por conversar sobre una situación específica de esa área. La categoría con menor puntuación muestra menos inquietudes en tus respuestas, pero no significa que deba descuidarse."
+        : "No hay información suficiente para comparar las categorías.";
+
+    const recomendaciones = [
+        "Describe situaciones concretas y cómo te hacen sentir, evitando convertir una sospecha en una acusación.",
+        "Acuerden qué significa para ambos la privacidad, la transparencia y el respeto dentro de la relación.",
+        "Escuchen las necesidades de ambas personas y definan compromisos que sean claros, mutuos y realistas."
+    ];
+    if (mayor && mayor.porcentaje >= 50) {
+        recomendaciones.unshift("Comiencen por el área de " + mayor.nombre + " y elijan un solo tema prioritario para conversar con calma.");
+    }
+
+    const lista = document.getElementById("recomendacionesResultado");
+    lista.innerHTML = "";
+    recomendaciones.forEach(function (texto) {
+        const item = document.createElement("li");
+        item.textContent = texto;
+        lista.appendChild(item);
     });
 
     tarjetaTest.hidden = true;
     tarjetaResultado.hidden = false;
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
         // ==========================================
