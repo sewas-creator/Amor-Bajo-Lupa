@@ -387,11 +387,26 @@
         @@media (max-width: 540px) {
             .article-header-inner,
             .article-container { width: min(100% - 30px, 1050px); }
-            .article-header-inner { min-height: 70px; }
-            .article-brand-mark { width: 38px; height: 38px; }
+            .article-header-inner {
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: center;
+                gap: 10px;
+                padding: 12px 0;
+            }
+            .article-brand { width: 100%; gap: 10px; }
+            .article-brand-mark { width: 38px; height: 38px; flex: 0 0 38px; }
             .article-brand-name { font-size: 18px; }
-            .article-brand-caption { font-size: 9px; }
-            .article-back { min-height: 39px; padding: 8px 11px; font-size: 12px; }
+            .article-brand-caption { font-size: 9px; letter-spacing: 1.2px; }
+            .article-back {
+                min-height: 39px;
+                align-self: flex-end;
+                padding: 8px 13px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
             .article-intro { padding: 38px 0 27px; }
             .article-intro h1 { font-size: 39px; letter-spacing: -1px; }
             .article-lead { font-size: 16px; }
