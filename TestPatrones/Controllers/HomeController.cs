@@ -450,6 +450,12 @@ namespace TestPatrones.Controllers
             return View();
         }
 
+        // Artículo: comunicación en pareja
+        public ActionResult ArticuloComunicacion()
+        {
+            return View();
+        }
+
         // Test actual
         public ActionResult TestPatrones()
         {
