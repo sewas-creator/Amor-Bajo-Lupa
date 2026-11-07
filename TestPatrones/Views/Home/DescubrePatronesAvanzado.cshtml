@@ -307,6 +307,24 @@
             }
         }
     
+
+        /* Informe ampliado para resultados de los tests avanzados */
+        .informe-avanzado { margin-top: 28px; text-align: left; }
+        .informe-seccion { margin: 22px 0; padding: 20px; border: 1px solid #eee3f4; border-radius: 18px; background: #fff; }
+        .informe-seccion h3 { margin: 0 0 12px; color: #713787; font-size: 19px; }
+        .informe-seccion p { color: #6f6479; line-height: 1.75; margin: 8px 0; }
+        .informe-seccion ul { margin: 10px 0 0; padding-left: 22px; color: #6f6479; line-height: 1.8; }
+        .informe-nivel { display: inline-block; margin: 5px 0 10px; padding: 6px 12px; border-radius: 999px; background: #f5eafb; color: #713787; font-size: 12px; font-weight: 800; }
+        .informe-categoria { margin: 15px 0; padding: 16px; border: 1px solid #eee5f2; border-radius: 14px; background: #fcf9fe; }
+        .informe-categoria-cabecera { display: flex; justify-content: space-between; gap: 12px; color: #713787; font-weight: 700; }
+        .informe-categoria p { margin: 8px 0 0; font-size: 14px; }
+        .informe-barra { height: 8px; margin-top: 10px; overflow: hidden; border-radius: 20px; background: #eee6f3; }
+        .informe-barra span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #9251a8, #dc8fb9); }
+        .informe-dos-columnas { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+        .informe-punto { padding: 15px; border-radius: 14px; background: #faf5fd; }
+        .informe-punto strong { display: block; margin-bottom: 6px; color: #713787; }
+        @@media (max-width: 600px) { .informe-dos-columnas { grid-template-columns: 1fr; } .informe-seccion { padding: 16px; } }
+
         /* ===== IDENTIDAD VISUAL COMPARTIDA: AMOR BAJO LUPA ===== */
         :root {
             --abl-primary: #9251a8;
@@ -760,11 +778,43 @@
 
                 <p class="interpretacion" id="interpretacionGeneral"></p>
 
-                <h3 style="color:var(--primary-dark); margin-top:30px;">
-                    Análisis por categorías
-                </h3>
+                <div class="informe-avanzado" id="informeAvanzado">
+                    <section class="informe-seccion">
+                        <h3>¿Qué refleja tu resultado?</h3>
+                        <span class="informe-nivel" id="nivelPatrones"></span>
+                        <p id="explicacionPatrones"></p>
+                    </section>
 
-                <div id="resultadosCategorias"></div>
+                    <section class="informe-seccion">
+                        <h3>Análisis detallado de tus cinco áreas</h3>
+                        <p>Las puntuaciones reflejan la frecuencia e intensidad con la que reconoces estos patrones en ti. No son etiquetas permanentes ni un diagnóstico.</p>
+                        <div id="resultadosCategorias"></div>
+                    </section>
+
+                    <section class="informe-seccion">
+                        <h3>Fortalezas y áreas para trabajar</h3>
+                        <div class="informe-dos-columnas">
+                            <div class="informe-punto"><strong>Área más consolidada</strong><span id="fortalezaPatrones"></span></div>
+                            <div class="informe-punto"><strong>Área que merece atención</strong><span id="atencionPatrones"></span></div>
+                        </div>
+                        <p id="lecturaPatrones"></p>
+                    </section>
+
+                    <section class="informe-seccion">
+                        <h3>Recomendaciones para tu crecimiento personal</h3>
+                        <ul id="recomendacionesPatrones"></ul>
+                    </section>
+
+                    <section class="informe-seccion">
+                        <h3>Ejercicios de reflexión</h3>
+                        <ul>
+                            <li>Antes de reaccionar, identifica qué emoción estás sintiendo y qué situación concreta la activó.</li>
+                            <li>Pregúntate si una expectativa que tienes fue conversada y acordada o si esperas que la otra persona la adivine.</li>
+                            <li>Reserva tiempo para tus amistades, intereses y objetivos personales, además de los espacios compartidos.</li>
+                            <li>Practica expresar una necesidad o un límite con claridad, respeto y sin disculparte por tenerlo.</li>
+                        </ul>
+                    </section>
+                </div>
 
                 <p class="nota">
                     Este resultado no constituye un diagnóstico psicológico
@@ -1193,50 +1243,16 @@
 
 
         function mostrarResultado() {
-
-            zonaTest.style.display = "none";
-            zonaResultado.style.display = "block";
-
-            document.getElementById("barraProgreso").style.width = "100%";
-
-            let total = 0;
-
-            respuestas.forEach(function (valor) {
-                total += valor;
+            const respuestaInvalida = respuestas.findIndex(function (valor) {
+                return !Number.isInteger(valor) || valor < 0 || valor > 3;
             });
 
-            const maximo = preguntas.length * 3;
-            const porcentaje = Math.round((total / maximo) * 100);
-
-            document.getElementById("porcentajeResultado").textContent =
-                porcentaje + "%";
-
-            let interpretacion = "";
-
-            if (porcentaje <= 25) {
-                interpretacion =
-                    "Tus respuestas reflejan, en general, recursos personales " +
-                    "que pueden ayudarte a gestionar tus emociones, expectativas " +
-                    "y límites. Sigue fortaleciendo la comunicación y el equilibrio personal.";
-            } else if (porcentaje <= 50) {
-                interpretacion =
-                    "Tus respuestas muestran algunas áreas que podrían beneficiarse " +
-                    "de mayor atención. Reflexionar sobre tus necesidades y la forma " +
-                    "en que te relacionas puede ayudarte a construir vínculos más equilibrados.";
-            } else if (porcentaje <= 75) {
-                interpretacion =
-                    "Tus respuestas señalan varias áreas de reflexión. Puede ser útil " +
-                    "observar qué situaciones generan inseguridad, dificultad para comunicarte " +
-                    "o problemas para mantener tu autonomía.";
-            } else {
-                interpretacion =
-                    "Tus respuestas indican que hay varios aspectos de tu forma de " +
-                    "relacionarte que merecen una reflexión cuidadosa. Considera buscar " +
-                    "apoyo y trabajar en tus necesidades, límites y bienestar emocional.";
+            if (respuestaInvalida !== -1) {
+                alert("Falta registrar correctamente la respuesta de la pregunta " + (respuestaInvalida + 1) + ".");
+                indice = respuestaInvalida;
+                mostrarPregunta();
+                return;
             }
-
-            document.getElementById("interpretacionGeneral").textContent =
-                interpretacion;
 
             const categorias = [
                 "Emociones",
@@ -1247,60 +1263,138 @@
             ];
 
             const descripciones = {
-                "Emociones": "Explora cómo reconoces, expresas y gestionas tus emociones.",
-                "Expectativas": "Refleja cómo manejas tus expectativas y necesidades afectivas.",
-                "Hábitos": "Observa el equilibrio entre tus rutinas personales y la relación.",
-                "Comunicación": "Analiza cómo expresas tus ideas, necesidades y desacuerdos.",
-                "Autonomía y límites": "Reflexiona sobre tu independencia, privacidad y límites personales."
+                "Emociones": "Cómo reconoces, expresas y regulas emociones como inseguridad, celos, frustración o miedo.",
+                "Expectativas": "Cómo construyes expectativas afectivas, interpretas las necesidades y manejas las diferencias entre lo que imaginas y lo que ocurre.",
+                "Hábitos": "Cómo equilibras tus rutinas, decisiones, tiempo y actividades personales con la vida en pareja.",
+                "Comunicación": "Cómo expresas preocupaciones, escuchas opiniones distintas, resuelves conflictos y pides disculpas.",
+                "Autonomía y límites": "Cómo respetas tu espacio y el de la otra persona, mantienes tus valores y comunicas límites."
             };
 
-            const contenedorResultados =
-                document.getElementById("resultadosCategorias");
+            const total = respuestas.reduce(function (suma, valor) { return suma + valor; }, 0);
+            const maximo = preguntas.length * 3;
+            const porcentaje = Math.round((total / maximo) * 100);
 
-            contenedorResultados.innerHTML = "";
+            document.getElementById("porcentajeResultado").textContent = porcentaje + "%";
 
-            categorias.forEach(function (categoria) {
+            const nivel = porcentaje <= 25 ? "Patrones poco presentes"
+                : porcentaje <= 50 ? "Algunos patrones aparecen ocasionalmente"
+                : porcentaje <= 75 ? "Patrones que conviene observar"
+                : "Patrones frecuentes que merecen atención";
 
+            document.getElementById("nivelPatrones").textContent = nivel;
+
+            const interpretacion = porcentaje <= 25
+                ? "Tus respuestas sugieren que, en general, cuentas con recursos para reconocer tus emociones, mantener expectativas flexibles y conservar tu autonomía. Puedes seguir fortaleciendo estas habilidades sin dejar de atender las necesidades que aparezcan."
+                : porcentaje <= 50
+                ? "Tus respuestas muestran algunos hábitos o reacciones que pueden aparecer en determinadas circunstancias. Observar cuándo ocurren y qué los activa puede ayudarte a responder de una manera más consciente."
+                : porcentaje <= 75
+                ? "Has reconocido varios patrones que podrían influir en tu bienestar y en la forma de relacionarte. No significa que estés haciendo algo mal; indica áreas donde practicar nuevas respuestas, comunicación y límites puede ser beneficioso."
+                : "Tus respuestas muestran patrones que reconoces con bastante frecuencia y que podrían estar generando malestar o reduciendo tu autonomía. Avanza paso a paso, identifica qué necesitas y considera buscar acompañamiento profesional si estos patrones te afectan de manera persistente.";
+
+            document.getElementById("interpretacionGeneral").textContent = interpretacion;
+            document.getElementById("explicacionPatrones").textContent =
+                "El índice se calcula a partir de tus 30 respuestas. Un porcentaje mayor significa que seleccionaste con más frecuencia opciones asociadas a dificultades o reacciones que pueden limitar tu bienestar. No mide tu valor personal ni determina cómo será tu relación.";
+
+            const detalle = categorias.map(function (categoria) {
                 let suma = 0;
                 let cantidad = 0;
 
                 preguntas.forEach(function (pregunta, i) {
-
                     if (pregunta.categoria === categoria) {
                         suma += respuestas[i];
                         cantidad++;
                     }
-
                 });
 
                 const maximoCategoria = cantidad * 3;
-                const porcentajeCategoria =
-                    Math.round((suma / maximoCategoria) * 100);
+                return {
+                    nombre: categoria,
+                    puntos: suma,
+                    maximo: maximoCategoria,
+                    porcentaje: maximoCategoria ? Math.round((suma / maximoCategoria) * 100) : 0
+                };
+            }).sort(function (a, b) {
+                return b.porcentaje - a.porcentaje;
+            });
 
+            const contenedor = document.getElementById("resultadosCategorias");
+            contenedor.innerHTML = "";
+
+            detalle.forEach(function (categoria) {
                 const tarjeta = document.createElement("div");
-                tarjeta.className = "categoria-resultado";
+                tarjeta.className = "informe-categoria";
 
-                const titulo = document.createElement("strong");
-                titulo.textContent = categoria + " · " +
-                    porcentajeCategoria + "%";
+                const cabecera = document.createElement("div");
+                cabecera.className = "informe-categoria-cabecera";
 
-                const descripcion = document.createElement("p");
-                descripcion.textContent = descripciones[categoria];
+                const titulo = document.createElement("span");
+                titulo.textContent = categoria.nombre;
 
-                const barraFondo = document.createElement("div");
-                barraFondo.className = "barra-categoria";
+                const valor = document.createElement("span");
+                valor.textContent = categoria.porcentaje + "%";
+
+                cabecera.appendChild(titulo);
+                cabecera.appendChild(valor);
 
                 const barra = document.createElement("div");
-                barra.style.width = porcentajeCategoria + "%";
+                barra.className = "informe-barra";
+                const relleno = document.createElement("span");
+                relleno.style.width = categoria.porcentaje + "%";
+                barra.appendChild(relleno);
 
-                barraFondo.appendChild(barra);
+                const descripcion = document.createElement("p");
+                descripcion.textContent = descripciones[categoria.nombre];
 
-                tarjeta.appendChild(titulo);
+                const lectura = document.createElement("p");
+                lectura.textContent = categoria.porcentaje <= 25
+                    ? "En tus respuestas este aspecto aparece con baja intensidad. Reconoce qué haces para mantener ese equilibrio y procura conservarlo."
+                    : categoria.porcentaje <= 50
+                    ? "Puede aparecer en algunas situaciones. Observa qué lo desencadena y qué respuesta alternativa te gustaría practicar."
+                    : categoria.porcentaje <= 75
+                    ? "Es un área que merece atención consciente. Identifica ejemplos recientes y elige un pequeño cambio que puedas probar."
+                    : "Es una de las áreas más presentes en tus respuestas. Considera priorizarla y buscar apoyo si está afectando tu tranquilidad o tus relaciones.";
+
+                tarjeta.appendChild(cabecera);
+                tarjeta.appendChild(barra);
                 tarjeta.appendChild(descripcion);
-                tarjeta.appendChild(barraFondo);
-
-                contenedorResultados.appendChild(tarjeta);
+                tarjeta.appendChild(lectura);
+                contenedor.appendChild(tarjeta);
             });
+
+            const fortaleza = detalle[detalle.length - 1];
+            const atencion = detalle[0];
+
+            document.getElementById("fortalezaPatrones").textContent =
+                fortaleza ? fortaleza.nombre + " (" + fortaleza.porcentaje + "%)" : "Sin datos";
+            document.getElementById("atencionPatrones").textContent =
+                atencion ? atencion.nombre + " (" + atencion.porcentaje + "%)" : "Sin datos";
+            document.getElementById("lecturaPatrones").textContent = atencion
+                ? "La puntuación más alta aparece en " + atencion.nombre +
+                  ". Puedes empezar observando una situación reciente relacionada con esa área. La puntuación más baja, " +
+                  fortaleza.nombre + ", señala un recurso que podrías seguir fortaleciendo."
+                : "No hay información suficiente para comparar las áreas.";
+
+            const recomendaciones = [
+                "Lleva un registro breve de las situaciones que activan tus emociones y de cómo respondes ante ellas.",
+                "Expresa tus necesidades de forma directa y respetuosa; no esperes que la otra persona las adivine.",
+                "Mantén actividades, amistades e intereses propios, procurando un equilibrio entre independencia y cercanía.",
+                "Revisa tus expectativas y conversa los acuerdos para distinguir lo que necesitas de lo que supones."
+            ];
+            if (atencion && atencion.porcentaje >= 50) {
+                recomendaciones.unshift("Dedica esta semana una acción pequeña y concreta a trabajar el área de " + atencion.nombre + ".");
+            }
+
+            const lista = document.getElementById("recomendacionesPatrones");
+            lista.innerHTML = "";
+            recomendaciones.forEach(function (texto) {
+                const item = document.createElement("li");
+                item.textContent = texto;
+                lista.appendChild(item);
+            });
+
+            zonaTest.style.display = "none";
+            zonaResultado.style.display = "block";
+            document.getElementById("barraProgreso").style.width = "100%";
 
             guardarResultado(porcentaje);
         }
