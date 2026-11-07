@@ -189,6 +189,7 @@
     <Content Include="Views\Home\ArticuloConocerse.cshtml" />
     <Content Include="Views\Home\ArticuloComunicacion.cshtml" />
     <Content Include="Views\Home\ArticuloEmociones.cshtml" />
+    <Content Include="Views\Home\ArticuloLimites.cshtml" />
     <Content Include="Views\Home\Proximamente.cshtml" />
     <Content Include="Views\Home\TestPatrones.cshtml" />
     <Content Include="Views\Home\DescubrePatrones.cshtml" />
