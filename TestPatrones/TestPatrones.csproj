@@ -197,6 +197,7 @@
     <Content Include="Views\Cuenta\VerificarSesion.cshtml" />
     <Content Include="Views\Home\TestAvanzado.cshtml" />
     <Content Include="Views\Home\DescubrePatronesAvanzado.cshtml" />
+    <Content Include="Views\Home\TestPreparacionRelacion.cshtml" />
     <Content Include="Web.config.example" />
   </ItemGroup>
   <ItemGroup>
