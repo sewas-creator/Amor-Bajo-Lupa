@@ -462,6 +462,11 @@ namespace TestPatrones.Controllers
             return View();
         }
 
+        public ActionResult ArticuloLimites()
+        {
+            return View();
+        }
+
         // Test actual
         public ActionResult TestPatrones()
         {
