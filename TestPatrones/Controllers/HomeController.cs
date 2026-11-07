@@ -456,6 +456,12 @@ namespace TestPatrones.Controllers
             return View();
         }
 
+        // Artículo: reconocimiento de las emociones
+        public ActionResult ArticuloEmociones()
+        {
+            return View();
+        }
+
         // Test actual
         public ActionResult TestPatrones()
         {
