@@ -2,7 +2,6 @@
 using System.Data.SqlClient;
 using System.Security.Claims;
 using TestPatrones;
-using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Owin.Security;
