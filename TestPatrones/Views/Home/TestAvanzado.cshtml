@@ -1376,6 +1376,23 @@
 
 function mostrarResultado() {
 
+    // Verificar que las 30 respuestas estén registradas antes de calcular o guardar.
+    const respuestaInvalida = respuestas.findIndex(function (valor) {
+        return ![0, 2, 5].includes(valor);
+    });
+
+    if (respuestaInvalida !== -1) {
+        alert(
+            "No se registró correctamente la respuesta de la pregunta " +
+            (respuestaInvalida + 1) +
+            ". Vuelve a responderla."
+        );
+
+        indice = respuestaInvalida;
+        mostrarPregunta();
+        return;
+    }
+
     const resultado = calcularResultados();
 
     const estado = document.getElementById("estadoGuardado");
