@@ -16,24 +16,22 @@ namespace TestPatrones.Controllers
 {
     public class HomeController : Controller
     {
-
         public ActionResult DiagnosticarMercadoPago()
         {
             string token = System.Configuration.ConfigurationManager
                 .AppSettings["MercadoPagoAccessToken"];
 
-            string ruta = Server.MapPath(
-                "~/App_Data/GoogleAuth.secrets.config");
+            bool archivoEncontrado = System.IO.File.Exists(
+                Server.MapPath("~/App_Data/GoogleAuth.secrets.config")
+            );
 
             return Content(
-                "Token encontrado: " +
-                (!string.IsNullOrWhiteSpace(token)) +
-                "\nLongitud del token: " +
-                (token == null ? 0 : token.Length) +
-                "\nArchivo encontrado: " +
-                System.IO.File.Exists(ruta)
+                "Token encontrado: " + (!string.IsNullOrWhiteSpace(token)) +
+                "\nLongitud del token: " + (token == null ? 0 : token.Length) +
+                "\nArchivo encontrado: " + archivoEncontrado
             );
         }
+
 
 
         [HttpPost]
@@ -444,23 +442,6 @@ namespace TestPatrones.Controllers
             }
         }
 
-        // Comprobar conexión con SQL Server
-        public ActionResult ProbarConexion()
-        {
-            try
-            {
-                using (var conexion = ConexionBD.ObtenerConexion())
-                {
-                    conexion.Open();
-                }
-
-                return Content("¡Conexión a AmorBajoLupa exitosa!");
-            }
-            catch (Exception ex)
-            {
-                return Content("Error de conexión: " + ex.Message);
-            }
-        }
 
         // Página principal de Amor Bajo Lupa
         public ActionResult Index()

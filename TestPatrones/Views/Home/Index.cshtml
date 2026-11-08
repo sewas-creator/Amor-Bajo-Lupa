@@ -34,7 +34,24 @@
                     <a href="#temas">Temas</a>
                     <a href="#conocenos">Conócenos</a>
                     <a href="#articulos">Artículos</a>
-                    <a class="abl-nav-cta" href="#tests">Explorar tests <span aria-hidden="true">↗</span></a>
+                    <a class="abl-nav-cta" href="#tests">
+                        Explorar tests <span aria-hidden="true">↗</span>
+                    </a>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="abl-nav-cta"
+                           href="@Url.Action("CerrarSesion", "Cuenta")">
+                            Cerrar sesión
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="abl-nav-cta"
+                           href="@Url.Action("IniciarSesion", "Cuenta", new { returnUrl = Url.Action("Index", "Home") })">
+                            Iniciar sesión con Google
+                        </a>
+                    }
                 </nav>
 
                 <details class="abl-mobile-menu">
@@ -45,6 +62,19 @@
                         <a href="#conocenos">Conócenos</a>
                         <a href="#articulos">Artículos</a>
                         <a href="#tests">Explorar tests</a>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a href="@Url.Action("CerrarSesion", "Cuenta")">
+                                Cerrar sesión
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("IniciarSesion", "Cuenta", new { returnUrl = Url.Action("Index", "Home") })">
+                                Iniciar sesión con Google
+                            </a>
+                        }
                     </nav>
                 </details>
             </div>
@@ -307,7 +337,14 @@
                                 Una experiencia personal de 10 preguntas para explorar tu bienestar emocional,
                                 tus experiencias pasadas, el apego, tu autonomía y lo que buscas al amar.
                             </p>
-                            <div class="abl-article-meta">S/ 3.00 · Acceso por intento · Próximamente</div>
+                            <div class="abl-article-meta">
+                                S/ 3.00 · Acceso por intento
+                            </div>
+
+                            <a class="abl-button abl-button-primary"
+                               href="@Url.Action("TestPreparacionRelacion", "Home")">
+                                Acceder al test <span aria-hidden="true">→</span>
+                            </a>
                         </article>
                     </div>
 
