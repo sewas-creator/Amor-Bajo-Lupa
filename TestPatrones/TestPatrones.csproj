@@ -166,6 +166,7 @@
     <Content Include="App_Data\GoogleAuth.secrets.config.example" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml.example" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
+    <Content Include="README.md" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
