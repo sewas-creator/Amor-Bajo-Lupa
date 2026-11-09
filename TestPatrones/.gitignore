@@ -14,3 +14,6 @@ obj/
 # Credenciales privadas de Google OAuth y SQL Server (local y Somee)
 /App_Data/GoogleAuth.secrets.config
 /App_Data/SqlServer.secrets.config
+
+# Perfil privado de publicación FTP
+/Properties/PublishProfiles/FTPProfile.pubxml

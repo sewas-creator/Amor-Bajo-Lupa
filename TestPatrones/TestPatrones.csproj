@@ -162,6 +162,10 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include=".gitignore" />
+    <Content Include="App_Data\SqlServer.secrets.config" />
+    <Content Include="App_Data\GoogleAuth.secrets.config.example" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml.example" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -202,7 +206,7 @@
     <Content Include="Web.config.example" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Data\GoogleAuth.secrets.config" />
+    <Content Include="App_Data\GoogleAuth.secrets.config" />
     <Content Include="App_Data\SqlServer.secrets.config.example" />
   </ItemGroup>
   <ItemGroup>
